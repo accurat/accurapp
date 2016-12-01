@@ -7,8 +7,6 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-// Inspired by https://github.com/airbnb/javascript but less opinionated.
-
 // We use eslint-loader so even warnings are very visible.
 // This is why we only use "WARNING" level for potential errors,
 // and we don't use "ERROR" level at all.
@@ -16,12 +14,42 @@
 // In the future, we might create a separate list of rules for production.
 // It would probably be more strict.
 
+// This loads eslint-config-standard but modifying every 'error' rule to 'warn'.
+
+function errorToWarn (ruleValue) {
+  if (ruleValue === 2 || ruleValue === 'error') {
+    return 1
+  }
+  if (Array.isArray(ruleValue)) {
+    if (ruleValue[0] === 2 || ruleValue[0] === 'error') {
+      ruleValue[0] = 1
+      return ruleValue
+    }
+  }
+  return ruleValue
+}
+
+var standardJSRules = require('eslint-config-standard').rules
+var standardJSRulesWarn = Object.keys(standardJSRules).reduce(function (acc, ruleName) {
+  if (ruleName.indexOf('standard') === 0) return acc
+
+  var ruleValue = standardJSRules[ruleName]
+  var ruleValueNew = errorToWarn(ruleValue)
+  acc[ruleName] = ruleValueNew
+  return acc
+}, {})
+
 module.exports = {
   root: true,
 
   parser: 'babel-eslint',
 
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react'],
+  plugins: [
+    'import',
+    'flowtype',
+    'promise',
+    'react'
+  ],
 
   env: {
     browser: true,
@@ -53,108 +81,25 @@ module.exports = {
     }
   },
 
-  rules: {
-    // http://eslint.org/docs/rules/
-    'array-callback-return': 'warn',
-    'default-case': ['warn', { commentPattern: '^no default$' }],
-    'dot-location': ['warn', 'property'],
-    eqeqeq: ['warn', 'allow-null'],
-    'guard-for-in': 'warn',
-    'new-parens': 'warn',
-    'no-array-constructor': 'warn',
-    'no-caller': 'warn',
-    'no-cond-assign': ['warn', 'always'],
-    'no-const-assign': 'warn',
-    'no-control-regex': 'warn',
-    'no-delete-var': 'warn',
-    'no-dupe-args': 'warn',
-    'no-dupe-class-members': 'warn',
-    'no-dupe-keys': 'warn',
-    'no-duplicate-case': 'warn',
-    'no-empty-character-class': 'warn',
-    'no-empty-pattern': 'warn',
-    'no-eval': 'warn',
-    'no-ex-assign': 'warn',
-    'no-extend-native': 'warn',
-    'no-extra-bind': 'warn',
-    'no-extra-label': 'warn',
-    'no-fallthrough': 'warn',
-    'no-func-assign': 'warn',
-    'no-implied-eval': 'warn',
-    'no-invalid-regexp': 'warn',
-    'no-iterator': 'warn',
-    'no-label-var': 'warn',
-    'no-labels': ['warn', { allowLoop: false, allowSwitch: false }],
-    'no-lone-blocks': 'warn',
-    'no-loop-func': 'warn',
-    'no-mixed-operators': ['warn', {
-      groups: [
-        ['&', '|', '^', '~', '<<', '>>', '>>>'],
-        ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
-        ['&&', '||'],
-        ['in', 'instanceof']
-      ],
-      allowSamePrecedence: false
+  rules: Object.assign(standardJSRulesWarn, {
+    // WARNINGS
+    'comma-dangle': [1, 'always-multiline'], // No risks, beacuse it will be transpiled
+    'space-before-function-paren': [1, {anonymous: 'always', named: 'never'}],
+    'key-spacing': [1, {beforeColon: false, afterColon: true, mode: 'minimum'}],
+    'object-curly-spacing': [1, 'always'],
+    'block-spacing': [1, 'always'],
+    'padded-blocks': [1, {blocks: 'never', switches: 'never', classes: 'never'}],
+    'react/sort-comp': 1,
+    'react/jsx-indent': [1, 2],
+    'react/jsx-indent-props': [1, 2],
+    'react/jsx-wrap-multilines': 1,
+    // ERRORS
+    'react/no-unused-prop-types': 2,
+    'react/jsx-no-bind': [2, {
+      ignoreRefs: true,
     }],
-    'no-multi-str': 'warn',
-    'no-native-reassign': 'warn',
-    'no-negated-in-lhs': 'warn',
-    'no-new-func': 'warn',
-    'no-new-object': 'warn',
-    'no-new-symbol': 'warn',
-    'no-new-wrappers': 'warn',
-    'no-obj-calls': 'warn',
-    'no-octal': 'warn',
-    'no-octal-escape': 'warn',
-    'no-redeclare': 'warn',
-    'no-regex-spaces': 'warn',
-    'no-restricted-syntax': [
-      'warn',
-      'LabeledStatement',
-      'WithStatement',
-    ],
-    'no-script-url': 'warn',
-    'no-self-assign': 'warn',
-    'no-self-compare': 'warn',
-    'no-sequences': 'warn',
-    'no-shadow-restricted-names': 'warn',
-    'no-sparse-arrays': 'warn',
-    'no-template-curly-in-string': 'warn',
-    'no-this-before-super': 'warn',
-    'no-throw-literal': 'warn',
-    'no-undef': 'error',
-    'no-unexpected-multiline': 'warn',
-    'no-unreachable': 'warn',
-    'no-unused-expressions': ['warn', {
-      'allowShortCircuit': true,
-      'allowTernary': true
-    }],
-    'no-unused-labels': 'warn',
-    'no-unused-vars': ['warn', {
-      vars: 'local',
-      varsIgnorePattern: '^_',
-      args: 'none'
-    }],
-    'no-use-before-define': ['warn', 'nofunc'],
-    'no-useless-computed-key': 'warn',
-    'no-useless-concat': 'warn',
-    'no-useless-constructor': 'warn',
-    'no-useless-escape': 'warn',
-    'no-useless-rename': ['warn', {
-      ignoreDestructuring: false,
-      ignoreImport: false,
-      ignoreExport: false,
-    }],
-    'no-with': 'warn',
-    'no-whitespace-before-property': 'warn',
-    'operator-assignment': ['warn', 'always'],
-    radix: 'warn',
-    'require-yield': 'warn',
-    'rest-spread-spacing': ['warn', 'never'],
-    strict: ['warn', 'never'],
-    'unicode-bom': ['warn', 'never'],
-    'use-isnan': 'warn',
-    'valid-typeof': 'warn',
+
+    // *** These rules are taken from eslint-config-react-app ***
 
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/
 
@@ -204,15 +149,9 @@ module.exports = {
     'react/require-render-return': 'warn',
     'react/style-prop-object': 'warn',
 
-    // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
-    'jsx-a11y/aria-role': 'warn',
-    'jsx-a11y/img-has-alt': 'warn',
-    'jsx-a11y/img-redundant-alt': 'warn',
-    'jsx-a11y/no-access-key': 'warn',
-
     // https://github.com/gajus/eslint-plugin-flowtype
     'flowtype/define-flow-type': 'warn',
     'flowtype/require-valid-file-annotation': 'warn',
     'flowtype/use-flow-type': 'warn'
-  }
+  })
 };

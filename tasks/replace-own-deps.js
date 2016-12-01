@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 
 const packagesDir = path.join(__dirname, '../packages');
-const pkgFilename = path.join(packagesDir, 'react-scripts/package.json');
+const pkgFilename = path.join(packagesDir, 'accurapp-scripts/package.json');
 const data = require(pkgFilename);
 
 fs.readdirSync(packagesDir).forEach((name) => {

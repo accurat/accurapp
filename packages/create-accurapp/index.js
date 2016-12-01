@@ -121,6 +121,7 @@ function install(packageToInstall, verbose, callback) {
     if (err.code === 'ENOENT') {
       yarnExists = false;
     }
+    console.error(err.code)
   });
   proc.on('close', function (code) {
     if (yarnExists) {
@@ -167,7 +168,7 @@ function run(root, appName, version, verbose, originalDirectory) {
 }
 
 function getInstallPackage(version) {
-  var packageToInstall = 'react-scripts';
+  var packageToInstall = 'accurapp-scripts';
   var validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += '@' + validSemver;

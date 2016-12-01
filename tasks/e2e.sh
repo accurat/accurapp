@@ -18,7 +18,7 @@ function cleanup {
   echo 'Cleaning up.'
   cd $root_path
   # Uncomment when snapshot testing is enabled by default:
-  # rm ./packages/react-scripts/template/src/__snapshots__/App.test.js.snap
+  # rm ./packages/accurapp-scripts/template/src/__snapshots__/App.test.js.snap
   rm -rf $temp_cli_path $temp_app_path
 }
 
@@ -37,7 +37,7 @@ function handle_exit {
 }
 
 function create_react_app {
-  node "$temp_cli_path"/node_modules/create-react-app/index.js $*
+  node "$temp_cli_path"/node_modules/create-accurapp/index.js $*
 }
 
 # Exit the script with a helpful error message when any error is encountered
@@ -63,10 +63,10 @@ fi
 npm install
 
 # Lint own code
-./node_modules/.bin/eslint --ignore-path .gitignore ./
+# ./node_modules/.bin/eslint --ignore-path .gitignore ./
 
 # ******************************************************************************
-# First, test the create-react-app development environment.
+# First, test the create-accurapp development environment.
 # This does not affect our users but makes sure we can develop it.
 # ******************************************************************************
 
@@ -87,15 +87,15 @@ CI=true npm test
 npm start -- --smoke-test
 
 # ******************************************************************************
-# Next, pack react-scripts and create-react-app so we can verify they work.
+# Next, pack accurapp-scripts and create-accurapp so we can verify they work.
 # ******************************************************************************
 
 # Pack CLI
-cd $root_path/packages/create-react-app
+cd $root_path/packages/create-accurapp
 cli_path=$PWD/`npm pack`
 
-# Go to react-scripts
-cd $root_path/packages/react-scripts
+# Go to accurapp-scripts
+cd $root_path/packages/accurapp-scripts
 
 # Save package.json because we're going to touch it
 cp package.json package.json.orig
@@ -104,8 +104,8 @@ cp package.json package.json.orig
 # of those packages.
 node $root_path/tasks/replace-own-deps.js
 
-# Finally, pack react-scripts
-scripts_path=$root_path/packages/react-scripts/`npm pack`
+# Finally, pack accurapp-scripts
+scripts_path=$root_path/packages/accurapp-scripts/`npm pack`
 
 # Restore package.json
 rm package.json
@@ -127,7 +127,7 @@ cd $temp_app_path
 create_react_app --scripts-version=$scripts_path test-app
 
 # ******************************************************************************
-# Now that we used create-react-app to create an app depending on react-scripts,
+# Now that we used create-accurapp to create an app depending on accurapp-scripts,
 # let's make sure all npm scripts are in the working state.
 # ******************************************************************************
 
@@ -158,10 +158,9 @@ npm start -- --smoke-test
 echo yes | npm run eject
 
 # ...but still link to the local packages
-npm link $root_path/packages/babel-preset-react-app
-npm link $root_path/packages/eslint-config-react-app
+npm link $root_path/packages/eslint-config-accurapp
 npm link $root_path/packages/react-dev-utils
-npm link $root_path/packages/react-scripts
+npm link $root_path/packages/accurapp-scripts
 
 # Test the build
 npm run build
@@ -192,31 +191,31 @@ create_react_app --scripts-version=0.4.0 test-app-version-number
 cd test-app-version-number
 
 # Check corresponding scripts version is installed.
-test -e node_modules/react-scripts
-grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+test -e node_modules/accurapp-scripts
+grep '"version": "0.4.0"' node_modules/accurapp-scripts/package.json
 
 # ******************************************************************************
 # Test --scripts-version with a tarball url
 # ******************************************************************************
 
 cd $temp_app_path
-create_react_app --scripts-version=https://registry.npmjs.org/react-scripts/-/react-scripts-0.4.0.tgz test-app-tarball-url
+create_react_app --scripts-version=https://registry.npmjs.org/accurapp-scripts/-/accurapp-scripts-0.4.0.tgz test-app-tarball-url
 cd test-app-tarball-url
 
 # Check corresponding scripts version is installed.
-test -e node_modules/react-scripts
-grep '"version": "0.4.0"' node_modules/react-scripts/package.json
+test -e node_modules/accurapp-scripts
+grep '"version": "0.4.0"' node_modules/accurapp-scripts/package.json
 
 # ******************************************************************************
-# Test --scripts-version with a custom fork of react-scripts
+# Test --scripts-version with a custom fork of accurapp-scripts
 # ******************************************************************************
 
 cd $temp_app_path
-create_react_app --scripts-version=react-scripts-fork test-app-fork
+create_react_app --scripts-version=accurapp-scripts-fork test-app-fork
 cd test-app-fork
 
 # Check corresponding scripts version is installed.
-test -e node_modules/react-scripts-fork
+test -e node_modules/accurapp-scripts-fork
 
 # Cleanup
 cleanup

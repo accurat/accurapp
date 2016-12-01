@@ -7,7 +7,7 @@
 # of patent rights can be found in the PATENTS file in the same directory.
 
 # ******************************************************************************
-# This creates an app with the global CLI and `react-scripts` from the source.
+# This creates an app with the global CLI and `accurapp-scripts` from the source.
 # It is useful for testing the end-to-end flow locally.
 # ******************************************************************************
 
@@ -48,13 +48,13 @@ cd ..
 root_path=$PWD
 
 # ******************************************************************************
-# Pack react-scripts so we can verify they work.
+# Pack accurapp-scripts so we can verify they work.
 # ******************************************************************************
 
 # Install all our packages
 $root_path/node_modules/.bin/lerna bootstrap
 
-cd packages/react-scripts
+cd packages/accurapp-scripts
 
 # Save package.json because we're going to touch it
 cp package.json package.json.orig
@@ -63,8 +63,8 @@ cp package.json package.json.orig
 # of those packages.
 node $root_path/tasks/replace-own-deps.js
 
-# Finally, pack react-scripts
-scripts_path=$root_path/packages/react-scripts/`npm pack`
+# Finally, pack accurapp-scripts
+scripts_path=$root_path/packages/accurapp-scripts/`npm pack`
 
 # Restore package.json
 rm package.json
@@ -75,12 +75,12 @@ mv package.json.orig package.json
 # Now that we have packed them, call the global CLI.
 # ******************************************************************************
 
-# If Yarn is installed, clean its cache because it may have cached react-scripts
-yarn cache clean || true
+# If Yarn is installed, clean its cache because it may have cached accurapp-scripts
+#yarn cache clean || true
 
 # Go back to the root directory and run the command from here
 cd $root_path
-node packages/create-react-app/index.js --scripts-version=$scripts_path "$@"
+node packages/create-accurapp/index.js --scripts-version=$scripts_path "$@"
 
 # Cleanup
 cleanup
