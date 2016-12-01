@@ -1,6 +1,6 @@
 {
   "name": "accurapp-scripts",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Configuration and scripts for Create Accurat App.",
   "repository": "accurat/create-accurapp",
   "license": "BSD-3-Clause",
@@ -36,7 +36,7 @@
     "detect-port": "1.0.1",
     "dotenv": "2.0.0",
     "eslint": "3.8.1",
-    "eslint-config-accurapp": "^0.1.0",
+    "eslint-config-accurapp": "^0.1.1",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-loader": "1.6.0",
     "eslint-plugin-flowtype": "2.21.0",
@@ -66,8 +66,7 @@
     "webpack-manifest-plugin": "1.1.0",
     "whatwg-fetch": "1.0.0"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "optionalDependencies": {
     "fsevents": "1.0.14"
   }

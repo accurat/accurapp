@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-accurapp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ESLint configuration used by Accurat",
   "repository": "accurat/eslint-config-accurapp",
   "license": "BSD-3-Clause",
