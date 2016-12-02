@@ -2,7 +2,7 @@
   "name": "accurapp-scripts",
   "version": "0.7.1",
   "description": "Configuration and scripts for Create Accurat App.",
-  "repository": "accurat/create-accurapp",
+  "repository": "accurat/accurapp",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=6"

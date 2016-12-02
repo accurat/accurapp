@@ -5,7 +5,7 @@
     "react"
   ],
   "description": "Create apps with no build configuration.",
-  "repository": "accurat/create-accurapp",
+  "repository": "accurat/accurapp",
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=6"
