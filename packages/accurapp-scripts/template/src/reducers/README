@@ -1,0 +1,2 @@
+This dir is for Redux reducers.
+Organize them by file and export them in `index.html`.
