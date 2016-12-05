@@ -24,7 +24,8 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
     'start': 'accurapp-scripts start',
     'build': 'accurapp-scripts build',
     'test': 'accurapp-scripts test --env=jsdom',
-    'eject': 'accurapp-scripts eject'
+    'eject': 'accurapp-scripts eject',
+    'postinstall': '[ -f node_modules/.bin/eslint ] || ln -s -f ../eslint/bin/eslint.js node_modules/.bin/eslint',
   };
 
   fs.writeFileSync(
