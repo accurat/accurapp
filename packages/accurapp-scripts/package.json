@@ -1,6 +1,6 @@
 {
   "name": "accurapp-scripts",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Configuration and scripts for Create Accurat App.",
   "repository": "accurat/accurapp",
   "license": "BSD-3-Clause",
@@ -36,7 +36,7 @@
     "detect-port": "1.0.1",
     "dotenv": "2.0.0",
     "eslint": "3.8.1",
-    "eslint-config-accurapp": "^0.1.1",
+    "eslint-config-accurapp": "^0.1.2",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-loader": "1.6.0",
     "eslint-plugin-flowtype": "2.21.0",
