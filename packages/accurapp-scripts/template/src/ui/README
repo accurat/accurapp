@@ -1,1 +1,2 @@
 This directory for presentational components: with styles, not connected.
+Make it possible to require with `import Comp from 'ui/Comp'`

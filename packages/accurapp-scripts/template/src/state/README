@@ -1,0 +1,3 @@
+This directory is for everything related to state managemant,
+such as Redux actions and reducers, or MobX state classes.
+Organize them by file and export them in `index.js`.
