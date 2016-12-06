@@ -116,7 +116,8 @@ module.exports = {
           /\.html$/,
           /\.(js|jsx)$/,
           /\.css$/,
-          /\.json$/
+          /\.json$/,
+          /\.(glsl|frag|vert)$/
         ],
         loader: 'url',
         query: {
@@ -158,6 +159,13 @@ module.exports = {
       {
         test: /\.json$/,
         loader: 'json'
+      },
+      // GLSLify is a node-style module system for GLSL
+      // allowing you to install GLSL modules from npm and use them in your shaders.
+      {
+        test: /\.(glsl|frag|vert)$/,
+        include: paths.appSrc,
+        loader: 'raw!glslify'
       }
     ]
   },
