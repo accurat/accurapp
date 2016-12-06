@@ -11,6 +11,7 @@
 
 process.env.NODE_ENV = 'test';
 process.env.PUBLIC_URL = '';
+process.env.NODE_PATH += ':src/';
 
 // Load environment variables from .env file. Suppress warnings using silent
 // if this file is missing. dotenv will never modify any environment variables

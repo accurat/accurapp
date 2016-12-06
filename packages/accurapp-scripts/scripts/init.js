@@ -74,7 +74,7 @@ module.exports = function(appPath, appName, verbose, originalDirectory) {
   }
   args.push.apply(args, packagesToInstallInApp);
 
-  console.log('Installing react and react-dom using ' + command + '...');
+  console.log('Installing project packages using ' + command + '...');
   console.log();
 
   var proc = spawn(command, args, {stdio: 'inherit'});

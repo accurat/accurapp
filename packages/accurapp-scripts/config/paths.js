@@ -47,7 +47,7 @@ module.exports = {
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   ownNodeModules: resolveApp('node_modules'),
-  nodePaths: nodePaths
+  nodePaths: nodePaths.concat([resolveApp('src')])
 };
 
 // @remove-on-eject-begin
@@ -68,7 +68,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   // this is empty with npm3 but node resolution searches higher anyway:
   ownNodeModules: resolveOwn('../node_modules'),
-  nodePaths: nodePaths
+  nodePaths: nodePaths.concat([resolveApp('src')])
 };
 
 // config before publish: we're in ./packages/react-scripts/config/
@@ -84,7 +84,7 @@ if (__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1) 
     testsSetup: resolveOwn('../template/src/setupTests.js'),
     appNodeModules: resolveOwn('../node_modules'),
     ownNodeModules: resolveOwn('../node_modules'),
-    nodePaths: nodePaths
+    nodePaths: nodePaths.concat([resolveOwn('../template/src')])
   };
 }
 // @remove-on-eject-end
