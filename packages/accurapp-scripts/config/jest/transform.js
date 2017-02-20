@@ -10,9 +10,12 @@ const babelJest = require('babel-jest');
 
 module.exports = babelJest.createTransformer({
   presets: [
-    require.resolve('babel-preset-es2015'),
+    require.resolve('babel-preset-latest'),
     require.resolve('babel-preset-stage-0'),
     require.resolve('babel-preset-react'),
+  ],
+  plugins: [
+    require.resolve('babel-plugin-transform-decorators-legacy'),
   ],
   babelrc: false
 });

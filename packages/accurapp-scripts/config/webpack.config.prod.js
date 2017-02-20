@@ -141,9 +141,12 @@ module.exports = {
         query: {
           babelrc: false,
           presets: [
-            require.resolve('babel-preset-es2015'),
+            require.resolve('babel-preset-latest'),
             require.resolve('babel-preset-stage-0'),
             require.resolve('babel-preset-react'),
+          ],
+          plugins: [
+            require.resolve('babel-plugin-transform-decorators-legacy'),
           ],
         },
         // @remove-on-eject-end

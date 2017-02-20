@@ -9,5 +9,5 @@ for the specific needs of Accurat.
 
 ## Customizations:
 - ESLint config is the one configured for Accurat, `eslint-config-accurapp`
-- Babel presets are changed to `stage-0` and `es2015`
+- Babel presets are changed to `stage-0` and `latest` with decorators support
 - GLSL webpack loader, to import shaders and require shaders within shaders
