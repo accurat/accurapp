@@ -145,6 +145,9 @@ module.exports = {
             require.resolve('babel-preset-stage-0'),
             require.resolve('babel-preset-react'),
           ],
+          plugins: [
+            require.resolve('babel-plugin-transform-decorators-legacy'),
+          ],
         },
         // @remove-on-eject-end
       },

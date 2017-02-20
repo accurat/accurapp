@@ -14,5 +14,8 @@ module.exports = babelJest.createTransformer({
     require.resolve('babel-preset-stage-0'),
     require.resolve('babel-preset-react'),
   ],
+  plugins: [
+    require.resolve('babel-plugin-transform-decorators-legacy'),
+  ],
   babelrc: false
 });
