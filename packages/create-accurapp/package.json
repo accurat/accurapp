@@ -8,7 +8,7 @@
   "repository": "accurat/accurapp",
   "license": "BSD-3-Clause",
   "engines": {
-    "node": ">=6"
+    "node": ">=7"
   },
   "files": [
     "index.js"
@@ -19,8 +19,7 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "cross-spawn": "^4.0.0",
-    "minimist": "^1.2.0",
-    "path-exists": "^2.1.0",
-    "semver": "^5.0.3"
+    "fs-extra": "^2.1.2",
+    "meow": "^3.7.0"
   }
 }
