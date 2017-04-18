@@ -8,7 +8,7 @@ export default class App extends React.Component {
           React App
         </h2>
         <p>
-          To get started, edit <code>src/App.js</code> and save to reload.
+          To get started, edit <code>components/App.js</code> and save to reload.
         </p>
       </div>
     )
