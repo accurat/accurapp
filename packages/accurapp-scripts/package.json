@@ -8,16 +8,11 @@
     "node": ">=6"
   },
   "files": [
-    ".babelrc",
-    ".eslintrc",
     "bin",
-    "config",
-    "scripts",
-    "template",
-    "utils"
+    "scripts"
   ],
   "bin": {
-    "accurapp-scripts": "./bin/react-scripts.js"
+    "accurapp-scripts": "./bin/scripts.js"
   },
   "dependencies": {
     "autoprefixer": "6.5.1",
