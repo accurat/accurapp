@@ -1,14 +1,11 @@
 {
   "name": "create-accurapp",
-  "version": "0.6.2",
-  "keywords": [
-    "react"
-  ],
-  "description": "Create apps with no build configuration.",
+  "version": "3.0.0-beta",
+  "description": "Create accurat apps with minimum flexible build configuration",
   "repository": "accurat/accurapp",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "engines": {
-    "node": ">=7"
+    "node": ">=6.5"
   },
   "files": [
     "index.js"
