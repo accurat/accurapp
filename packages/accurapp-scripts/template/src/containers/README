@@ -1,2 +1,0 @@
-This directory for container components: connected, without styles.
-Make it possible to require with `import Comp from 'containers/Comp'`
