@@ -7,11 +7,6 @@ const spawn = require('cross-spawn')
 const chalk = require('chalk')
 const meow = require('meow')
 
-const devDependencies = [
-  'accurapp-scripts',
-  // 'accurapp-config',
-]
-
 const dependencies = [
   'react',
   'react-dom',
@@ -54,25 +49,29 @@ const cli = meow(`
 	  ${chalk.green('$')} ${chalk.cyan('create-accurapp')} ${chalk.yellow('<app-name>')}
 
 	Options
-    -v | --version - to print current version
-    -d | --dry-run - to fake it all
-    -g | --no-git - do not run git init/commit
-    -i | --no-install - do not run yarn install
+    -v | --version    = to print current version
+    -g | --no-git     = do not run git init/commit
+    -i | --no-install = do not run yarn install
+    -d | --dry-run    = to fake it all
+    -t | --testing    = [internal] create a version for testing, referencing
+                        the local accurapp-scripts as a 'file:' dependency
 
 	Example
 	  ${chalk.green('$')} ${chalk.blue('create-accurapp mega-viz')}
 `, {
 	alias: {
     v: 'version',
-    d: 'dry-run',
     g: 'no-git',
     i: 'no-install',
+    d: 'dry-run',
+    t: 'testing',
 	}
 })
 
 const isRealRun = !cli.flags.dryRun
 const isYesGit = !cli.flags.noGit
 const isYesInstall = !cli.flags.noInstall
+const isTesting = cli.flags.testing
 
 const appDir = path.resolve(cli.input[0])
 const appName = path.basename(appDir)
@@ -103,17 +102,18 @@ if (isRealRun) {
   fs.copySync(path.join(__dirname, 'template'), appDir)
   fs.renameSync(path.join(appDir, 'gitignore'), path.join(appDir, '.gitignore'))
 
-  templateOverwriting(path.join(appDir, 'public/index.html'), [
+  const substitutions = [
     [/\{\{APP_NAME\}\}/g, appName],
     [/\{\{APP_TITLE\}\}/g, appTitle],
-  ])
-  templateOverwriting(path.join(appDir, 'README.md'), [
-    [/\{\{APP_NAME\}\}/g, appName],
-    [/\{\{APP_TITLE\}\}/g, appTitle],
-  ])
+  ]
+  templateOverwriting(path.join(appDir, 'public/index.html'), substitutions)
+  templateOverwriting(path.join(appDir, 'README.md'), substitutions)
 }
 
 if (isYesInstall) {
+  const devDependencies = isTesting
+    ? ['file:../packages/accurapp-scripts']
+    : ['accurapp-scripts']
   log.ok(`Installing dev packages: ${chalk.cyan(devDependencies.join(', '))}`)
   if (isRealRun) exec(`yarn add --dev --ignore-scripts ${devDependencies.join(' ')}`, appDir)
 
