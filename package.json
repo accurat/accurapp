@@ -5,7 +5,7 @@
     "postinstall": "lerna bootstrap",
     "publish": "tasks/release.sh",
     "outdated": "for P in $(ls packages); do echo '\\n' === $P ===; cd \"packages/$P/\"; yarn outdated; cd ../..; done",
-    "create-test-app": "node packages/create-accurapp/index.js --testing"
+    "create-test-app": "rm -rf test-app; node packages/create-accurapp/index.js test-app --testing"
   },
   "devDependencies": {
     "lerna": "^2.0.0-rc.3"

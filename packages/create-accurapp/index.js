@@ -86,7 +86,14 @@ log.ok(`Creating a new app in ${chalk.magenta(appName)}`)
 if (isRealRun) fs.mkdirSync(appDir)
 
 log.ok(`Creating package.json`)
-const packageJson = { name: appName, private: true, version: '0.1.0' }
+const packageJson = {
+  name: appName,
+  private: true,
+  version: '0.1.0',
+  scripts: {
+    start: 'accurapp-scripts start',
+  },
+}
 if (isRealRun) writePackageJson(appDir, packageJson)
 
 function templateOverwriting(filePath, substitutions) {
@@ -106,14 +113,14 @@ if (isRealRun) {
     [/\{\{APP_NAME\}\}/g, appName],
     [/\{\{APP_TITLE\}\}/g, appTitle],
   ]
-  templateOverwriting(path.join(appDir, 'public/index.html'), substitutions)
+  templateOverwriting(path.join(appDir, 'src/index.html'), substitutions)
   templateOverwriting(path.join(appDir, 'README.md'), substitutions)
 }
 
 if (isYesInstall) {
   const devDependencies = isTesting
-    ? ['file:../packages/accurapp-scripts']
-    : ['accurapp-scripts']
+    ? ['file:../packages/accurapp-scripts', 'file:../packages/webpack-preset-accurapp']
+    : ['accurapp-scripts', 'webpack-preset-accurapp']
   log.ok(`Installing dev packages: ${chalk.cyan(devDependencies.join(', '))}`)
   if (isRealRun) exec(`yarn add --dev --ignore-scripts ${devDependencies.join(' ')}`, appDir)
 

@@ -29,8 +29,8 @@ function accuPreset(blocks = [], overrides = {}) {
       // Makes some environment variables available to the JS code, for example:
       // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': process.env.NODE_ENV,
-        'process.env.PUBLIC_URL': process.env.PUBLIC_URL,
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
       }),
       // Makes some environment variables available in index.html.
       // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
