@@ -1,6 +1,6 @@
 if (parseFloat(process.versions.node) < 6.5) throw new Error('Sorry, Node 6.5+ is required! Tip: use `nvm` for painless upgrades.')
 
-const { addPlugins, createConfig, customConfig, defineConstants, env, entryPoint, setOutput, sourceMaps, webpack } = require('@webpack-blocks/webpack2')
+const { addPlugins, createConfig, customConfig, env, entryPoint, setOutput, sourceMaps, webpack } = require('@webpack-blocks/webpack2')
 const babel = require('@webpack-blocks/babel6')
 const postcss = require('@webpack-blocks/postcss')
 const autoprefixer = require('autoprefixer')
@@ -10,11 +10,11 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 
-const { resolveSrc, glslifyLoader } = requre('./customBlocks')
+const { resolveSrc, glslifyLoader } = require('./customBlocks')
 
 // TODO move browsers in package.json when they will be supported https://github.com/babel/babel-preset-env/issues/149
 const browsers = process.env.NODE_ENV === 'development' ? ['last 1 Chrome version'] : ['last 2 versions', 'ie 10']
-const babelrc = require('./.babelrc')(browsers)
+const babelrc = require('./babelrc')(browsers)
 
 // TODO understand how to customize file-loader in webpack-blocks to set the output asset name line create-react-app does instead of only hash: '[name].[hash:8].[ext]' https://github.com/andywer/webpack-blocks/issues/145
 
@@ -70,7 +70,7 @@ function accuPreset(blocks = [], overrides = {}) {
     //
     env('development', [
       // devServer(),
-      babel({ overrides.babel || babelrc }),
+      babel(overrides.babel || babelrc),
       // "cheap-module-eval-source-map" instead of the standard "cheap-module-source-map"
       // because build time is faster
       sourceMaps('cheap-module-eval-source-map'),
@@ -95,7 +95,7 @@ function accuPreset(blocks = [], overrides = {}) {
     //  \______/       \__|      \__|  \__|    \______/    \______|   \__|  \__|    \______/
     //
     env('staging', [
-      babel({ overrides.babel || babelrc }),
+      babel(overrides.babel || babelrc),
       postcss([
         autoprefixer({ browsers }),
       ]),
@@ -113,11 +113,11 @@ function accuPreset(blocks = [], overrides = {}) {
     // \__|         \__|  \__|    \______/    \_______/
     //
     env('production', [
-      babel({ overrides.babel || babelrc }),
+      babel(overrides.babel || babelrc),
       postcss([
         autoprefixer({ browsers }),
       ]),
-      addPlugins({
+      addPlugins([
         new webpack.optimize.UglifyJsPlugin({
           compress: {
             warnings: false,
@@ -127,7 +127,7 @@ function accuPreset(blocks = [], overrides = {}) {
             comments: false,
           },
         }),
-      }),
+      ]),
     ]),
 
     ...blocks,

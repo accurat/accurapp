@@ -1,4 +1,4 @@
-export default (browsers) => {
+module.exports = (browsers) => ({
   presets: [
     ['env', {
       targets: { browsers },
@@ -10,4 +10,4 @@ export default (browsers) => {
   plugins: [
     'transform-decorators-legacy',
   ],
-}
+})
