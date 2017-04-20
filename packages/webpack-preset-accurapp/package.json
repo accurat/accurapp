@@ -1,12 +1,9 @@
 {
-  "name": "webpack-blocks-preset-accurapp",
-  "version": "0.0.0",
-  "description": "Webpack-block configuration used by Accurat",
+  "name": "webpack-preset-accurapp",
+  "version": "3.0.0-beta",
+  "description": "Webpack configuration used by Accurat, base on webpack-blocks",
   "repository": "accurat/accurapp",
   "license": "MIT",
-  "files": [
-    "index.js"
-  ],
   "engines": {
     "node": ">=6.5"
   },
@@ -19,13 +16,11 @@
     "@webpack-blocks/postcss": "^0.4.3",
     "@webpack-blocks/webpack2": "^0.4.0",
     "autoprefixer": "^6.7.7",
+    "babel-polyfill": "^6.23.0",
     "case-sensitive-paths-webpack-plugin": "^2.0.0",
     "glslify-loader": "^1.0.2",
     "html-webpack-plugin": "^2.28.0",
     "raw-loader": "^0.5.1",
     "react-dev-utils": "^0.5.2"
   },
-  "peerDependencies": {
-    "babel-polyfill": "^6.23.0",
-  }
 }
