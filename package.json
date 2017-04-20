@@ -1,12 +1,9 @@
 {
+  "name": "accurapp",
   "private": true,
   "scripts": {
-    "build": "node packages/accurapp-scripts/scripts/build.js",
-    "create-react-app": "tasks/cra.sh",
-    "e2e": "tasks/e2e.sh",
     "postinstall": "lerna bootstrap",
-    "publish": "tasks/release.sh",
-    "start": "node packages/accurapp-scripts/scripts/start.js"
+    "publish": "tasks/release.sh"
   },
   "devDependencies": {
     "babel-eslint": "6.1.2",

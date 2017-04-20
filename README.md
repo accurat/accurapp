@@ -1,7 +1,8 @@
 # AccurApp
 
-This is a fork of [create-react-app](https://github.com/facebookincubator/create-react-app/)
-for the specific needs of Accurat.
+This is a project kickstarter for the specific needs of Accurat.
+It was originally forked from [create-react-app](https://github.com/facebookincubator/create-react-app/),
+but in version 3.0.0 significant amounts of code were rewritten and simplified.
 
 ## Getting started:
 
