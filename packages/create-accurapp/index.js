@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-// const fs = require('fs')
 const fs = require('fs-extra')
 const path = require('path')
 const spawn = require('cross-spawn')
@@ -50,10 +49,10 @@ function exec(command, dir) {
 }
 
 const cli = meow(`
-	Usage
-	  ${chalk.green('$')} ${chalk.cyan('create-accurapp')} ${chalk.yellow('<app-name>')}
+  Usage
+    ${chalk.green('$')} ${chalk.cyan('create-accurapp')} ${chalk.yellow('<app-name>')}
 
-	Options
+  Options
     -v | --version    = to print current version
     -g | --no-git     = do not run git init/commit
     -i | --no-install = do not run yarn install
@@ -61,8 +60,8 @@ const cli = meow(`
     -t | --testing    = [internal] create a version for testing, referencing
                         the local accurapp-scripts as a 'file:' dependency
 
-	Example
-	  ${chalk.green('$')} ${chalk.blue('create-accurapp mega-viz')}
+  Example
+    ${chalk.green('$')} ${chalk.blue('create-accurapp mega-viz')}
 `, {
   alias: {
     v: 'version',
