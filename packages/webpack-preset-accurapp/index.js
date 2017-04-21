@@ -10,7 +10,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 
-const { resolveSrc, glslifyLoader } = require('./customBlocks')
+const { resolveSrc, glslifyLoader, prependEntry } = require('./customBlocks')
 
 // TODO move browsers in package.json when they will be supported https://github.com/babel/babel-preset-env/issues/149
 const browsers = process.env.NODE_ENV === 'development' ? ['last 1 Chrome version'] : ['last 2 versions', 'ie 10']
@@ -20,7 +20,12 @@ const babelrc = require('./babelrc')(browsers)
 
 function accuPreset(blocks = [], overrides = {}) {
   return createConfig([
-    entryPoint(['babel-polyfill', './src/index.js']),
+    entryPoint([
+      // Include all polyfills we can, to prevent cross-browser bugs.
+      'babel-polyfill',
+      // Your app's code.
+      './src/index.js',
+    ]),
     setOutput('./build/app.js'),
     resolveSrc(),
     glslifyLoader(),
@@ -69,7 +74,7 @@ function accuPreset(blocks = [], overrides = {}) {
     // \_______/    \________|       \_/
     //
     env('development', [
-      // devServer(),
+      prependEntry('react-dev-utils/webpackHotDevClient'),
       babel(overrides.babel || babelrc),
       // "cheap-module-eval-source-map" instead of the standard "cheap-module-source-map"
       // because build time is faster

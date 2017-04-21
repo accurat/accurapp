@@ -22,7 +22,24 @@ function glslifyLoader() {
   })
 }
 
+/**
+ * Add entryPoint at beginning of 'entry' array
+ */
+function prependEntry(entry) {
+  const blockFunction = (context, config) => {
+    if (!context.entriesToPrepend) context.entriesToPrepend = []
+    context.entriesToPrepend.unshift(entry)
+  }
+  return Object.assign(blockFunction, {
+    post: prependEntryPostHook,
+  })
+}
+function prependEntryPostHook(context, config) {
+  config.entry.main.unshift(...context.entriesToPrepend)
+}
+
 module.exports = {
   resolveSrc,
   glslifyLoader,
+  prependEntry,
 }
