@@ -1,7 +1,7 @@
 if (parseFloat(process.versions.node) < 6.5) throw new Error('Sorry, Node 6.5+ is required! Tip: use `nvm` for painless upgrades.')
 
 const { addPlugins, createConfig, customConfig, env, entryPoint, setOutput, sourceMaps, webpack } = require('@webpack-blocks/webpack2')
-const babel = require('@webpack-blocks/babel6')
+const babelLoader = require('@webpack-blocks/babel6')
 const postcss = require('@webpack-blocks/postcss')
 const autoprefixer = require('autoprefixer')
 
@@ -29,6 +29,7 @@ function accuPreset(blocks = [], overrides = {}) {
     setOutput('./build/app.js'),
     resolveSrc(),
     glslifyLoader(),
+    babelLoader(overrides.babel || babelrc),
 
     addPlugins([
       // Makes some environment variables available to the JS code, for example:
@@ -75,7 +76,6 @@ function accuPreset(blocks = [], overrides = {}) {
     //
     env('development', [
       prependEntry('react-dev-utils/webpackHotDevClient'),
-      babel(overrides.babel || babelrc),
       // "cheap-module-eval-source-map" instead of the standard "cheap-module-source-map"
       // because build time is faster
       sourceMaps('cheap-module-eval-source-map'),
@@ -100,7 +100,6 @@ function accuPreset(blocks = [], overrides = {}) {
     //  \______/       \__|      \__|  \__|    \______/    \______|   \__|  \__|    \______/
     //
     env('staging', [
-      babel(overrides.babel || babelrc),
       postcss([
         autoprefixer({ browsers }),
       ]),
@@ -118,7 +117,6 @@ function accuPreset(blocks = [], overrides = {}) {
     // \__|         \__|  \__|    \______/    \_______/
     //
     env('production', [
-      babel(overrides.babel || babelrc),
       postcss([
         autoprefixer({ browsers }),
       ]),
