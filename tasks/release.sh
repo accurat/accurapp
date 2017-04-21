@@ -5,11 +5,11 @@ set -e
 # Echo every command being executed
 set -x
 
-cd "$(dirname "$0/..")"
+cd "$(dirname "$0/")/.."
 
 # Check npm version
-if [ $(npm -v | head -c 1) -lt 6 ]; then
-  echo "Releasing requires npm >= 6. Aborting.";
+if [ $(npm -v | head -c 1) -lt 3 ]; then
+  echo "Releasing requires npm >= 3. Aborting.";
   exit 1;
 fi;
 
