@@ -1,5 +1,6 @@
 process.on('unhandledRejection', err => { throw err })
 process.env.NODE_ENV = 'development'
+process.env.PUBLIC_URL = ''
 
 require('dotenv').config({ silent: true })
 
