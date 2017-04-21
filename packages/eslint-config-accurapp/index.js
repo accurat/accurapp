@@ -1,22 +1,4 @@
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-// We use eslint-loader so even warnings are very visible.
-// This is why we only use "WARNING" level for potential errors,
-// and we don't use "ERROR" level at all.
-
-// In the future, we might create a separate list of rules for production.
-// It would probably be more strict.
-
-// This loads eslint-config-standard but modifying every 'error' rule to 'warn'.
-
-function errorToWarn (ruleValue) {
+function errorToWarn(ruleValue) {
   if (ruleValue === 2 || ruleValue === 'error') {
     return 1
   }
@@ -44,11 +26,21 @@ module.exports = {
 
   parser: 'babel-eslint',
 
+  parserOptions: {
+    ecmaVersion: 8,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+      generators: true,
+      experimentalObjectRestSpread: true,
+    },
+  },
+
   plugins: [
     'import',
     'flowtype',
     'promise',
-    'react'
+    'react',
   ],
 
   env: {
@@ -56,39 +48,17 @@ module.exports = {
     commonjs: true,
     es6: true,
     jest: true,
-    node: true
-  },
-
-  parserOptions: {
-    ecmaVersion: 6,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-      generators: true,
-      experimentalObjectRestSpread: true
-    }
-  },
-
-  settings: {
-    'import/ignore': [
-      'node_modules'
-    ],
-    'import/extensions': ['.js'],
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.json']
-      }
-    }
+    node: true,
   },
 
   rules: Object.assign(standardJSRulesWarn, {
     // WARNINGS
     'comma-dangle': [1, 'always-multiline'], // No risks, beacuse it will be transpiled
-    'space-before-function-paren': [1, {anonymous: 'always', named: 'never'}],
-    'key-spacing': [1, {beforeColon: false, afterColon: true, mode: 'minimum'}],
+    'space-before-function-paren': [1, { anonymous: 'always', named: 'never' }],
+    'key-spacing': [1, { beforeColon: false, afterColon: true, mode: 'minimum' }],
     'object-curly-spacing': [1, 'always'],
     'block-spacing': [1, 'always'],
-    'padded-blocks': [1, {blocks: 'never', switches: 'never', classes: 'never'}],
+    'padded-blocks': [1, { blocks: 'never', switches: 'never', classes: 'never' }],
     'react/sort-comp': 1,
     'react/jsx-indent': [1, 2],
     'react/jsx-indent-props': [1, 2],
