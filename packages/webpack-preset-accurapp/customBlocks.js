@@ -1,4 +1,6 @@
-// you're able to import starting from the src folder so you don't have to ../../../
+/**
+ * You will be able to import starting from the src folder so you don't have to ../../../
+ */
 function resolveSrc() {
   return () => ({
     resolve: {
@@ -7,8 +9,10 @@ function resolveSrc() {
   })
 }
 
-// GLSLify is a node-style module system for GLSL
-// allowing you to install GLSL modules from npm and use them in your shaders.
+/**
+ * GLSLify is a node-style module system for WebGL shaders,
+ * allowing you to install GLSL modules from npm and use them in your shaders.
+ */
 function glslifyLoader() {
   return () => ({
     module: {

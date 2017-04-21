@@ -32,16 +32,12 @@ function accuPreset(blocks = [], overrides = {}) {
     babelLoader(overrides.babel || babelrc),
 
     addPlugins([
-      // Makes some environment variables available to the JS code, for example:
-      // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
+      // Makes some environment variables available to the JS code
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
       }),
-      // Makes some environment variables available in index.html.
-      // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
-      // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-      // In development, this will be an empty string.
+      // Makes some environment variables available in index.html. Example: %PUBLIC_URL%
       new InterpolateHtmlPlugin({
         'NODE_ENV': process.env.NODE_ENV,
         'PUBLIC_URL': process.env.PUBLIC_URL,
@@ -51,17 +47,8 @@ function accuPreset(blocks = [], overrides = {}) {
         inject: true,
         template: './src/index.html'
       }),
-      // This is necessary to emit hot updates (currently CSS only):
-      new webpack.HotModuleReplacementPlugin(),
-      // Watcher doesn't work well if you mistype casing in a path so we use
-      // a plugin that prints an error when you attempt to do this.
-      // See https://github.com/facebookincubator/create-react-app/issues/240
+      // Check case of paths, so case-sensitive filesystems won't complain:
       new CaseSensitivePathsPlugin(),
-      // If you require a missing module and then `npm install` it, you still have
-      // to restart the development server for Webpack to discover it. This plugin
-      // makes the discovery automatic so you don't have to restart.
-      // See https://github.com/facebookincubator/create-react-app/issues/186
-      new WatchMissingNodeModulesPlugin('node_modules'),
     ]),
 
     //
@@ -76,13 +63,16 @@ function accuPreset(blocks = [], overrides = {}) {
     //
     env('development', [
       prependEntry('react-dev-utils/webpackHotDevClient'),
-      // "cheap-module-eval-source-map" instead of the standard "cheap-module-source-map"
-      // because build time is faster
+      addPlugins([
+        // This is necessary to emit hot updates (currently CSS only)
+        new webpack.HotModuleReplacementPlugin(),
+        // Automatic rediscover of packages after `npm install`
+        new WatchMissingNodeModulesPlugin('node_modules'),
+      ]),
+      // Faster "cheap-module-eval-source-map" instead of the standard "cheap-module-source-map"
       sourceMaps('cheap-module-eval-source-map'),
       customConfig({
-        // Turn off performance hints during development because we don't do any
-        // splitting or minification in interest of speed. These warnings become
-        // cumbersome.
+        // Turn off performance hints during development
         performance: {
           hints: false,
         },
