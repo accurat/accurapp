@@ -5,6 +5,7 @@ const path = require('path')
 const spawn = require('cross-spawn')
 const chalk = require('chalk')
 const meow = require('meow')
+const figlet = require('figlet')
 
 const dependencies = [
   'react',
@@ -20,9 +21,17 @@ const devDependencies = [
 ]
 
 const log = {
-  ok(...a) { console.log('--- ' + chalk.yellow(...a)) },
+  ok(...a) { console.log('::: ' + chalk.yellow(...a)) },
   err(...a) { console.error('!!! ' + chalk.red(...a)) },
-  info(...a) { console.log('::: ' + chalk.blue(...a)) },
+  info(...a) { console.log('--- ' + chalk.blue(...a)) },
+}
+
+function coloredBanner(text, colors = ['blue', 'red']) {
+  const bannerText = text.replace(/\|/g, 'l') // In BigMoney font, 'l' (lowercase L) are much nicer than '|' (pipes)
+  const bannerColors = { '$': colors[0], '_': colors[1], '|': colors[1], '\\': colors[1], '/': colors[1] }
+  const banner = figlet.textSync(bannerText, { font: 'Big Money-nw' })
+  const colored = banner.replace(/[^\s]/g, (c) => chalk[bannerColors[c] || 'white'](c))
+  return `\n${colored}`
 }
 
 function abort(message, errno = 1) {
@@ -49,19 +58,21 @@ function exec(command, dir) {
 }
 
 const cli = meow(`
-  Usage
-    ${chalk.green('$')} ${chalk.cyan('create-accurapp')} ${chalk.yellow('<app-name>')}
+${coloredBanner('/||||/| accurapp', ['red', 'magenta'])}
+Usage
+  ${chalk.green('$')} ${chalk.cyan('create-accurapp')} ${chalk.yellow('<app-name>')}
 
-  Options
-    -v | --version    = to print current version
-    -g | --no-git     = do not run git init/commit
-    -i | --no-install = do not run yarn install
-    -d | --dry-run    = to fake it all
-    -t | --testing    = [internal] create a version for testing, referencing
-                        the local accurapp-scripts as a 'file:' dependency
+Options
+  -v | --version    = to print current version
+  -g | --no-git     = do not run git init/commit
+  -i | --no-install = do not run yarn install
+  -d | --dry-run    = to fake it all
+  -t | --testing    = [internal] create a version for testing, referencing
+                      the local accurapp-scripts as a 'file:' dependency
 
-  Example
-    ${chalk.green('$')} ${chalk.blue('create-accurapp mega-viz')}
+Example
+  ${chalk.green('$')} ${chalk.cyan('create-accurapp mega-viz')}
+\n\n
 `, {
   alias: {
     v: 'version',
@@ -81,8 +92,7 @@ const appDir = path.resolve(cli.input[0])
 const appName = path.basename(appDir)
 const appTitle = appName.split('-').map(i => i.charAt(0).toUpperCase() + i.substr(1)).join(' ')
 
-console.log(`\n`)
-log.info(`Welcome to create-accurapp!`)
+console.log(coloredBanner('/||||/| accurapp', ['yellow', 'green']))
 
 if (fs.existsSync(appDir)) abort(`The directory '${appName}' is already existing!`)
 
@@ -96,6 +106,7 @@ const packageJson = {
   version: '0.1.0',
   scripts: {
     start: 'accurapp-scripts start',
+    build: 'accurapp-scripts build',
   },
 }
 if (isRealRun) writePackageJson(appDir, packageJson)

@@ -17,7 +17,22 @@ const WebpackDevServer = require('webpack-dev-server')
 const openOrRefreshBrowser = require('react-dev-utils/openBrowser')
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
 
+const log = {
+  ok(...a) { console.log('::: ' + chalk.yellow(...a)) },
+  warn(...a) { console.error('!!! ' + chalk.yellow(...a)) },
+  err(...a) { console.error('!!! ' + chalk.red(...a)) },
+  info(...a) { console.log('--- ' + chalk.blue(...a)) },
+}
+
 function noop() {}
+
+function coloredBanner(text, colors = ['blue', 'red']) {
+  const bannerText = text.replace(/\|/g, 'l') // In BigMoney font, 'l' (lowercase L) are much nicer than '|' (pipes)
+  const bannerColors = { '$': colors[0], '_': colors[1], '|': colors[1], '\\': colors[1], '/': colors[1] }
+  const banner = figlet.textSync(bannerText, { font: 'Big Money-nw' })
+  const colored = banner.replace(/[^\s]/g, (c) => chalk[bannerColors[c] || 'white'](c))
+  return `\n${colored}`
+}
 
 function indent(text, prepend = '  ', firstLinePrepend = prepend) {
   return text
@@ -52,25 +67,26 @@ function createWebpackCompiler(config, onFirstReadyCallback = noop) {
   try {
     compiler = webpack(config)
   } catch (err) {
-    console.log(chalk.red(`Failed to compile:\n${err.message || err}`))
+    log.err(`Failed to compile:\n${err.message || err}`)
     process.exit(1)
   }
 
-  // "invalid" event (= bundle invalidation) fires when you have changed a file, and Webpack is recompiling a bundle.
+  // You have changed a file, bundle is now "invalidated", and Webpack is recompiling a bundle
   compiler.plugin('invalid', (filePath) => {
     const filePathRelative = path.relative(APPDIR, filePath)
-    console.log(chalk.green(`Compiling ${chalk.cyan(filePathRelative)}...`))
+    console.log()
+    log.info(`Compiling ${chalk.cyan(filePathRelative)}...`)
   })
 
   let isFirstCompile = true
 
-  // "done" event fires when Webpack has finished recompiling the bundle, whether or not you have warnings or errors.
+  // Webpack has finished recompiling the bundle (whether or not you have warnings or errors)
   compiler.plugin('done', stats => {
     const messages = formatWebpackMessages(stats.toJson({}, true))
     const isSuccessful = messages.errors.length + messages.warnings.length === 0
 
     if (isSuccessful) {
-      console.log(chalk.green('Compiled successfully!'))
+      log.ok('Compiled successfully!')
       if (isFirstCompile) {
         onFirstReadyCallback()
         isFirstCompile = false
@@ -78,13 +94,13 @@ function createWebpackCompiler(config, onFirstReadyCallback = noop) {
     }
 
     if (messages.errors.length > 0) {
-      console.log(chalk.red('Errors in compiling:'))
+      log.err('Errors in compiling:')
       messages.errors.forEach(message => { console.log(listLine(chalk.red(message))) })
       return // Warnings are unuseful if there are errors
     }
 
     if (messages.warnings.length > 0) {
-      console.log(chalk.yellow('Compiled with warnings:'))
+      log.warn('Compiled with warnings:')
       messages.warnings.forEach(message => { console.log(listLine(message, chalk.yellow)) })
     }
   })
@@ -96,33 +112,29 @@ function run(port) {
   const compiler = createWebpackCompiler(
     config,
     function onFirstSuccess() {
-      console.log(chalk.blue(`The app is running at: ${chalk.cyan(`http://${HOST}:${port}/`)}`))
+      log.info(`The app is running at: ${chalk.cyan(`http://${HOST}:${port}/`)}`)
     }
   )
 
   const devServer = new WebpackDevServer(compiler, devServerConfig)
   devServer.listen(port, err => {
-    if (err) return console.log(err)
-    console.log(chalk.blue('Starting the development server...'))
+    if (err) return log.err(err)
+    log.info('Starting the development server...')
     openOrRefreshBrowser(`http://${HOST}:${port}/`)
   })
 }
 
-const bannerText = '/llll/l accurapp' // 'l' (lowercase L) are much nicer than '|' (pipes) in BigMoney font
-const bannerColors = { '_': 'red', '|': 'red', '\\': 'red', '/': 'red', '$': 'blue' }
-const banner = figlet.textSync(bannerText, { font: 'Big Money-nw' })
-const coloredBanner = banner.replace(/[^\s]/g, (c) => chalk[bannerColors[c] || 'white'](c))
-console.log(`\n` + coloredBanner + `\n`)
+console.log(coloredBanner('/||||/| accurapp'))
 
 detect(DEFAULT_PORT).then(port => {
   if (port === DEFAULT_PORT) {
     run(port)
   } else {
     if (isInteractive) {
-      console.log(chalk.yellow(`Something is already running on port ${DEFAULT_PORT}, switching to ${chalk.blue(port)}...`))
+      log.ok(`Something is already running on port ${DEFAULT_PORT}, switching to ${chalk.blue(port)}...`)
       run(port)
     } else {
-      console.log(chalk.red(`Something is already running on port ${DEFAULT_PORT}, aborting.`))
+      log.err(`Something is already running on port ${DEFAULT_PORT}, aborting.`)
     }
   }
   return port
