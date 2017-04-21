@@ -20,9 +20,9 @@ function glslifyLoader() {
         {
           test: /\.(glsl|frag|vert)$/,
           loaders: ['raw-loader', 'glslify-loader'],
-        }
-      ]
-    }
+        },
+      ],
+    },
   })
 }
 

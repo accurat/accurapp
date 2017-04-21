@@ -45,7 +45,7 @@ function accuPreset(blocks = [], overrides = {}) {
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin({
         inject: true,
-        template: './src/index.html'
+        template: './src/index.html',
       }),
       // Check case of paths, so case-sensitive filesystems won't complain:
       new CaseSensitivePathsPlugin(),

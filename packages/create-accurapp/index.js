@@ -47,7 +47,6 @@ function exec(command, dir) {
   })
   if (proc.status !== 0) abort(`Command '${chalk.cyan(command)}' failed with error: "${proc.error}"`)
   if (proc.signal !== null) abort(`Command '${chalk.cyan(command)}' exited with signal: "${proc.signal}"`)
-
 }
 
 const cli = meow(`
@@ -65,13 +64,13 @@ const cli = meow(`
 	Example
 	  ${chalk.green('$')} ${chalk.blue('create-accurapp mega-viz')}
 `, {
-	alias: {
+  alias: {
     v: 'version',
     g: 'no-git',
     i: 'no-install',
     d: 'dry-run',
     t: 'testing',
-	}
+  },
 })
 
 const isRealRun = !cli.flags.dryRun
