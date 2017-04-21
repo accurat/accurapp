@@ -19,6 +19,17 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
 
 function noop() {}
 
+function indent(text, prepend = '  ', firstLinePrepend = prepend) {
+  return text
+    .split(`\n`)
+    .map((line, i) => `${i === 0 ? firstLinePrepend : prepend}${line}`)
+    .join(`\n`)
+}
+
+function listLine(text, color = i => i) {
+  return indent(text, '   ', color('\n • '))
+}
+
 const config = require(path.join(APPDIR, 'webpack.config.js'))
 const devServerConfig = {
   compress: true,
@@ -68,13 +79,13 @@ function createWebpackCompiler(config, onFirstReadyCallback = noop) {
 
     if (messages.errors.length > 0) {
       console.log(chalk.red('Errors in compiling:'))
-      messages.errors.forEach(message => { console.log(' - ', chalk.red(message)) })
+      messages.errors.forEach(message => { console.log(listLine(chalk.red(message))) })
       return // Warnings are unuseful if there are errors
     }
 
     if (messages.warnings.length > 0) {
       console.log(chalk.yellow('Compiled with warnings:'))
-      messages.warnings.forEach(message => { console.log(' - ', chalk.yellow(message)) })
+      messages.warnings.forEach(message => { console.log(listLine(message, chalk.yellow)) })
     }
   })
 

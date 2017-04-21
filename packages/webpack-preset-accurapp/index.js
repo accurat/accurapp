@@ -10,7 +10,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 
-const { resolveSrc, glslifyLoader, prependEntry } = require('./customBlocks')
+const { resolveSrc, glslifyLoader, eslintLoader, prependEntry } = require('./customBlocks')
 
 // TODO move browsers in package.json when they will be supported https://github.com/babel/babel-preset-env/issues/149
 const browsers = process.env.NODE_ENV === 'development' ? ['last 1 Chrome version'] : ['last 2 versions', 'ie 10']
@@ -63,6 +63,7 @@ function accuPreset(blocks = [], overrides = {}) {
     //
     env('development', [
       prependEntry('react-dev-utils/webpackHotDevClient'),
+      eslintLoader(),
       addPlugins([
         // This is necessary to emit hot updates (currently CSS only)
         new webpack.HotModuleReplacementPlugin(),

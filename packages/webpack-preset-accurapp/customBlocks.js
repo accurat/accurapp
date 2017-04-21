@@ -27,6 +27,23 @@ function glslifyLoader() {
 }
 
 /**
+ * Run ESLint on every required file.
+ */
+function eslintLoader() {
+  return () => ({
+    module: {
+      loaders: [{
+        test: /\.(js|jsx)$/,
+        enforce: 'pre', // It's important to do this before Babel processes the JS.
+        exclude: [/node_modules/],
+        loader: 'eslint-loader',
+        options: { useEslintrc: true },
+      }],
+    },
+  })
+}
+
+/**
  * Add entryPoint at beginning of 'entry' array
  */
 function prependEntry(entry) {
@@ -45,5 +62,6 @@ function prependEntryPostHook(context, config) {
 module.exports = {
   resolveSrc,
   glslifyLoader,
+  eslintLoader,
   prependEntry,
 }

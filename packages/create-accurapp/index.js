@@ -14,6 +14,12 @@ const dependencies = [
   'lodash',
 ]
 
+const devDependencies = [
+  'accurapp-scripts',
+  'webpack-preset-accurapp',
+  'eslint-config-accurapp',
+]
+
 const log = {
   ok(...a) { console.log('--- ' + chalk.yellow(...a)) },
   err(...a) { console.error('!!! ' + chalk.red(...a)) },
@@ -118,11 +124,11 @@ if (isRealRun) {
 }
 
 if (isYesInstall) {
-  const devDependencies = isTesting
-    ? ['file:../packages/accurapp-scripts', 'file:../packages/webpack-preset-accurapp']
-    : ['accurapp-scripts', 'webpack-preset-accurapp']
-  log.ok(`Installing dev packages: ${chalk.cyan(devDependencies.join(', '))}`)
-  if (isRealRun) exec(`yarn add --dev --ignore-scripts ${devDependencies.join(' ')}`, appDir)
+  const devDependenciesToInstall = isTesting
+    ? devDependencies.map(dep => `file:../packages/${dep}`)
+    : devDependencies
+  log.ok(`Installing dev packages: ${devDependenciesToInstall.map(d => chalk.cyan(d)).join(', ')}`)
+  if (isRealRun) exec(`yarn add --dev --ignore-scripts ${devDependenciesToInstall.join(' ')}`, appDir)
 
   log.ok(`Installing packages: ${chalk.cyan(dependencies.join(', '))}`)
   if (isRealRun) exec(`yarn add --ignore-scripts ${dependencies.join(' ')}`, appDir)
