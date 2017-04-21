@@ -17,6 +17,7 @@ var standardJSRulesWarn = Object.keys(standardJSRules).reduce(function (acc, rul
 
   var ruleValue = standardJSRules[ruleName]
   var ruleValueNew = errorToWarn(ruleValue)
+  if (ruleName.startsWith('node/')) return acc // filter out eslint-plugin-node rules because they error
   acc[ruleName] = ruleValueNew
   return acc
 }, {})
@@ -62,6 +63,7 @@ module.exports = {
     'object-curly-spacing': [1, 'always'],
     'block-spacing': [1, 'always'],
     'padded-blocks': [1, { blocks: 'never', switches: 'never', classes: 'never' }],
+    'no-implicit-coercion': 1,
     'react/sort-comp': 1,
     'react/jsx-indent': [1, 2],
     'react/jsx-indent-props': [1, 2],
@@ -83,8 +85,14 @@ module.exports = {
     'no-undef': 2,
     'no-unexpected-multiline': 2,
     'no-use-before-define': [2, { functions: false, classes: true, variables: true }],
+    'callback-return': [2, ['callback', 'cb', 'next', 'done']],
+    'handle-callback-err': 2,
     'react/no-unused-prop-types': 2,
     'react/jsx-no-bind': [2, { ignoreRefs: true }],
     'react/react-in-jsx-scope': 2,
+    'promise/catch-or-return': 2,
+    'promise/always-return': 2,
+    'promise/no-return-wrap': 2,
+    'promise/no-nesting': 2,
   }),
 }
