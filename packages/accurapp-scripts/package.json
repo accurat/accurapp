@@ -1,6 +1,6 @@
 {
   "name": "accurapp-scripts",
-  "version": "3.0.0-beta",
+  "version": "3.0.0",
   "description": "Scripts for AccurApp.",
   "repository": "accurat/accurapp",
   "license": "BSD-3-Clause",
