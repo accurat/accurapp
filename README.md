@@ -17,12 +17,12 @@ create-accurapp project-name
 Then you just `cd project-name`, run `yarn start` and start creating awesome stuff! 🎉
 
 ## Setting up bitbucket
-- Create a new repo
-- Choose `I have an existing project` and follow the instructions
+1. Create a new repo
+2. Choose `I have an existing project` and follow the instructions
 
 ## Setting up the automatic deploy to `project-name.clinent.accurat.io`
-- Go into `Settings > Pipelines - Settings` and enable Bitbucket Pipelines
-- Go into `Settings > Pipelines - Environment Variables` and add the environment variables `DEPLOY_CUSTOMER`, `DEPLOY_PROJECT`, `SLACK_CHANNEL`
+1. Go into `Settings > Pipelines - Settings` and enable Bitbucket Pipelines
+2. Go into `Settings > Pipelines - Environment Variables` and add the environment variables `DEPLOY_CUSTOMER`, `DEPLOY_PROJECT`, `SLACK_CHANNEL`
 
 ## Original documentation:
 - [Getting Started](https://github.com/facebookincubator/create-react-app/#getting-started)
@@ -86,7 +86,7 @@ add your custom rules to the `.eslintrc`
 
 
 ## TODOs
-- add a bitbucket-pipelines.sample.yml (does pipelines enable itself if a bitbucket-pipelines.yml is found?)
+- add a bitbucket-pipelines.sample.yml
 - check the node version in the create-react-app package instead of the webpack one like it's done [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/create-react-app/index.js)
 - use CommonsChunkPlugin for faster build times?
 - add tests?
