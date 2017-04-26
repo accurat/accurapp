@@ -86,7 +86,6 @@ add your custom rules to the `.eslintrc`
 
 
 ## TODOs
-- add a bitbucket-pipelines.sample.yml
 - check the node version in the create-react-app package instead of the webpack one like it's done [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/create-react-app/index.js)
 - use CommonsChunkPlugin for faster build times?
 - add tests?
