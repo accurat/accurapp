@@ -34,6 +34,10 @@ function coloredBanner(text, colors = ['blue', 'red']) {
   return `\n${colored}`
 }
 
+function reindent(text, numSpaces = 2) {
+  return text.split(`\n`).map(l => `${' '.repeat(numSpaces)}${l}`).join(`\n`)
+}
+
 function abort(message, errno = 1) {
   console.error(`\n`)
   log.err(message)
@@ -57,23 +61,25 @@ function exec(command, dir) {
   if (proc.signal !== null) abort(`Command '${chalk.cyan(command)}' exited with signal: "${proc.signal}"`)
 }
 
-const cli = meow(`
-${coloredBanner('/||||/| accurapp', ['red', 'magenta'])}
-Usage
-  ${chalk.green('$')} ${chalk.cyan('create-accurapp')} ${chalk.yellow('<app-name>')}
+const cli = meow({
+  description: false,
+  inferType: true,
+  help: `
+    ${reindent(coloredBanner('/||||/| accurapp', ['red', 'magenta']), 4)}
+    Usage
+      ${chalk.green('$')} ${chalk.cyan('create-accurapp')} ${chalk.yellow('<app-name>')}
 
-Options
-  -v | --version    = to print current version
-  -g | --no-git     = do not run git init/commit
-  -i | --no-install = do not run yarn install
-  -d | --dry-run    = to fake it all
-  -t | --testing    = [internal] create a version for testing, referencing
-                      the local accurapp-scripts as a 'file:' dependency
+    Options
+      -v | --version    = to print current version
+      -g | --no-git     = do not run git init/commit
+      -i | --no-install = do not run yarn install
+      -d | --dry-run    = to fake it all
+      -t | --testing    = [internal] create a version for testing
 
-Example
-  ${chalk.green('$')} ${chalk.cyan('create-accurapp mega-viz')}
-\n\n
-`, {
+    Example
+      ${chalk.green('$')} ${chalk.cyan('create-accurapp mega-viz --no-install')}
+  `,
+}, {
   alias: {
     v: 'version',
     g: 'no-git',
@@ -87,6 +93,8 @@ const isRealRun = !cli.flags.dryRun
 const isYesGit = !cli.flags.noGit
 const isYesInstall = !cli.flags.noInstall
 const isTesting = cli.flags.testing
+
+if (cli.input.length === 0) cli.showHelp()
 
 const appDir = path.resolve(cli.input[0])
 const appName = path.basename(appDir)
