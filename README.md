@@ -17,12 +17,12 @@ create-accurapp project-name
 Then you just `cd project-name`, run `yarn start` and start creating awesome stuff! 🎉
 
 ## Setting up bitbucket
-1. Create a new repo
-2. Choose `I have an existing project` and follow the instructions
+0. Create a new repo
+0. Choose `I have an existing project` and follow the instructions
 
 ## Setting up the automatic deploy to `project-name.clinent.accurat.io`
-1. Go into `Settings > Pipelines - Settings` and enable Bitbucket Pipelines
-2. Go into `Settings > Pipelines - Environment Variables` and add the environment variables `DEPLOY_CUSTOMER`, `DEPLOY_PROJECT`, `SLACK_CHANNEL`
+0. Go into `Settings > Pipelines - Settings` and enable Bitbucket Pipelines
+0. Go into `Settings > Pipelines - Environment Variables` and add the environment variables `DEPLOY_CUSTOMER`, `DEPLOY_PROJECT`, `SLACK_CHANNEL`
 
 ## Original documentation:
 - [Getting Started](https://github.com/facebookincubator/create-react-app/#getting-started)
@@ -46,6 +46,9 @@ Then you just `cd project-name`, run `yarn start` and start creating awesome stu
 │   ├── index.css
 │   ├── index.html
 │   └── index.js
+├── .eslintrc         # put here your eslint customizations
+├── .gitignore
+├── bitbucket-pipelines.yml
 ├── README.md
 ├── package.json
 ├── webpack.config.js
@@ -53,7 +56,7 @@ Then you just `cd project-name`, run `yarn start` and start creating awesome stu
 ```
 
 ## Customizing Webpack
-edit the `webpack.config.js` and add new [webpack-blocks](https://github.com/andywer/webpack-blocks)
+Edit the `webpack.config.js` and add new [webpack-blocks](https://github.com/andywer/webpack-blocks), to see how to create custom blocks, add plugins, add loaders, check out their [docs](https://github.com/andywer/webpack-blocks).
 ```js
 const buildWebpackConfig = require('webpack-preset-accurapp')
 const sass = require('@webpack-blocks/sass')
@@ -64,28 +67,27 @@ module.exports = buildWebpackConfig([
 ```
 
 ## Customizing Babel
-create a `.babelrc` and pass it to `buildWebpackConfig` in the second arguments, which is an object of overrides
+Create a `.babelrc` and pass it to `buildWebpackConfig` in the second arguments, which is an object of overrides
 ```js
 // .babelrc
 {
-  'presets': ['latest'],
-  'plugins': ['fast-async']
+  "presets": ["latest"],
+  "plugins": ["fast-async"]
 }
 
 // webpack.config.js
 const buildWebpackConfig = require('webpack-preset-accurapp')
-const babelrc = require('./.babelrc')
 
 module.exports = buildWebpackConfig([], {
-  babel: babelrc,
+  babel: { babelrc: true },
 })
 ```
 
 ## Customizing Eslint
-add your custom rules to the `.eslintrc`
+Add your custom rules to the `.eslintrc`
 
 
 ## TODOs
-- check the node version in the create-react-app package instead of the webpack one like it's done [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/create-react-app/index.js)
+- check the node version in the create-accurapp and accurapp-scripts package instead of the webpack one like it's done [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/create-react-app/index.js)
 - use CommonsChunkPlugin for faster build times?
 - add tests?
