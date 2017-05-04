@@ -1,0 +1,12 @@
+image: node:latest
+
+pipelines:
+  default:
+    - step:
+        script:
+          - git clone --branch="master" --depth=1 https://bitbucket.org/accurat/accurat_deployer.git ./_deployer
+          - ./_deployer/scripts/deploy-ssh.sh --check-env
+          - yarn install --no-emoji --no-progress --link-duplicates
+          - yarn build
+          - ./_deployer/scripts/deploy-ssh.sh ./build/
+          - ./_deployer/scripts/notify-slack.sh

@@ -1,21 +1,18 @@
 {
   "name": "eslint-config-accurapp",
-  "version": "0.1.2",
+  "version": "3.0.0",
   "description": "ESLint configuration used by Accurat",
   "repository": "accurat/accurapp",
-  "license": "BSD-3-Clause",
-  "files": [
-    "index.js"
-  ],
-  "peerDependencies": {
-    "babel-eslint": "7.0.0",
-    "eslint": "3.8.1",
-    "eslint-plugin-flowtype": "2.21.0",
-    "eslint-plugin-import": "2.0.1",
-    "eslint-plugin-react": "6.4.1",
-    "eslint-plugin-promise": "^3.4.0"
-  },
+  "license": "MIT",
   "dependencies": {
-    "eslint-config-standard": "^6.2.1"
+    "babel-eslint": "^7.2.2",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-flowtype": "^2.32.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^6.10.3",
+    "eslint-plugin-standard": "^3.0.1"
   }
 }

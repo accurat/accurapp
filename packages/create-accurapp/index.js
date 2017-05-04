@@ -1,254 +1,173 @@
 #!/usr/bin/env node
 
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
+const fs = require('fs-extra')
+const path = require('path')
+const spawn = require('cross-spawn')
+const chalk = require('chalk')
+const meow = require('meow')
+const figlet = require('figlet')
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//   /!\ DO NOT MODIFY THIS FILE /!\
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-// create-react-app is installed globally on people's computers. This means
-// that it is extremely difficult to have them upgrade the version and
-// because there's only one global version installed, it is very prone to
-// breaking changes.
-//
-// The only job of create-react-app is to init the repository and then
-// forward all the commands to the local version of create-react-app.
-//
-// If you need to add a new command, please add it to the scripts/ folder.
-//
-// The only reason to modify this file is to add more warnings and
-// troubleshooting information for the `create-react-app` command.
-//
-// Do not make breaking changes! We absolutely don't want to have to
-// tell people to update their global version of create-react-app.
-//
-// Also be careful with new language features.
-// This file must work on Node 0.10+.
-//
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//   /!\ DO NOT MODIFY THIS FILE /!\
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+const dependencies = [
+  'react',
+  'react-dom',
+  'd3',
+  'lodash',
+]
 
-'use strict';
+const devDependencies = [
+  'accurapp-scripts',
+  'webpack-preset-accurapp',
+  'eslint-config-accurapp',
+]
 
-var fs = require('fs');
-var path = require('path');
-var spawn = require('cross-spawn');
-var chalk = require('chalk');
-var semver = require('semver');
-var argv = require('minimist')(process.argv.slice(2));
-var pathExists = require('path-exists');
-
-/**
- * Arguments:
- *   --version - to print current version
- *   --verbose - to print logs while init
- *   --scripts-version <alternative package>
- *     Example of valid values:
- *     - a specific npm version: "0.22.0-rc1"
- *     - a .tgz archive from any npm repo: "https://registry.npmjs.org/react-scripts/-/react-scripts-0.20.0.tgz"
- *     - a package prepared with `tasks/clean_pack.sh`: "/Users/home/vjeux/create-react-app/react-scripts-0.22.0.tgz"
- */
-var commands = argv._;
-if (commands.length === 0) {
-  if (argv.version) {
-    console.log('create-react-app version: ' + require('./package.json').version);
-    process.exit();
-  }
-  console.error(
-    'Usage: create-react-app <project-directory> [--verbose]'
-  );
-  process.exit(1);
+const log = {
+  ok(...a) { console.log('::: ' + chalk.yellow(...a)) },
+  err(...a) { console.error('!!! ' + chalk.red(...a)) },
+  info(...a) { console.log('--- ' + chalk.blue(...a)) },
 }
 
-createApp(commands[0], argv.verbose, argv['scripts-version']);
-
-function createApp(name, verbose, version) {
-  var root = path.resolve(name);
-  var appName = path.basename(root);
-
-  checkAppName(appName);
-
-  if (!pathExists.sync(name)) {
-    fs.mkdirSync(root);
-  } else if (!isSafeToCreateProjectIn(root)) {
-    console.log('The directory `' + name + '` contains file(s) that could conflict. Aborting.');
-    process.exit(1);
-  }
-
-  console.log(
-    'Creating a new React app in ' + root + '.'
-  );
-  console.log();
-
-  var packageJson = {
-    name: appName,
-    version: '0.1.0',
-    private: true,
-  };
-  fs.writeFileSync(
-    path.join(root, 'package.json'),
-    JSON.stringify(packageJson, null, 2)
-  );
-  var originalDirectory = process.cwd();
-  process.chdir(root);
-
-  console.log('Installing packages. This might take a couple minutes.');
-  console.log('Installing react-scripts...');
-  console.log();
-
-  run(root, appName, version, verbose, originalDirectory);
+function coloredBanner(text, colors = ['blue', 'red']) {
+  const bannerText = text.replace(/\|/g, 'l') // In BigMoney font, 'l' (lowercase L) are much nicer than '|' (pipes)
+  const bannerColors = { '$': colors[0], '_': colors[1], '|': colors[1], '\\': colors[1], '/': colors[1] }
+  const banner = figlet.textSync(bannerText, { font: 'Big Money-nw' })
+  const colored = banner.replace(/[^\s]/g, (c) => chalk[bannerColors[c] || 'white'](c))
+  return `\n${colored}`
 }
 
-function install(packageToInstall, verbose, callback) {
-  var args = [
-    'add',
-    '--dev',
-    '--exact',
-    packageToInstall,
-  ];
-  var proc = spawn('yarn', args, {stdio: 'inherit'});
-
-  var yarnExists = true;
-  proc.on('error', function (err) {
-    if (err.code === 'ENOENT') {
-      yarnExists = false;
-    }
-    console.error(err.code)
-  });
-  proc.on('close', function (code) {
-    if (yarnExists) {
-      callback(code, 'yarn', args);
-      return;
-    }
-    // No Yarn installed, continuing with npm.
-    args = [
-      'install',
-      verbose && '--verbose',
-      '--save-dev',
-      '--save-exact',
-      packageToInstall,
-    ].filter(function(e) { return e; });
-    var npmProc = spawn('npm', args, {stdio: 'inherit'});
-    npmProc.on('close', function (code) {
-      callback(code, 'npm', args);
-    });
-  });
+function reindent(text, numSpaces = 2) {
+  return text.split(`\n`).map(l => `${' '.repeat(numSpaces)}${l}`).join(`\n`)
 }
 
-function run(root, appName, version, verbose, originalDirectory) {
-  var packageToInstall = getInstallPackage(version);
-  var packageName = getPackageName(packageToInstall);
-
-  install(packageToInstall, verbose, function (code, command, args) {
-    if (code !== 0) {
-      console.error('`' + command + ' ' + args.join(' ') + '` failed');
-      return;
-    }
-
-    checkNodeVersion(packageName);
-
-    var scriptsPath = path.resolve(
-      process.cwd(),
-      'node_modules',
-      packageName,
-      'scripts',
-      'init.js'
-    );
-    var init = require(scriptsPath);
-    init(root, appName, verbose, originalDirectory);
-  });
+function abort(message, errno = 1) {
+  console.error(`\n`)
+  log.err(message)
+  log.err(`Aborting.`)
+  process.exit(1)
 }
 
-function getInstallPackage(version) {
-  var packageToInstall = 'accurapp-scripts';
-  var validSemver = semver.valid(version);
-  if (validSemver) {
-    packageToInstall += '@' + validSemver;
-  } else if (version) {
-    // for tar.gz or alternative paths
-    packageToInstall = version;
-  }
-  return packageToInstall;
+function writePackageJson(dir, contentJson) {
+  fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify(contentJson, null, 2))
 }
 
-// Extract package name from tarball url or path.
-function getPackageName(installPackage) {
-  if (installPackage.indexOf('.tgz') > -1) {
-    // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
-    // However, this function returns package name only wihout semver version.
-    return installPackage.match(/^.+\/(.+?)(?:-\d+.+)?\.tgz$/)[1];
-  } else if (installPackage.indexOf('@') > 0) {
-    // Do not match @scope/ when stripping off @version or @tag
-    return installPackage.charAt(0) + installPackage.substr(1).split('@')[0];
-  }
-  return installPackage;
+function exec(command, dir) {
+  if (!dir) throw new Error(`Function exec called without directory.`)
+
+  const [executable, ...args] = Array.isArray(command) ? command : command.split(' ')
+  const proc = spawn.sync(executable, args, {
+    stdio: 'inherit',
+    cwd: dir,
+  })
+  if (proc.status !== 0) abort(`Command '${chalk.cyan(command)}' failed with error: "${proc.error}"`)
+  if (proc.signal !== null) abort(`Command '${chalk.cyan(command)}' exited with signal: "${proc.signal}"`)
 }
 
-function checkNodeVersion(packageName) {
-  var packageJsonPath = path.resolve(
-    process.cwd(),
-    'node_modules',
-    packageName,
-    'package.json'
-  );
-  var packageJson = require(packageJsonPath);
-  if (!packageJson.engines || !packageJson.engines.node) {
-    return;
-  }
+const cli = meow({
+  description: false,
+  inferType: true,
+  help: `
+    ${reindent(coloredBanner('/||||/| accurapp', ['red', 'magenta']), 4)}
+    Usage
+      ${chalk.green('$')} ${chalk.cyan('create-accurapp')} ${chalk.yellow('<app-name>')}
 
-  if (!semver.satisfies(process.version, packageJson.engines.node)) {
-    console.error(
-      chalk.red(
-        'You are currently running Node %s but create-react-app requires %s.' +
-        ' Please use a supported version of Node.\n'
-      ),
-      process.version,
-      packageJson.engines.node
-    );
-    process.exit(1);
-  }
+    Options
+      -v | --version    = to print current version
+      -g | --no-git     = do not run git init/commit
+      -i | --no-install = do not run yarn install
+      -d | --dry-run    = to fake it all
+      -t | --testing    = [internal] create a version for testing
+
+    Example
+      ${chalk.green('$')} ${chalk.cyan('create-accurapp mega-viz --no-install')}
+  `,
+}, {
+  alias: {
+    v: 'version',
+    g: 'no-git',
+    i: 'no-install',
+    d: 'dry-run',
+    t: 'testing',
+  },
+})
+
+const isRealRun = !cli.flags.dryRun
+const isYesGit = !cli.flags.noGit
+const isYesInstall = !cli.flags.noInstall
+const isTesting = cli.flags.testing
+
+if (cli.input.length === 0) cli.showHelp()
+
+const appDir = path.resolve(cli.input[0])
+const appName = path.basename(appDir)
+const appTitle = appName.split('-').map(i => i.charAt(0).toUpperCase() + i.substr(1)).join(' ')
+
+console.log(coloredBanner('/||||/| accurapp', ['yellow', 'green']))
+
+if (fs.existsSync(appDir)) abort(`The directory '${appName}' is already existing!`)
+
+log.ok(`Creating a new app in ${chalk.magenta(appName)}`)
+if (isRealRun) fs.mkdirSync(appDir)
+
+log.ok(`Creating package.json`)
+const packageJson = {
+  name: appName,
+  private: true,
+  version: '0.1.0',
+  scripts: {
+    start: 'accurapp-scripts start',
+    build: 'accurapp-scripts build',
+  },
+}
+if (isRealRun) writePackageJson(appDir, packageJson)
+
+function templateOverwriting(filePath, substitutions) {
+  let content = fs.readFileSync(filePath, { encoding: 'utf-8' })
+  substitutions.forEach(([find, subst]) => {
+    content = content.replace(find, subst)
+  })
+  fs.writeFileSync(filePath, content)
 }
 
-function checkAppName(appName) {
-  // TODO: there should be a single place that holds the dependencies
-  var dependencies = ['react', 'react-dom'];
-  var devDependencies = ['react-scripts'];
-  var allDependencies = dependencies.concat(devDependencies).sort();
+log.ok(`Creating dir structure`)
+if (isRealRun) {
+  fs.copySync(path.join(__dirname, 'template'), appDir)
+  fs.renameSync(path.join(appDir, 'gitignore'), path.join(appDir, '.gitignore'))
 
-  if (allDependencies.indexOf(appName) >= 0) {
-    console.error(
-      chalk.red(
-        'We cannot create a project called `' + appName + '` because a dependency with the same name exists.\n' +
-        'Due to the way npm works, the following names are not allowed:\n\n'
-      ) +
-      chalk.cyan(
-        allDependencies.map(function(depName) {
-          return '  ' + depName;
-        }).join('\n')
-      ) +
-      chalk.red('\n\nPlease choose a different project name.')
-    );
-    process.exit(1);
-  }
+  const substitutions = [
+    [/\{\{APP_NAME\}\}/g, appName],
+    [/\{\{APP_TITLE\}\}/g, appTitle],
+  ]
+  templateOverwriting(path.join(appDir, 'src/index.html'), substitutions)
+  templateOverwriting(path.join(appDir, 'README.md'), substitutions)
 }
 
-// If project only contains files generated by GH, it’s safe.
-// We also special case IJ-based products .idea because it integrates with CRA:
-// https://github.com/facebookincubator/create-react-app/pull/368#issuecomment-243446094
-function isSafeToCreateProjectIn(root) {
-  var validFiles = [
-    '.DS_Store', 'Thumbs.db', '.git', '.gitignore', '.idea', 'README.md', 'LICENSE'
-  ];
-  return fs.readdirSync(root)
-    .every(function(file) {
-      return validFiles.indexOf(file) >= 0;
-    });
+if (isYesInstall) {
+  const devDependenciesToInstall = isTesting
+    ? devDependencies.map(dep => `file:../packages/${dep}`)
+    : devDependencies
+  log.ok(`Installing dev packages: ${devDependenciesToInstall.map(d => chalk.cyan(d)).join(', ')}`)
+  if (isRealRun) exec(`yarn add --dev --ignore-scripts ${devDependenciesToInstall.join(' ')}`, appDir)
+
+  log.ok(`Installing packages: ${chalk.cyan(dependencies.join(', '))}`)
+  if (isRealRun) exec(`yarn add --ignore-scripts ${dependencies.join(' ')}`, appDir)
+} else {
+  log.info(`Not running 'yarn add/install' because you chose so.`)
 }
+
+const isReadyGit = fs.existsSync(path.join(appDir, '.gitignore'))
+if (isYesGit && isReadyGit) {
+  log.ok(`Initializing git repo`)
+  if (isRealRun) exec(`git init`, appDir)
+
+  log.ok(`Creating first commit`)
+  if (isRealRun) exec(`git add .`, appDir)
+  if (isRealRun) exec(['git', 'commit', '-a', '-m', `💥 Bang! First commit\n\nApp bootstrapped with create-accurapp`], appDir)
+} else {
+  if (!isYesGit) log.info(`Not running 'git init/add/commit' because you chose so.`)
+  if (!isReadyGit) log.info(`Not running 'git init/add/commit' because there is no '.gitignore' file.`)
+}
+
+log.ok(`Done! Have fun with your new app.`)
+log.info(`Quick tip:\n
+    ${chalk.cyan(`cd ${appName}`)}
+    ${chalk.cyan(`yarn start`)}
+`)

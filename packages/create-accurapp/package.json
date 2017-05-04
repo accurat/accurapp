@@ -1,17 +1,15 @@
 {
   "name": "create-accurapp",
-  "version": "0.6.2",
-  "keywords": [
-    "react"
-  ],
-  "description": "Create apps with no build configuration.",
+  "version": "3.0.2",
+  "description": "Create accurat apps with minimum flexible build configuration",
   "repository": "accurat/accurapp",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "engines": {
-    "node": ">=6"
+    "node": ">=6.5"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "template"
   ],
   "bin": {
     "create-accurapp": "./index.js"
@@ -19,8 +17,8 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "cross-spawn": "^4.0.0",
-    "minimist": "^1.2.0",
-    "path-exists": "^2.1.0",
-    "semver": "^5.0.3"
+    "figlet": "^1.2.0",
+    "fs-extra": "^2.1.2",
+    "meow": "^3.7.0"
   }
 }
