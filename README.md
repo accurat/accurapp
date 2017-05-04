@@ -91,3 +91,4 @@ Add your custom rules to the `.eslintrc`
 - check the node version in the create-accurapp and accurapp-scripts package instead of the webpack one like it's done [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/create-react-app/index.js)
 - use CommonsChunkPlugin for faster build times?
 - add tests?
+- do more beautiful console output like zeppelin does
