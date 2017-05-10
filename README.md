@@ -20,7 +20,7 @@ Then you just `cd project-name`, run `yarn start` and start creating awesome stu
 0. Create a new repo
 0. Choose `I have an existing project` and follow the instructions
 
-## Setting up the automatic deploy to `project-name.clinent.accurat.io`
+## Setting up the automatic deploy
 0. Go into `Settings > Pipelines - Settings` and enable Bitbucket Pipelines
 0. Go into `Settings > Pipelines - Environment Variables` and add the environment variables `DEPLOY_CUSTOMER`, `DEPLOY_PROJECT`, `SLACK_CHANNEL`
 
