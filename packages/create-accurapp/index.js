@@ -149,7 +149,7 @@ if (isRealRun) {
 
 if (isYesInstall) {
   const devDependenciesToInstall = isTesting
-    ? devDependencies.map(dep => `file:../packages/${dep}`)
+    ? devDependencies.map(dep => `file:${path.join(__dirname, `../${dep}`)}`) // Local package
     : devDependencies
   log.ok(`Installing dev packages: ${devDependenciesToInstall.map(d => chalk.cyan(d)).join(', ')}`)
   if (isRealRun) exec(`yarn add --dev --ignore-scripts ${devDependenciesToInstall.join(' ')}`, appDir)
