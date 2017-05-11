@@ -20,6 +20,7 @@
     "detect-port": "^1.1.1",
     "dotenv": "^4.0.0",
     "figlet": "^1.2.0",
+    "fs-extra": "^2.1.2",
     "path": "^0.12.7",
     "react-dev-utils": "^0.5.2",
     "webpack": "^2.4.1",
