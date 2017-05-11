@@ -69,9 +69,11 @@ const cli = meow({
     Usage
       ${chalk.green('$')} ${chalk.cyan('create-accurapp')} ${chalk.yellow('<app-name>')}
 
+    Creates a folder named ${chalk.yellow('<app-name>')}, with a flexible JS build configuration.
+
     Options
       -v | --version    = to print current version
-      -g | --no-git     = do not run git init/commit
+      -g | --no-git     = do not run git init && git commit
       -i | --no-install = do not run yarn install
       -d | --dry-run    = to fake it all
       -t | --testing    = [internal] create a version for testing
@@ -82,6 +84,7 @@ const cli = meow({
 }, {
   alias: {
     v: 'version',
+    h: 'help',
     g: 'no-git',
     i: 'no-install',
     d: 'dry-run',
@@ -94,7 +97,10 @@ const isYesGit = !cli.flags.noGit
 const isYesInstall = !cli.flags.noInstall
 const isTesting = cli.flags.testing
 
-if (cli.input.length === 0) cli.showHelp()
+if (cli.input.length === 0 && !cli.flags.help) {
+  log.err(`No <app-name> specified! Displaying help.`)
+  cli.showHelp(1)
+}
 
 const appDir = path.resolve(cli.input[0])
 const appName = path.basename(appDir)
