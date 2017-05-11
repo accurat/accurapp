@@ -12,7 +12,7 @@
     "create-test-app": "yarn run clean-yarn-cache; rm -rf test-app; node packages/create-accurapp/index.js test-app --testing"
   },
   "devDependencies": {
-    "lerna": "^2.0.0-rc.3",
-    "eslint-config-accurapp": "file:./packages/eslint-config-accurapp"
+    "eslint-config-accurapp": "file:./packages/eslint-config-accurapp",
+    "lerna": "^2.0.0-rc.4"
   }
 }
