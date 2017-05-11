@@ -8,7 +8,7 @@ const chalk = require('chalk')
 const detect = require('detect-port')
 const WebpackDevServer = require('webpack-dev-server')
 const openOrRefreshBrowser = require('react-dev-utils/openBrowser')
-const { log, createWebpackCompiler, coloredBanner } = require('./utils')
+const { log, createWebpackCompiler, coloredBanner } = require('./_utils')
 
 const HOST = process.env.HOST || 'localhost'
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8000

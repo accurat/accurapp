@@ -6,7 +6,7 @@ require('dotenv').config({ silent: true })
 const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs-extra')
-const { log, createWebpackCompiler, coloredBanner } = require('./utils')
+const { log, createWebpackCompiler, coloredBanner } = require('./_utils')
 
 function copyPublicFolder() {
   const appDir = process.cwd()
