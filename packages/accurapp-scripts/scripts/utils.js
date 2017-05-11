@@ -1,0 +1,99 @@
+const path = require('path')
+const webpack = require('webpack')
+const chalk = require('chalk')
+const figlet = require('figlet')
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
+
+const log = {
+  ok(...a) { console.log('::: ' + chalk.yellow(...a)) },
+  warn(...a) { console.error('!!! ' + chalk.yellow(...a)) },
+  err(...a) { console.error('!!! ' + chalk.red(...a)) },
+  info(...a) { console.log('--- ' + chalk.blue(...a)) },
+}
+
+function noop() {}
+
+function coloredBanner(text, colors = ['blue', 'red']) {
+  const bannerText = text.replace(/\|/g, 'l') // In BigMoney font, 'l' (lowercase L) are much nicer than '|' (pipes)
+  const bannerColors = { '$': colors[0], '_': colors[1], '|': colors[1], '\\': colors[1], '/': colors[1] }
+  const banner = figlet.textSync(bannerText, { font: 'Big Money-nw' })
+  const colored = banner.replace(/[^\s]/g, (c) => chalk[bannerColors[c] || 'white'](c))
+  return `\n${colored}`
+}
+
+function indent(text, prepend = '  ', firstLinePrepend = prepend) {
+  return text
+    .split(`\n`)
+    .map((line, i) => `${i === 0 ? firstLinePrepend : prepend}${line}`)
+    .join(`\n`)
+}
+
+function listLine(text, color = i => i) {
+  return indent(text, '   ', color('\n • '))
+}
+
+function readWebpackConfig() {
+  const cwd = process.cwd()
+  return require(path.join(cwd, 'webpack.config.js'))
+}
+
+/*
+ * The webpack "compiler" is a low-level interface to Webpack that lets us listen to
+ * some events and provide our own custom messages.
+ */
+function createWebpackCompiler(onFirstReadyCallback = noop) {
+  let compiler
+  try {
+    const config = readWebpackConfig()
+    compiler = webpack(config)
+  } catch (err) {
+    log.err(`Failed to compile:\n${err.message || err}`)
+    process.exit(1)
+  }
+
+  // You have changed a file, bundle is now "invalidated", and Webpack is recompiling a bundle
+  compiler.plugin('invalid', (filePath) => {
+    const filePathRelative = path.relative(process.cwd(), filePath)
+    console.log()
+    log.info(`Compiling ${chalk.cyan(filePathRelative)}...`)
+  })
+
+  let isFirstCompile = true
+
+  // Webpack has finished recompiling the bundle (whether or not you have warnings or errors)
+  compiler.plugin('done', (stats) => {
+    const messages = formatWebpackMessages(stats.toJson({}, true))
+    const isSuccessful = messages.errors.length + messages.warnings.length === 0
+
+    if (isSuccessful) {
+      log.ok('Compiled successfully!')
+      if (isFirstCompile) {
+        onFirstReadyCallback()
+        isFirstCompile = false
+      }
+    }
+
+    if (messages.errors.length > 0) {
+      log.err('Errors in compiling:')
+      messages.errors.forEach(message => { console.log(listLine(chalk.red(message))) })
+      return // Warnings are unuseful if there are errors
+    }
+
+    if (messages.warnings.length > 0) {
+      log.warn('Compiled with warnings:')
+      messages.warnings.forEach(message => { console.log(listLine(message, chalk.yellow)) })
+    }
+  })
+
+  return compiler
+}
+
+module.exports = {
+  log,
+  noop,
+  coloredBanner,
+  indent,
+  listLine,
+  readWebpackConfig,
+  createWebpackCompiler,
+}
