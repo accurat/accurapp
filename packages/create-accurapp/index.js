@@ -118,6 +118,7 @@ const packageJson = {
   name: appName,
   private: true,
   version: '0.1.0',
+  license: 'MIT',
   scripts: {
     start: 'accurapp-scripts start',
     build: 'accurapp-scripts build',

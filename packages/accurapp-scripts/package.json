@@ -3,7 +3,7 @@
   "version": "3.0.1",
   "description": "Scripts for AccurApp.",
   "repository": "accurat/accurapp",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "engines": {
     "node": ">=6.5"
   },
