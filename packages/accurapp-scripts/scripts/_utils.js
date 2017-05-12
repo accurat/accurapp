@@ -41,7 +41,7 @@ function readWebpackConfig() {
  * The webpack "compiler" is a low-level interface to Webpack that lets us listen to
  * some events and provide our own custom messages.
  */
-function createWebpackCompiler(onFirstReadyCallback = noop) {
+function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
   let compiler
   try {
     const config = readWebpackConfig()
@@ -71,15 +71,11 @@ function createWebpackCompiler(onFirstReadyCallback = noop) {
         onFirstReadyCallback()
         isFirstCompile = false
       }
-    }
-
-    if (messages.errors.length > 0) {
+    } else if (messages.errors.length > 0) {
       log.err('Errors in compiling:')
       messages.errors.forEach(message => { console.log(listLine(chalk.red(message))) })
-      return // Warnings are unuseful if there are errors
-    }
-
-    if (messages.warnings.length > 0) {
+      onError()
+    } else if (messages.warnings.length > 0) {
       log.warn('Compiled with warnings:')
       messages.warnings.forEach(message => { console.log(listLine(message, chalk.yellow)) })
     }

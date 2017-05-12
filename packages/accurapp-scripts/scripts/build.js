@@ -27,6 +27,9 @@ function build() {
   log.info(`Creating an optimized production build...`)
   const compiler = createWebpackCompiler(() => {
     log.ok(`The ${chalk.cyan('build/')} folder is ready to be deployed.`)
+  }, () => {
+    log.err(`Aborting`)
+    process.exit(2)
   })
   compiler.run(() => {})
 }
