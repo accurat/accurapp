@@ -91,6 +91,7 @@ module.exports = {
     'react/jsx-no-bind': [2, { ignoreRefs: true }],
     'react/react-in-jsx-scope': 2,
     'promise/catch-or-return': 2,
+    'promise/no-callback-in-promise': 2,
     'promise/no-return-wrap': 2,
     'promise/no-nesting': 2,
   }),
