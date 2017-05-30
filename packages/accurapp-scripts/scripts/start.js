@@ -16,6 +16,7 @@ const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8000
 const devServerConfig = {
   compress: true,
   clientLogLevel: 'none',
+  historyApiFallback: true,
   hot: true,
   contentBase: './public/',
   quiet: true,
