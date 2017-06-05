@@ -4,6 +4,7 @@ const { addPlugins, createConfig, customConfig, env, entryPoint, setOutput, sour
 const babelLoader = require('@webpack-blocks/babel6')
 const postcss = require('@webpack-blocks/postcss')
 const autoprefixer = require('autoprefixer')
+const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
@@ -26,7 +27,11 @@ function accuPreset(blocks = [], overrides = {}) {
       // Your app's code.
       './src/index.js',
     ]),
-    setOutput('./build/app.js'),
+    setOutput({
+      path: path.resolve('./build'),
+      filename: 'app.js',
+      publicPath: '/',
+    }),
     resolveSrc(),
     glslifyLoader(),
     babelLoader(overrides.babel || babelrc),
