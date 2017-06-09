@@ -1,5 +1,3 @@
-if (parseFloat(process.versions.node) < 6.5) throw new Error('Sorry, Node 6.5+ is required! Tip: use `nvm` for painless upgrades.')
-
 const { addPlugins, createConfig, customConfig, env, entryPoint, setOutput, sourceMaps, webpack } = require('@webpack-blocks/webpack2')
 const babelLoader = require('@webpack-blocks/babel6')
 const postcss = require('@webpack-blocks/postcss')
