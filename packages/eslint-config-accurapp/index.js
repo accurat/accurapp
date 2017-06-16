@@ -80,6 +80,9 @@ module.exports = {
     'react/no-is-mounted': 1,
     'react/require-render-return': 1,
     'react/style-prop-object': 1,
+    'promise/catch-or-return': 1,
+    'promise/no-callback-in-promise': 1,
+    'promise/no-return-wrap': 1,
     // ERRORS
     'no-redeclare': 2,
     'no-undef': 2,
@@ -90,9 +93,6 @@ module.exports = {
     'react/no-unused-prop-types': 2,
     'react/jsx-no-bind': [2, { ignoreRefs: true }],
     'react/react-in-jsx-scope': 2,
-    'promise/catch-or-return': 2,
-    'promise/no-callback-in-promise': 2,
-    'promise/no-return-wrap': 2,
     'promise/no-nesting': 2,
   }),
 }
