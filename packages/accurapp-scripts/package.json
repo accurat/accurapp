@@ -22,7 +22,7 @@
     "figlet": "^1.2.0",
     "fs-extra": "^3.0.1",
     "path": "^0.12.7",
-    "react-dev-utils": "^3.0.0",
+    "react-dev-utils": "^3.0.2",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
   },
