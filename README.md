@@ -4,25 +4,20 @@ It was originally forked from [create-react-app](https://github.com/facebookincu
 but in version 3.0.0 significant amounts of code were rewritten and simplified.
 
 ## Getting started:
-Add globally the binary `create-accurapp` that will be used to build a new project.
+Having installed yarn (`brew install yarn`), run this command which will handle the folder scaffolding, the dependencies installation, and the git initialization with a first commit.
 ```sh
-yarn global add create-accurapp
-```
-
-The `create-accurapp` command will handle the folder scaffolding, the dependencies installation, and the git initialization with a first commit.
-```sh
-create-accurapp project-name
+yarn create accurapp project-name
 ```
 
 Then you just `cd project-name`, run `yarn start` and start creating awesome stuff! 🎉
 
 ## Setting up bitbucket
-0. Create a new repo
-0. Choose `I have an existing project` and follow the instructions
+1. Create a new repo
+1. Choose `I have an existing project` and follow the instructions
 
 ## Setting up the automatic deploy
-0. Go into `Settings > Pipelines - Settings` and enable Bitbucket Pipelines
-0. Go into `Settings > Pipelines - Environment Variables` and add the environment variables `DEPLOY_CUSTOMER`, `DEPLOY_PROJECT`, `SLACK_CHANNEL`
+1. Go into `Settings > Pipelines - Settings` and enable Bitbucket Pipelines
+1. Go into `Settings > Pipelines - Environment Variables` and add the environment variables `DEPLOY_CUSTOMER`, `DEPLOY_PROJECT`, `SLACK_CHANNEL`
 
 ## Original documentation:
 - [Getting Started](https://github.com/facebookincubator/create-react-app/#getting-started)
@@ -36,7 +31,7 @@ Then you just `cd project-name`, run `yarn start` and start creating awesome stu
 ## Project Scaffolding
 ```
 ├── build             # created when you run yarn build
-├── public            # put the static stuff here (is this needed? only time will tell)
+├── public            # put the static stuff here
 │   └── favicon.ico
 ├── src
 │   ├── components
@@ -88,7 +83,5 @@ Add your custom rules to the `.eslintrc`
 
 
 ## TODOs
-- check the node version in the create-accurapp and accurapp-scripts package instead of the webpack one like it's done [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/create-react-app/index.js)
 - use CommonsChunkPlugin for faster build times?
-- add tests?
 - do more beautiful console output like zeppelin does
