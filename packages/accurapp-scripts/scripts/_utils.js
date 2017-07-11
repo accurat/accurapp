@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const chalk = require('chalk')
 const figlet = require('figlet')
+const boxen = require('boxen')
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
 
 const log = {
@@ -19,6 +20,25 @@ function coloredBanner(text, colors = ['blue', 'red']) {
   const banner = figlet.textSync(bannerText, { font: 'Big Money-nw' })
   const colored = banner.replace(/[^\s]/g, (c) => chalk[bannerColors[c] || 'white'](c))
   return `\n${colored}`
+}
+
+function outdatedDepsBox(outdatedDeps, updatedDeps) {
+  const outdatedMessages = outdatedDeps.map((dep, i) =>
+    `${chalk.blue(dep.name)} ${chalk.gray(dep.version)} → ${chalk.green(updatedDeps[i].version)}`
+  )
+
+  const message = `
+${chalk.yellow('Hey, an update for accurapp is available!')}
+${outdatedMessages.join('\n')}
+${chalk.yellow('Run')} ${chalk.cyan('yarn upgrade-interactive')} ${chalk.yellow('to update')}
+`
+  const boxenOptions = {
+    padding: 1,
+    align: 'center',
+    borderColor: 'yellow',
+  }
+
+  return boxen(message, boxenOptions)
 }
 
 function indent(text, prepend = '  ', firstLinePrepend = prepend) {
@@ -88,6 +108,7 @@ module.exports = {
   log,
   noop,
   coloredBanner,
+  outdatedDepsBox,
   indent,
   listLine,
   readWebpackConfig,
