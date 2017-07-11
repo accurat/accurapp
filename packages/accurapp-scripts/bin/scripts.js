@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-if (parseFloat(process.versions.node) < 6.5) { throw new Error('Sorry, Node 6.5+ is required! Tip: use `nvm` for painless upgrades.') }
+if (parseFloat(process.versions.node) < 6.5) throw new Error('Sorry, Node 6.5+ is required! Tip: use `nvm` for painless upgrades.')
 
 // warn if any accurapp package is outdated
 const latestVersion = require('latest-version')
