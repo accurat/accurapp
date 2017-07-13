@@ -22,16 +22,7 @@ function coloredBanner(text, colors = ['blue', 'red']) {
   return `\n${colored}`
 }
 
-function outdatedDepsBox(outdatedDeps, updatedDeps) {
-  const outdatedMessages = outdatedDeps.map((dep, i) =>
-    `${chalk.blue(dep.name)} ${chalk.gray(dep.version)} → ${chalk.green(updatedDeps[i].version)}`
-  )
-
-  const message = `
-${chalk.yellow('Hey, an update for accurapp is available!')}
-${outdatedMessages.join('\n')}
-${chalk.yellow('Run')} ${chalk.cyan('yarn upgrade-interactive')} ${chalk.yellow('to update')}
-`
+function yellowBox(message) {
   const boxenOptions = {
     padding: 1,
     align: 'center',
@@ -39,6 +30,18 @@ ${chalk.yellow('Run')} ${chalk.cyan('yarn upgrade-interactive')} ${chalk.yellow(
   }
 
   return boxen(message, boxenOptions)
+}
+
+function createOutdatedMessage(outdatedDeps, updatedDeps) {
+  const outdatedMessages = outdatedDeps.map((dep, i) =>
+    `${chalk.blue(dep.name)} ${chalk.gray(dep.version)} → ${chalk.green(updatedDeps[i].version)}`
+  )
+
+  return `
+${chalk.yellow('Hey, an update for accurapp is available!')}
+${outdatedMessages.join('\n')}
+${chalk.yellow('Run')} ${chalk.cyan('yarn upgrade-interactive')} ${chalk.yellow('to update')}
+`
 }
 
 function indent(text, prepend = '  ', firstLinePrepend = prepend) {
@@ -108,7 +111,8 @@ module.exports = {
   log,
   noop,
   coloredBanner,
-  outdatedDepsBox,
+  yellowBox,
+  createOutdatedMessage,
   indent,
   listLine,
   readWebpackConfig,

@@ -4,7 +4,7 @@ if (parseFloat(process.versions.node) < 6.5) throw new Error('Sorry, Node 6.5+ i
 // warn if any accurapp package is outdated
 const latestVersion = require('latest-version')
 const semver = require('semver')
-const { outdatedDepsBox } = require('../scripts/_utils')
+const { createOutdatedMessage, yellowBox } = require('../scripts/_utils')
 
 const currentDeps = [
   require('../package.json'),
@@ -18,7 +18,8 @@ Promise.all(currentDeps.map((dep) => latestVersion(dep.name)))
     const outdatedDeps = currentDeps.filter((dep, i) => semver.lt(dep.version, updatedDeps[i].version))
 
     if (outdatedDeps.length > 0) {
-      console.log(outdatedDepsBox(outdatedDeps, updatedDeps))
+      const message = createOutdatedMessage(outdatedDeps, updatedDeps)
+      console.log(yellowBox(message))
     }
   })
 
