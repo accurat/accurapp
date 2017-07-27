@@ -7,14 +7,21 @@ const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs-extra')
 const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = require('react-dev-utils/FileSizeReporter')
-const { log, createWebpackCompiler, coloredBanner } = require('./_utils')
+const { log, createWebpackCompiler, readWebpackConfig,  coloredBanner } = require('./_utils')
 
 const appDir = process.cwd()
+const config = readWebpackConfig()
 const appPublic = path.join(appDir, 'public')
-const appBuild = path.join(appDir, 'build')
+const appBuild = config.output.path
+const relativeAppBuildPath = `${path.relative(appDir, appBuild)}/`
+
+function clearBuildFolder() {
+  log.info(`Cleaning ${chalk.cyan(relativeAppBuildPath)}`)
+  fs.emptyDirSync(appBuild)
+}
 
 function copyPublicFolder() {
-  log.info(`Copying ${chalk.cyan('public/')} folder...`)
+  log.info(`Copying ${chalk.cyan('public/')} into ${chalk.cyan(relativeAppBuildPath)}`)
   fs.copySync(appPublic, appBuild, {
     overwrite: true,
     dereference: true,
@@ -26,7 +33,7 @@ function copyPublicFolder() {
 function build() {
   log.info(`Creating an optimized production build...`)
   const compiler = createWebpackCompiler(() => {
-    log.ok(`The ${chalk.cyan('build/')} folder is ready to be deployed.`)
+    log.ok(`The ${chalk.cyan(relativeAppBuildPath)} folder is ready to be deployed.`)
   }, () => {
     log.err(`Aborting`)
     process.exit(2)
@@ -47,6 +54,7 @@ console.log(coloredBanner('/||||/| accurapp', ['cyan', 'magenta']))
 
 measureFileSizesBeforeBuild(appBuild)
   .then((previousFileSizes) => {
+    clearBuildFolder()
     copyPublicFolder()
     build()
       .then((stats) => {
