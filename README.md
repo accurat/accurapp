@@ -81,6 +81,8 @@ module.exports = buildWebpackConfig([], {
 ## Customizing Eslint
 Add your custom rules to the `.eslintrc`
 
+## Contributing
+If you make some edits and wish to test them locally you can run `yarn create-test-app` which creates a test app using the local packages.
 
 ## TODOs
 - use CommonsChunkPlugin for faster build times?
