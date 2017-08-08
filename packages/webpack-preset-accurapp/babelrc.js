@@ -10,5 +10,6 @@ module.exports = (browsers) => ({
   ],
   plugins: [
     'transform-decorators-legacy',
+    'lodash',
   ],
 })
