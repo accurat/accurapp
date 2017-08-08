@@ -3,6 +3,7 @@ module.exports = (browsers) => ({
     ['env', {
       targets: { browsers },
       modules: false,
+      useBuiltIns: true,
     }],
     'stage-0',
     'react',
