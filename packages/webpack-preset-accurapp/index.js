@@ -1,6 +1,17 @@
-const { addPlugins, createConfig, customConfig, env, entryPoint, setOutput, sourceMaps, webpack } = require('@webpack-blocks/webpack2')
-const babelLoader = require('@webpack-blocks/babel6')
-const postcss = require('@webpack-blocks/postcss')
+const {
+  createConfig,
+  addPlugins,
+  customConfig,
+  webpack,
+  entryPoint,
+  setOutput,
+  env,
+  performance,
+  sourceMaps,
+  babel,
+  postcss,
+} = require('webpack-blocks')
+const { css } = require('@webpack-blocks/assets')
 const autoprefixer = require('autoprefixer')
 const path = require('path')
 
@@ -10,15 +21,21 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 const MinifyPlugin = require('babel-minify-webpack-plugin')
 
-const { resolveSrc, glslifyLoader, eslintLoader, prependEntry } = require('./customBlocks')
+const {
+  imageLoader,
+  videoLoader,
+  fontLoader,
+  glslifyLoader,
+  eslintLoader,
+  resolveSrc,
+  prependEntry,
+} = require('./customBlocks')
 
 // TODO move browsers in package.json when they will be supported https://github.com/babel/babel-preset-env/issues/149
 const browsers = process.env.NODE_ENV === 'development' ? ['last 1 Chrome version'] : ['last 2 versions', 'ie 10']
 const babelrc = require('./babelrc')(browsers)
 
-// TODO understand how to customize file-loader in webpack-blocks to set the output asset name line create-react-app does instead of only hash: '[name].[hash:8].[ext]' https://github.com/andywer/webpack-blocks/issues/145
-
-function accuPreset(blocks = [], overrides = {}) {
+function accuPreset(config = []) {
   return createConfig([
     entryPoint([
       // Include all polyfills we can, to prevent cross-browser bugs.
@@ -31,9 +48,16 @@ function accuPreset(blocks = [], overrides = {}) {
       filename: 'app.js',
       publicPath: '/',
     }),
-    resolveSrc(),
+
+    // Loaders
+    css(),
+    babel(babelrc),
+    fontLoader(),
+    imageLoader(),
+    videoLoader(),
     glslifyLoader(),
-    babelLoader(overrides.babel || babelrc),
+
+    resolveSrc(),
 
     addPlugins([
       // Makes some environment variables available to the JS code
@@ -76,12 +100,8 @@ function accuPreset(blocks = [], overrides = {}) {
       ]),
       // Faster 'cheap-module-eval-source-map' instead of the standard 'cheap-module-source-map'
       sourceMaps('cheap-module-eval-source-map'),
-      customConfig({
-        // Turn off performance hints during development
-        performance: {
-          hints: false,
-        },
-      }),
+      // Turn off performance hints during development
+      performance({ hints: false }),
     ]),
 
     //
@@ -124,7 +144,7 @@ function accuPreset(blocks = [], overrides = {}) {
       ]),
     ]),
 
-    ...blocks,
+    ...(Array.isArray(config) ? config : [customConfig(config)]),
   ])
 }
 
