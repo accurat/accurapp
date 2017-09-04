@@ -19,6 +19,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
+const NpmInstallPlugin = require('npm-install-webpack-plugin')
 const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 const {
@@ -97,6 +98,8 @@ function accuPreset(config = []) {
         new webpack.HotModuleReplacementPlugin(),
         // Automatic rediscover of packages after `npm install`
         new WatchMissingNodeModulesPlugin('node_modules'),
+        // Automatically install dependencies when you type `import ...` in your editor
+        new NpmInstallPlugin(),
       ]),
       // Faster 'cheap-module-eval-source-map' instead of the standard 'cheap-module-source-map'
       sourceMaps('cheap-module-eval-source-map'),
