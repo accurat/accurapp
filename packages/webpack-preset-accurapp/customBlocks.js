@@ -1,28 +1,28 @@
 const fileNameTemplate = '[name].[hash:8].[ext]'
 
 /**
- * Images smaller than 8kb are loaded as a base64 encoded url instead of file url
+ * Images smaller than 10kb are loaded as a base64 encoded url instead of file url
  */
 function imageLoader() {
   return (context, { addLoader }) => addLoader({
     test: /\.(gif|ico|jpg|jpeg|png|webp)$/,
     use: ['url-loader'],
     options: {
-      limit: 8192,
+      limit: 10000,
       name: fileNameTemplate,
     },
   })
 }
 
 /**
- * Videos smaller than 8kb are loaded as a base64 encoded url instead of file url
+ * Videos smaller than 10kb are loaded as a base64 encoded url instead of file url
  */
 function videoLoader() {
   return (context, { addLoader }) => addLoader({
     test: /\.(mp4|webm)$/,
     use: ['url-loader'],
     options: {
-      limit: 8192,
+      limit: 10000,
       name: fileNameTemplate,
     },
   })
