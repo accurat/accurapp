@@ -78,6 +78,9 @@ function accuPreset(config = []) {
       }),
       // Check case of paths, so case-sensitive filesystems won't complain:
       new CaseSensitivePathsPlugin(),
+      // Concatenate the scope of all module in a single closure,
+      // so the compiled code is a bit smaller and gets executed a bit faster
+      new webpack.optimize.ModuleConcatenationPlugin(),
     ]),
 
     //
