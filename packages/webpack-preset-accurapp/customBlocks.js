@@ -6,7 +6,7 @@ const fileNameTemplate = '[name].[hash:8].[ext]'
 function imageLoader() {
   return (context, { addLoader }) => addLoader({
     test: /\.(gif|ico|jpg|jpeg|png|webp)$/,
-    use: ['url-loader'],
+    loader: 'url-loader',
     options: {
       limit: 10000,
       name: fileNameTemplate,
@@ -20,7 +20,7 @@ function imageLoader() {
 function videoLoader() {
   return (context, { addLoader }) => addLoader({
     test: /\.(mp4|webm)$/,
-    use: ['url-loader'],
+    loader: 'url-loader',
     options: {
       limit: 10000,
       name: fileNameTemplate,
@@ -34,7 +34,7 @@ function videoLoader() {
 function fontLoader() {
   return (context, { addLoader }) => addLoader({
     test: /\.(eot|ttf|woff|woff2)(\?.*)?$/,
-    use: ['file-loader'],
+    loader: 'file-loader',
     options: {
       name: fileNameTemplate,
     },
@@ -60,7 +60,7 @@ function eslintLoader() {
     test: /\.(js|jsx)$/,
     enforce: 'pre', // It's important to do this before Babel processes the JS.
     exclude: /node_modules/,
-    use: ['eslint-loader'],
+    loader: 'eslint-loader',
     options: { useEslintrc: true },
   })
 }
