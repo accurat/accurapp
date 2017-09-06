@@ -1,8 +1,8 @@
+const webpack = require('webpack')
 const {
   createConfig,
   addPlugins,
   customConfig,
-  webpack,
   entryPoint,
   setOutput,
   env,
