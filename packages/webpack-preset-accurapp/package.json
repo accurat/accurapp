@@ -13,7 +13,7 @@
   ],
   "dependencies": {
     "@webpack-blocks/assets": "^1.0.0-alpha",
-    "autoprefixer": "^7.1.3",
+    "autoprefixer": "^7.1.4",
     "babel-minify-webpack-plugin": "^0.2.0",
     "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -28,9 +28,9 @@
     "html-webpack-plugin": "^2.30.1",
     "npm-install-webpack-plugin": "^4.0.5",
     "raw-loader": "^0.5.1",
-    "react-dev-utils": "^3.0.0",
+    "react-dev-utils": "^4.0.1",
     "url-loader": "^0.5.9",
-    "webpack": "^3.5.5",
+    "webpack": "^3.5.6",
     "webpack-blocks": "^1.0.0-beta.4"
   }
 }
