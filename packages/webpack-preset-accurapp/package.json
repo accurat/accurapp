@@ -16,6 +16,7 @@
     "@webpack-blocks/postcss": "^0.4.3",
     "@webpack-blocks/webpack2": "^0.4.0",
     "autoprefixer": "^7.1.1",
+    "babel-minify-webpack-plugin": "^0.2.0",
     "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-polyfill": "^6.23.0",

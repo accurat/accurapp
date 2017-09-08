@@ -8,6 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
+const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 const { resolveSrc, glslifyLoader, eslintLoader, prependEntry } = require('./customBlocks')
 
@@ -73,7 +74,7 @@ function accuPreset(blocks = [], overrides = {}) {
         // Automatic rediscover of packages after `npm install`
         new WatchMissingNodeModulesPlugin('node_modules'),
       ]),
-      // Faster "cheap-module-eval-source-map" instead of the standard "cheap-module-source-map"
+      // Faster 'cheap-module-eval-source-map' instead of the standard 'cheap-module-source-map'
       sourceMaps('cheap-module-eval-source-map'),
       customConfig({
         // Turn off performance hints during development
@@ -115,14 +116,10 @@ function accuPreset(blocks = [], overrides = {}) {
         autoprefixer({ browsers }),
       ]),
       addPlugins([
-        new webpack.optimize.UglifyJsPlugin({
-          compress: {
-            warnings: false,
-            drop_console: true,
-          },
-          output: {
-            comments: false,
-          },
+        new MinifyPlugin({
+          removeConsole: true,
+        }, {
+          comments: false,
         }),
       ]),
     ]),
