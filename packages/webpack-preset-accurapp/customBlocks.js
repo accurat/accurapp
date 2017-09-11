@@ -80,16 +80,20 @@ function resolveSrc() {
  * Add entryPoint at beginning of 'entry' array
  */
 function prependEntry(entry) {
-  const blockFunction = (context, config) => {
+  const blockFunction = (context, util) => {
     if (!context.entriesToPrepend) context.entriesToPrepend = []
     context.entriesToPrepend.unshift(entry)
+    return config => config
   }
   return Object.assign(blockFunction, {
     post: prependEntryPostHook,
   })
 }
-function prependEntryPostHook(context, config) {
-  config.entry.main.unshift(...context.entriesToPrepend)
+function prependEntryPostHook(context, util) {
+  return (config) => {
+    config.entry.main.unshift(...context.entriesToPrepend)
+    return config
+  }
 }
 
 module.exports = {
