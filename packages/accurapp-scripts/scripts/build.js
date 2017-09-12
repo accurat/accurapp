@@ -7,7 +7,7 @@ const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs-extra')
 const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = require('react-dev-utils/FileSizeReporter')
-const { log, createWebpackCompiler, readWebpackConfig,  coloredBanner } = require('./_utils')
+const { log, createWebpackCompiler, readWebpackConfig, coloredBanner } = require('./_utils')
 
 const appDir = process.cwd()
 const config = readWebpackConfig()
