@@ -8,7 +8,7 @@ but in version 3.0.0 significant amounts of code were rewritten and simplified. 
 - GLSL webpack loader, to import shaders and require shaders within shaders
 
 ## Creating a new project:
-Having installed yarn (`brew install yarn`), run this command which will handle the folder scaffolding, the dependencies installation, and the git initialization with a first commit.
+Having installed yarn (`brew install yarn`), run this command in the directory where you want to create the `project-name` folder. This command will also handle the project scaffolding, the dependencies installation, and the git initialization with a first commit.
 ```sh
 yarn create accurapp project-name
 ```
