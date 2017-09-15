@@ -1,9 +1,4 @@
 node_modules/
-build
 .DS_Store
-*.tgz
-my-app*
-test-app*
 *.log
-template/src/__tests__/__snapshots__/
-packages/**/yarn.lock
+test-app/*
