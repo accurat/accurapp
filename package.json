@@ -3,14 +3,16 @@
   "private": true,
   "scripts": {
     "preinstall": "yarn run clean-yarn-cache",
-    "postinstall": "lerna bootstrap",
-    "clean-install": "lerna clean; rm -rf node_modules; yarn run clean-yarn-cache",
+    "clean-install": "rm -rf node_modules; rm -rf packages/*/node_modules; yarn run clean-yarn-cache",
     "clean-yarn-cache": "rm -rf $(yarn cache dir)/*accurapp*",
     "lint": "node node_modules/eslint/bin/eslint.js packages",
     "publish": "tasks/release.sh",
     "outdated": "for P in $(ls packages); do echo '\\n' === $P ===; cd \"packages/$P/\"; yarn outdated; cd ../..; done",
     "create-test-app": "yarn run clean-yarn-cache; rm -rf test-app; node packages/create-accurapp/index.js test-app --testing"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "eslint-config-accurapp": "file:./packages/eslint-config-accurapp",
     "lerna": "^2.0.0-rc.4"
