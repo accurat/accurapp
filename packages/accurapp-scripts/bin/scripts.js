@@ -14,11 +14,11 @@ const currentDeps = [
 
 Promise.all(currentDeps.map((dep) => latestVersion(dep.name)))
   .then((npmVersions) => {
-    const updatedDeps = npmVersions.map((version, i) => Object.assign({}, currentDeps[i], { version }))
-    const outdatedDeps = currentDeps.filter((dep, i) => semver.lt(dep.version, updatedDeps[i].version))
+    const latestDeps = npmVersions.map((version, i) => Object.assign({}, currentDeps[i], { version }))
+    const outdatedDeps = currentDeps.filter((dep, i) => semver.lt(dep.version, latestDeps[i].version))
 
     if (outdatedDeps.length > 0) {
-      const message = createOutdatedMessage(outdatedDeps, updatedDeps)
+      const message = createOutdatedMessage(outdatedDeps, latestDeps)
       console.log(yellowBox(message))
     }
   })

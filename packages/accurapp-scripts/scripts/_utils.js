@@ -32,10 +32,11 @@ function yellowBox(message) {
   return boxen(message, boxenOptions)
 }
 
-function createOutdatedMessage(outdatedDeps, updatedDeps) {
-  const outdatedMessages = outdatedDeps.map((dep, i) =>
-    `${chalk.blue(dep.name)} ${chalk.gray(dep.version)} → ${chalk.green(updatedDeps[i].version)}`
-  )
+function createOutdatedMessage(outdatedDeps, latestDeps) {
+  const outdatedMessages = outdatedDeps.map((dep, i) => {
+    const updatedDep = latestDeps.find(latestDep => latestDep.name === dep.name)
+    return `${chalk.blue(dep.name)} ${chalk.gray(dep.version)} → ${chalk.green(updatedDep.version)}`
+  })
 
   return `
 ${chalk.yellow('Hey, an update for accurapp is available!')}
