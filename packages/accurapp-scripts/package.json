@@ -1,6 +1,6 @@
 {
   "name": "accurapp-scripts",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Scripts for AccurApp.",
   "repository": "accurat/accurapp",
   "license": "MIT",
@@ -28,6 +28,5 @@
     "semver": "^5.4.1",
     "webpack": "^3.5.6",
     "webpack-dev-server": "^2.7.1"
-  },
-  "devDependencies": {}
+  }
 }
