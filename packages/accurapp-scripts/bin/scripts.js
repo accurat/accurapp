@@ -25,8 +25,10 @@ Promise.all(currentDeps.map((dep) => latestVersion(dep.name)))
 
 // start the designated script
 const script = process.argv[2]
+const scriptPath = '../scripts/' + script
+
 try {
-  require('../scripts/' + script)
+  require.resolve(scriptPath) // Check if exists without running
 } catch (err) {
   if (err.code === 'MODULE_NOT_FOUND') {
     console.error(`Unknown script "${script}".`)
@@ -35,3 +37,5 @@ try {
   }
   process.exit(1)
 }
+
+require(scriptPath) // Run the script actually
