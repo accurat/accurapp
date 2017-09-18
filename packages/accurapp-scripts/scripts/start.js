@@ -39,7 +39,7 @@ function runDevServer(port) {
   })
   const devServerConfig = buildDevServerConfig(urls.lanUrlForConfig)
   const devServer = new WebpackDevServer(compiler, devServerConfig)
-  devServer.listen(port, err => {
+  devServer.listen(port, HOST, err => {
     if (err) return log.err(err)
     log.info('Starting the development server...')
     openOrRefreshBrowser(urls.localUrlForBrowser)
