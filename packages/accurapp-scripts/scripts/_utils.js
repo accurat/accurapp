@@ -41,7 +41,7 @@ function createOutdatedMessage(outdatedDeps, latestDeps) {
   return `
 ${chalk.yellow('Hey, an update for accurapp is available!')}
 ${outdatedMessages.join('\n')}
-${chalk.yellow('Run')} ${chalk.cyan('yarn upgrade-interactive')} ${chalk.yellow('to update')}
+${chalk.yellow('Run')} ${chalk.cyan('yarn upgrade-interactive --latest')} ${chalk.yellow('to update')}
 `
 }
 
