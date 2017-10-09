@@ -115,9 +115,11 @@ function accuPreset(config = []) {
     //  \______/       \__|      \__|  \__|    \______/    \______|   \__|  \__|    \______/
     //
     env('staging', [
-      postcss([
-        autoprefixer({ browsers }),
-      ]),
+      postcss({
+        plugins: [
+          autoprefixer({ browsers }),
+        ],
+      }),
       sourceMaps('source-map'),
     ]),
 
@@ -132,9 +134,11 @@ function accuPreset(config = []) {
     // \__|         \__|  \__|    \______/    \_______/
     //
     env('production', [
-      postcss([
-        autoprefixer({ browsers }),
-      ]),
+      postcss({
+        plugins: [
+          autoprefixer({ browsers }),
+        ],
+      }),
       addPlugins([
         new MinifyPlugin({
           removeConsole: true,
