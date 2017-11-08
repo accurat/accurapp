@@ -58,6 +58,7 @@ module.exports = {
   rules: Object.assign(standardJSRulesWarn, {
     // WARNINGS
     'comma-dangle': [1, 'always-multiline'], // No risks, beacuse it will be transpiled
+    'curly': [2, 'always'],
     'space-before-function-paren': [1, { anonymous: 'always', named: 'never' }],
     'key-spacing': [1, { beforeColon: false, afterColon: true, mode: 'minimum' }],
     'object-curly-spacing': [1, 'always'],
