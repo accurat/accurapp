@@ -46,7 +46,7 @@ function accuPreset(config = []) {
     setOutput({
       path: path.resolve('./build'),
       filename: 'app.js',
-      publicPath: '/',
+      publicPath: process.env.PUBLIC_URL || '',
     }),
 
     // Loaders
