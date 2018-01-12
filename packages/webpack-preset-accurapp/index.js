@@ -35,6 +35,8 @@ const {
 const browsers = process.env.NODE_ENV === 'development' ? ['last 1 Chrome version'] : ['last 2 versions', 'ie 10']
 const babelrc = require('./babelrc')(browsers)
 
+process.env.PUBLIC_URL = process.env.PUBLIC_URL || ''
+
 function accuPreset(config = []) {
   return createConfig([
     entryPoint([
@@ -46,7 +48,7 @@ function accuPreset(config = []) {
     setOutput({
       path: path.resolve('./build'),
       filename: 'app.js',
-      publicPath: process.env.PUBLIC_URL || '',
+      publicPath: process.env.PUBLIC_URL,
     }),
 
     // Loaders
