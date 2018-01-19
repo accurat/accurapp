@@ -1,5 +1,6 @@
 process.on('unhandledRejection', err => { throw err })
 process.env.NODE_ENV = process.env.NODE_ENV || 'production'
+process.env.PUBLIC_URL = process.env.PUBLIC_URL || ''
 
 require('dotenv').config({ silent: true })
 
