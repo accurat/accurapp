@@ -11,8 +11,7 @@ require('dotenv').config({ silent: true })
 const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs-extra')
-const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = require('react-dev-utils/FileSizeReporter')
-const { log, createWebpackCompiler, readWebpackConfig, coloredBanner } = require('./_utils')
+const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, printFileSizes } = require('./_utils')
 
 const appDir = process.cwd()
 const config = readWebpackConfig()
@@ -57,15 +56,12 @@ function build() {
 
 console.log(coloredBanner('/||||/| accurapp', ['cyan', 'magenta']))
 
-measureFileSizesBeforeBuild(appBuild)
-  .then((previousFileSizes) => {
-    clearBuildFolder()
-    copyPublicFolder()
-    build()
-      .then((stats) => {
-        log.info('File sizes after gzip:')
-        console.log()
-        printFileSizesAfterBuild(stats, previousFileSizes, appBuild)
-        console.log()
-      })
+clearBuildFolder()
+copyPublicFolder()
+build()
+  .then((stats) => {
+    log.info('File sizes:')
+    console.log()
+    printFileSizes(stats, appBuild)
+    console.log()
   })

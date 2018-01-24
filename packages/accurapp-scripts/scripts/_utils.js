@@ -1,8 +1,15 @@
 const path = require('path')
+const fs = require('fs')
 const webpack = require('webpack')
 const chalk = require('chalk')
 const figlet = require('figlet')
 const boxen = require('boxen')
+const outdent = require('outdent')
+const filesize = require('filesize')
+const gzipSize = require('gzip-size').sync
+const stripAnsi = require('strip-ansi')
+const indentString = require('indent-string')
+const columnify = require('columnify')
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
 
 const log = {
@@ -38,11 +45,11 @@ function createOutdatedMessage(outdatedDeps, latestDeps) {
     return `${chalk.blue(dep.name)} ${chalk.gray(dep.version)} → ${chalk.green(updatedDep.version)}`
   })
 
-  return `
-${chalk.yellow('Hey, an update for accurapp is available!')}
-${outdatedMessages.join('\n')}
-${chalk.yellow('Run')} ${chalk.cyan('yarn upgrade-interactive --latest')} ${chalk.yellow('to update')}
-`
+  return outdent`
+    ${chalk.yellow('Hey, an update for accurapp is available!')}
+    ${outdatedMessages.join('\n')}
+    ${chalk.yellow('Run')} ${chalk.cyan('yarn upgrade-interactive --latest')} ${chalk.yellow('to update')}
+  `
 }
 
 function indent(text, prepend = '  ', firstLinePrepend = prepend) {
@@ -108,6 +115,60 @@ function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
   return compiler
 }
 
+function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 512 * 1024) {
+  const assets = (webpackStats.stats || [webpackStats])
+    .map(stats =>
+      stats
+        .toJson()
+        .assets.filter(asset => /\.(js|css)$/.test(asset.name))
+        .map(asset => {
+          const fileContents = fs.readFileSync(path.join(appBuild, asset.name))
+          const size = fs.statSync(path.join(appBuild, asset.name)).size
+          const sizeGzip = gzipSize(fileContents)
+
+          return {
+            folder: path.join(path.basename(appBuild), path.dirname(asset.name)),
+            name: path.basename(asset.name),
+            size,
+            sizeGzip,
+          }
+        })
+    )
+    .reduce((single, all) => all.concat(single), [])
+
+  assets.sort((a, b) => b.size - a.size)
+
+  const isLarge = asset => path.extname(asset.name) === '.js' && asset.size > maxBundleGzipSize
+
+  const columnData = assets.reduce((columnObj, asset) => {
+    const sizeLabel = `${filesize(asset.size)} ${chalk.dim(`(${filesize(asset.sizeGzip)} gzipped)`)}`
+    const firstColumn = isLarge(asset) ? chalk.yellow(sizeLabel) : sizeLabel
+    const secondColumn = `${chalk.dim(`${asset.folder}${path.sep}`)}${chalk.cyan(asset.name)}`
+
+    columnObj[firstColumn] = secondColumn
+    return columnObj
+  }, {})
+
+  console.log(
+    indentString(
+      columnify(columnData, {
+        showHeaders: false,
+        columnSplitter: '   ',
+      }),
+      3
+    )
+  )
+
+  if (assets.some(isLarge)) {
+    console.log()
+    console.log(chalk.yellow(outdent`
+      The bundle size is significantly larger than recommended.
+      Consider reducing it with code splitting: https://goo.gl/9VhYWB
+      You can also analyze the project dependencies: https://goo.gl/sDmR4n
+    `))
+  }
+}
+
 module.exports = {
   log,
   noop,
@@ -118,4 +179,5 @@ module.exports = {
   listLine,
   readWebpackConfig,
   createWebpackCompiler,
+  printFileSizes,
 }
