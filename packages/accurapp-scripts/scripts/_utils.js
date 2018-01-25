@@ -62,7 +62,7 @@ function listLine(text, color = i => i) {
   return indent(text, '   ', color('\n • '))
 }
 
-export function readWebpackConfig() {
+function readWebpackConfig() {
   const cwd = process.cwd()
   return require(path.join(cwd, 'webpack.config.js'))
 }
