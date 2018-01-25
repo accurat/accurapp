@@ -44,6 +44,13 @@ function runDevServer(port) {
     log.info('Starting the development server...')
     openOrRefreshBrowser(urls.localUrlForBrowser)
   })
+
+  const shutDownServer = () => {
+    devServer.close()
+    process.exit()
+  }
+  process.on('SIGINT', shutDownServer)
+  process.on('SIGTERM', shutDownServer)
 }
 
 console.log(coloredBanner('/||||/| accurapp'))
