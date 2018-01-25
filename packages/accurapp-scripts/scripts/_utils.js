@@ -21,6 +21,11 @@ const log = {
 function noop() {}
 
 function coloredBanner(text, colors = ['blue', 'red']) {
+  // If the console is small, we show only the logo
+  if (process.stdout.columns < 125 && text.includes(' accurapp')) {
+    text = text.slice(0, -' accurapp'.length)
+  }
+
   const bannerText = text.replace(/\|/g, 'l') // In BigMoney font, 'l' (lowercase L) are much nicer than '|' (pipes)
   const bannerColors = { '$': colors[0], '_': colors[1], '|': colors[1], '\\': colors[1], '/': colors[1] }
   const banner = figlet.textSync(bannerText, { font: 'Big Money-nw' })
