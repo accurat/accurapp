@@ -48,20 +48,17 @@ module.exports = buildWebpackConfig([
 ])
 ```
 
-To add a loader, for example, TypeScript Loader:
-
+For example, this is the way to customize the webpack-dev-server options.
 ```js
 const buildWebpackConfig = require('webpack-preset-accurapp')
-
-function tsLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.tsx?$/,
-    loader: 'ts-loader',
-  })
-}
+const { env, devServer } = require('webpack-blocks')
 
 module.exports = buildWebpackConfig([
-  tsLoader(),
+  env('development', [
+    devServer({
+      // your custom options here
+    }),
+  ]),
 ])
 ```
 

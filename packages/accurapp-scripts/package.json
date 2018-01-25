@@ -31,7 +31,6 @@
     "path": "^0.12.7",
     "react-dev-utils": "6.0.0-next.9754a231",
     "semver": "^5.5.0",
-    "strip-ansi": "^4.0.0",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
   },

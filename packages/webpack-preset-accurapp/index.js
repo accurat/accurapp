@@ -3,6 +3,7 @@ const {
   createConfig,
   addPlugins,
   customConfig,
+  devServer,
   entryPoint,
   setOutput,
   env,
@@ -91,10 +92,19 @@ function accuPreset(config = []) {
     //
     env('development', [
       prependEntry('react-dev-utils/webpackHotDevClient'),
+      devServer({
+        compress: true,
+        clientLogLevel: 'none',
+        contentBase: './public/',
+        watchContentBase: true,
+        quiet: true,
+        watchOptions: {
+          ignored: /node_modules/,
+        },
+        overlay: false,
+      }),
       eslintLoader(),
       addPlugins([
-        // This is necessary to emit hot updates (currently CSS only)
-        new webpack.HotModuleReplacementPlugin(),
         // Automatic rediscover of packages after `npm install`
         new WatchMissingNodeModulesPlugin('node_modules'),
       ]),

@@ -7,7 +7,6 @@ const boxen = require('boxen')
 const outdent = require('outdent')
 const filesize = require('filesize')
 const gzipSize = require('gzip-size').sync
-const stripAnsi = require('strip-ansi')
 const indentString = require('indent-string')
 const columnify = require('columnify')
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
@@ -63,7 +62,7 @@ function listLine(text, color = i => i) {
   return indent(text, '   ', color('\n • '))
 }
 
-function readWebpackConfig() {
+export function readWebpackConfig() {
   const cwd = process.cwd()
   return require(path.join(cwd, 'webpack.config.js'))
 }
