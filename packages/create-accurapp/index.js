@@ -123,6 +123,10 @@ const packageJson = {
     start: 'accurapp-scripts start',
     build: 'accurapp-scripts build',
   },
+  browserslist: {
+    production: ['last 2 versions', 'ie 11'],
+    development: ['last 1 Chrome version'],
+  },
 }
 if (isRealRun) writePackageJson(appDir, packageJson)
 

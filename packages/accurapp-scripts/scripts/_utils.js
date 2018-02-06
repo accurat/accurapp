@@ -22,7 +22,7 @@ function noop() {}
 
 function coloredBanner(text, colors = ['blue', 'red']) {
   // If the console is small, we show only the logo
-  if (process.stdout.columns < 125 && text.includes(' accurapp')) {
+  if (text.includes(' accurapp') && process.stdout.columns < 125) {
     text = text.slice(0, -' accurapp'.length)
   }
 

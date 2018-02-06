@@ -5,11 +5,11 @@
   "repository": "accurat/accurapp",
   "license": "MIT",
   "engines": {
-    "node": ">=6.5"
+    "node": ">=7"
   },
-  "keywords": [
-    "accurapp",
-    "webpack-blocks"
+  "files": [
+    "index.js",
+    "customBlocks.js"
   ],
   "dependencies": {
     "@webpack-blocks/assets": "^1.0.0-rc",

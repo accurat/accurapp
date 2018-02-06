@@ -4,6 +4,12 @@
   "description": "ESLint configuration used by Accurat",
   "repository": "accurat/accurapp",
   "license": "MIT",
+  "engines": {
+    "node": ">=7"
+  },
+  "files": [
+    "index.js"
+  ],
   "dependencies": {
     "babel-eslint": "^7.2.2",
     "eslint": "^3.19.0",
