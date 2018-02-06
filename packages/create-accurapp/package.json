@@ -15,10 +15,12 @@
     "create-accurapp": "./index.js"
   },
   "dependencies": {
+    "accurapp-scripts": "^4.0.0",
     "chalk": "^1.1.1",
     "cross-spawn": "^4.0.0",
     "figlet": "^1.2.0",
     "fs-extra": "^2.1.2",
+    "indent-string": "^3.2.0",
     "meow": "^3.7.0"
   }
 }
