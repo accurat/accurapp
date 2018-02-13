@@ -8,10 +8,10 @@ const {
   env,
   performance,
   sourceMaps,
-  babel,
-  postcss,
-} = require('webpack-blocks')
+} = require('@webpack-blocks/webpack')
 const { css } = require('@webpack-blocks/assets')
+const babel = require('@webpack-blocks/babel')
+const postcss = require('@webpack-blocks/postcss')
 const autoprefixer = require('autoprefixer')
 const path = require('path')
 

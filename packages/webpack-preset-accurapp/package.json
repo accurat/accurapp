@@ -13,6 +13,9 @@
   ],
   "dependencies": {
     "@webpack-blocks/assets": "^1.0.0-rc",
+    "@webpack-blocks/babel": "^1.0.0-rc",
+    "@webpack-blocks/postcss": "^1.0.0-rc",
+    "@webpack-blocks/webpack": "^1.0.0-rc",
     "autoprefixer": "^7.1.4",
     "babel-minify-webpack-plugin": "^0.2.0",
     "babel-plugin-lodash": "^3.2.11",
@@ -29,7 +32,6 @@
     "raw-loader": "^0.5.1",
     "react-dev-utils": "^4.0.1",
     "url-loader": "^0.5.9",
-    "webpack": "^3.5.6",
-    "webpack-blocks": "^1.0.0-rc"
+    "webpack": "^3.5.6"
   }
 }
