@@ -46,20 +46,14 @@ function runDevServer(port) {
   })
 }
 
-const isInteractive = process.stdout.isTTY
-
 console.log(coloredBanner('/||||/| accurapp'))
 
 detect(DEFAULT_PORT).then(port => {
   if (port === DEFAULT_PORT) {
     runDevServer(port)
   } else {
-    if (isInteractive) {
-      log.ok(`Something is already running on port ${DEFAULT_PORT}, switching to ${chalk.blue(port)}...`)
-      runDevServer(port)
-    } else {
-      log.err(`Something is already running on port ${DEFAULT_PORT}, aborting.`)
-    }
+    log.ok(`Something is already running on port ${DEFAULT_PORT}, switching to ${chalk.blue(port)}...`)
+    runDevServer(port)
   }
   return port
 }).catch(err => { throw err })
