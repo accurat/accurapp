@@ -3,24 +3,25 @@ const {
   createConfig,
   addPlugins,
   customConfig,
-  devServer,
   entryPoint,
   setOutput,
   env,
   performance,
   sourceMaps,
+  match,
 } = require('@webpack-blocks/webpack')
 const { css } = require('@webpack-blocks/assets')
+const devServer = require('@webpack-blocks/dev-server')
 const babel = require('@webpack-blocks/babel')
 const postcss = require('@webpack-blocks/postcss')
 const autoprefixer = require('autoprefixer')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const {
   imageLoader,
@@ -32,32 +33,40 @@ const {
   prependEntry,
 } = require('./customBlocks')
 
-// TODO move browsers in package.json when they will be supported https://github.com/babel/babel-preset-env/issues/149
-const browsers = process.env.NODE_ENV === 'development' ? ['last 1 Chrome version'] : ['last 2 versions', 'ie 10']
-const babelrc = require('./babelrc')(browsers)
-
 function accuPreset(config = []) {
   return createConfig([
-    entryPoint([
-      // Include all polyfills we can, to prevent cross-browser bugs.
-      'babel-polyfill',
-      // Your app's code.
-      './src/index.js',
-    ]),
+    entryPoint('./src/index.js'),
     setOutput({
       path: path.resolve('./build'),
-      filename: 'app.js',
-      publicPath: process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}/` : '/',
+      filename: 'app.[chunkhash:8].js',
+      publicPath: `/${process.env.PUBLIC_URL}`,
     }),
 
     // Loaders
-    css(),
-    babel(babelrc),
+    match(['*.css', '!*.module.css'], [
+      css({
+        minimize: process.env.NODE_ENV === 'production',
+        sourceMap: process.env.NODE_ENV !== 'production',
+      }),
+    ]),
+    match('*.module.css', [
+      css.modules({
+        minimize: process.env.NODE_ENV === 'production',
+        sourceMap: process.env.NODE_ENV !== 'production',
+      }),
+    ]),
+    postcss({
+      plugins: [
+        autoprefixer({ flexbox: 'no-2009' }),
+      ],
+    }),
+    babel(),
     fontLoader(),
     imageLoader(),
     videoLoader(),
     glslifyLoader(),
 
+    // Import components without doing the ../../../
     resolveSrc(),
 
     addPlugins([
@@ -112,6 +121,7 @@ function accuPreset(config = []) {
       sourceMaps('cheap-module-eval-source-map'),
       // Turn off performance hints during development
       performance({ hints: false }),
+      customConfig({ mode: 'development' }),
     ]),
 
     //
@@ -125,12 +135,11 @@ function accuPreset(config = []) {
     //  \______/       \__|      \__|  \__|    \______/    \______|   \__|  \__|    \______/
     //
     env('staging', [
-      postcss({
-        plugins: [
-          autoprefixer({ browsers }),
-        ],
-      }),
       sourceMaps('source-map'),
+      customConfig({
+        mode: 'production',
+        optimization: { minimize: false },
+      }),
     ]),
 
     //
@@ -144,37 +153,37 @@ function accuPreset(config = []) {
     // \__|         \__|  \__|    \______/    \_______/
     //
     env('production', [
-      postcss({
-        plugins: [
-          autoprefixer({ browsers }),
-        ],
+      customConfig({
+        mode: 'production',
+        optimization: {
+          minimizer: [
+            new UglifyJsPlugin({
+              uglifyOptions: {
+                ecma: 8,
+                compress: {
+                  // Remove all console.logs
+                  drop_console: true,
+                  // Disabled because of an issue with Uglify breaking seemingly valid code:
+                  // https://github.com/facebook/create-react-app/issues/2376
+                  // Pending further investigation:
+                  // https://github.com/mishoo/UglifyJS2/issues/2011
+                  comparisons: false,
+                },
+                output: {
+                  // Turned on because emoji and regex is not minified properly using default
+                  // https://github.com/facebook/create-react-app/issues/2488
+                  ascii_only: true,
+                },
+              },
+              // Use multi-process parallel running to improve the build speed
+              // Default number of concurrent runs: os.cpus().length - 1
+              parallel: true,
+              // Enable file caching
+              cache: true,
+            }),
+          ],
+        },
       }),
-      addPlugins([
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            ecma: 8,
-            compress: {
-              // Remove all console.logs
-              drop_console: true,
-              // Disabled because of an issue with Uglify breaking seemingly valid code:
-              // https://github.com/facebook/create-react-app/issues/2376
-              // Pending further investigation:
-              // https://github.com/mishoo/UglifyJS2/issues/2011
-              comparisons: false,
-            },
-            output: {
-              // Turned on because emoji and regex is not minified properly using default
-              // https://github.com/facebook/create-react-app/issues/2488
-              ascii_only: true,
-            },
-          },
-          // Use multi-process parallel running to improve the build speed
-          // Default number of concurrent runs: os.cpus().length - 1
-          parallel: true,
-          // Enable file caching
-          cache: true,
-        }),
-      ]),
     ]),
 
     ...(Array.isArray(config) ? config : [customConfig(config)]),

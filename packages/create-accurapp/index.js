@@ -111,6 +111,7 @@ const packageJson = {
     production: ['last 2 versions', 'ie 11'],
     development: ['last 1 Chrome version'],
   },
+  sideEffects: false,
 }
 if (isRealRun) writePackageJson(appDir, packageJson)
 

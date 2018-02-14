@@ -1,4 +1,4 @@
-const fileNameTemplate = '[name].[hash:8].[ext]'
+const fileNameTemplate = '[name].[chunkhash:8].[ext]'
 
 /**
  * Images smaller than 10kb are loaded as a base64 encoded url instead of file url

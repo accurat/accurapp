@@ -13,8 +13,11 @@
   ],
   "dependencies": {
     "@webpack-blocks/assets": "^1.0.0-rc",
-    "autoprefixer": "^7.2.5",
-    "babel-minify-webpack-plugin": "^0.3.0",
+    "@webpack-blocks/babel": "^1.0.0-rc",
+    "@webpack-blocks/dev-server": "^1.0.0-rc",
+    "@webpack-blocks/postcss": "^1.0.0-rc",
+    "@webpack-blocks/webpack": "^1.0.0-rc",
+    "autoprefixer": "^8.0.0",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "eslint-loader": "^1.9.0",
     "file-loader": "^1.1.6",
@@ -22,8 +25,14 @@
     "html-webpack-plugin": "^2.30.1",
     "raw-loader": "1.0.0-beta.0",
     "react-dev-utils": "6.0.0-next.9754a231",
+    "uglifyjs-webpack-plugin": "^1.1.8",
     "url-loader": "1.0.0-beta.0",
-    "webpack": "4.0.0-beta.0",
-    "webpack-blocks": "^1.0.0-rc.2"
+    "webpack": "4.0.0-beta.1"
+  },
+  "resolutions": {
+    "**/babel-loader": "8.0.0-beta.0",
+    "**/file-loader": "1.1.6",
+    "**/webpack": "4.0.0-beta.1",
+    "**/webpack-dev-server": "3.0.0-alpha6"
   }
 }
