@@ -12,7 +12,6 @@ const {
 } = require('@webpack-blocks/webpack')
 const { css } = require('@webpack-blocks/assets')
 const devServer = require('@webpack-blocks/dev-server')
-const babel = require('@webpack-blocks/babel')
 const postcss = require('@webpack-blocks/postcss')
 const autoprefixer = require('autoprefixer')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -24,6 +23,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 
 const {
+  babel,
   imageLoader,
   videoLoader,
   fontLoader,
@@ -60,7 +60,16 @@ function accuPreset(config = []) {
         autoprefixer({ flexbox: 'no-2009' }),
       ],
     }),
-    babel(),
+    match(['*.{js,jsx}', '!*node_modules*'], [
+      babel({
+        compact: process.env.NODE_ENV === 'production',
+      }),
+    ]),
+    match('*node_modules*.{js,jsx}', [
+      babel({
+        compact: process.env.NODE_ENV === 'production',
+      }),
+    ]),
     fontLoader(),
     imageLoader(),
     videoLoader(),

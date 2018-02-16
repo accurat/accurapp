@@ -1,6 +1,29 @@
 const fileNameTemplate = '[name].[chunkhash:8].[ext]'
 
 /**
+ * The thread-loader parallelizes code compilation, useful with babel since
+ * it transpiles both application javascript and node_modules javascript
+ */
+function babel(options = {}) {
+  return (context, { addLoader }) => addLoader(
+    Object.assign({
+      // setting `test` defaults here, in case there is no `context.match` data
+      test: /\.(js|jsx)$/,
+      use: [
+        'thread-loader',
+        {
+          loader: 'babel-loader',
+          options: Object.assign({
+            cacheDirectory: true,
+            highlightCode: true,
+          }, options),
+        },
+      ],
+    }, context.match)
+  )
+}
+
+/**
  * Images smaller than 10kb are loaded as a base64 encoded url instead of file url
  */
 function imageLoader() {
@@ -97,6 +120,7 @@ function prependEntryPostHook(context, util) {
 }
 
 module.exports = {
+  babel,
   imageLoader,
   videoLoader,
   fontLoader,
