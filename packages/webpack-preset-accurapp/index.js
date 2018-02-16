@@ -14,7 +14,6 @@ const { css } = require('@webpack-blocks/assets')
 const devServer = require('@webpack-blocks/dev-server')
 const postcss = require('@webpack-blocks/postcss')
 const autoprefixer = require('autoprefixer')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -31,7 +30,17 @@ const {
   eslintLoader,
   resolveSrc,
   prependEntry,
+  mode,
+  uglify,
 } = require('./customBlocks')
+
+const cssLoaderOpts = {
+  minimize: process.env.NODE_ENV === 'production',
+  sourceMap: process.env.NODE_ENV !== 'production',
+}
+const babelLoaderOpts = {
+  compact: process.env.NODE_ENV === 'production',
+}
 
 function accuPreset(config = []) {
   return createConfig([
@@ -44,16 +53,10 @@ function accuPreset(config = []) {
 
     // Loaders
     match(['*.css', '!*.module.css'], [
-      css({
-        minimize: process.env.NODE_ENV === 'production',
-        sourceMap: process.env.NODE_ENV !== 'production',
-      }),
+      css(cssLoaderOpts),
     ]),
     match('*.module.css', [
-      css.modules({
-        minimize: process.env.NODE_ENV === 'production',
-        sourceMap: process.env.NODE_ENV !== 'production',
-      }),
+      css.modules(cssLoaderOpts),
     ]),
     postcss({
       plugins: [
@@ -61,14 +64,10 @@ function accuPreset(config = []) {
       ],
     }),
     match(['*.{js,jsx}', '!*node_modules*'], [
-      babel({
-        compact: process.env.NODE_ENV === 'production',
-      }),
+      babel(babelLoaderOpts),
     ]),
     match('*node_modules*.{js,jsx}', [
-      babel({
-        compact: process.env.NODE_ENV === 'production',
-      }),
+      babel(babelLoaderOpts),
     ]),
     fontLoader(),
     imageLoader(),
@@ -109,6 +108,7 @@ function accuPreset(config = []) {
     // \_______/    \________|       \_/
     //
     env('development', [
+      mode('development'),
       prependEntry('react-dev-utils/webpackHotDevClient'),
       devServer({
         compress: true,
@@ -130,7 +130,6 @@ function accuPreset(config = []) {
       sourceMaps('cheap-module-eval-source-map'),
       // Turn off performance hints during development
       performance({ hints: false }),
-      customConfig({ mode: 'development' }),
     ]),
 
     //
@@ -144,11 +143,8 @@ function accuPreset(config = []) {
     //  \______/       \__|      \__|  \__|    \______/    \______|   \__|  \__|    \______/
     //
     env('staging', [
+      mode('production', { minimize: false }),
       sourceMaps('source-map'),
-      customConfig({
-        mode: 'production',
-        optimization: { minimize: false },
-      }),
     ]),
 
     //
@@ -162,36 +158,30 @@ function accuPreset(config = []) {
     // \__|         \__|  \__|    \______/    \_______/
     //
     env('production', [
-      customConfig({
-        mode: 'production',
-        optimization: {
-          minimizer: [
-            new UglifyJsPlugin({
-              uglifyOptions: {
-                ecma: 8,
-                compress: {
-                  // Remove all console.logs
-                  drop_console: true,
-                  // Disabled because of an issue with Uglify breaking seemingly valid code:
-                  // https://github.com/facebook/create-react-app/issues/2376
-                  // Pending further investigation:
-                  // https://github.com/mishoo/UglifyJS2/issues/2011
-                  comparisons: false,
-                },
-                output: {
-                  // Turned on because emoji and regex is not minified properly using default
-                  // https://github.com/facebook/create-react-app/issues/2488
-                  ascii_only: true,
-                },
-              },
-              // Use multi-process parallel running to improve the build speed
-              // Default number of concurrent runs: os.cpus().length - 1
-              parallel: true,
-              // Enable file caching
-              cache: true,
-            }),
-          ],
+      mode('production'),
+      uglify({
+        uglifyOptions: {
+          ecma: 8,
+          compress: {
+            // Remove all console.logs
+            drop_console: true,
+            // Disabled because of an issue with Uglify breaking seemingly valid code:
+            // https://github.com/facebook/create-react-app/issues/2376
+            // Pending further investigation:
+            // https://github.com/mishoo/UglifyJS2/issues/2011
+            comparisons: false,
+          },
+          output: {
+            // Turned on because emoji and regex is not minified properly using default
+            // https://github.com/facebook/create-react-app/issues/2488
+            ascii_only: true,
+          },
         },
+        // Use multi-process parallel running to improve the build speed
+        // Default number of concurrent runs: os.cpus().length - 1
+        parallel: true,
+        // Enable file caching
+        cache: true,
       }),
     ]),
 

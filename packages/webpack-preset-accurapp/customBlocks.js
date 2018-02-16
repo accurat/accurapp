@@ -1,3 +1,5 @@
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
 const fileNameTemplate = '[name].[chunkhash:8].[ext]'
 
 /**
@@ -119,6 +121,31 @@ function prependEntryPostHook(context, util) {
   }
 }
 
+/**
+ * Block for webpack4's mode and its options
+ * TODO remove this block when it will be supported in webpack-blocks
+ */
+function mode(mode, options = {}) {
+  return (context, { merge }) => merge({
+    mode,
+    optimization: options,
+  })
+}
+
+/**
+ * Webpack4 uglify block
+ * TODO remove this block when it will be supported in webpack-blocks
+ */
+function uglify(options = {}) {
+  return (context, { merge }) => merge({
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin(options),
+      ],
+    },
+  })
+}
+
 module.exports = {
   babel,
   imageLoader,
@@ -128,4 +155,6 @@ module.exports = {
   eslintLoader,
   resolveSrc,
   prependEntry,
+  mode,
+  uglify,
 }
