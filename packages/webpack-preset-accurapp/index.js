@@ -29,6 +29,7 @@ const {
   fontLoader,
   glslifyLoader,
   eslintLoader,
+  csvLoader,
   resolveSrc,
   prependEntry,
   mode,
@@ -74,6 +75,7 @@ function accuPreset(config = []) {
     imageLoader(),
     videoLoader(),
     glslifyLoader(),
+    csvLoader(),
 
     // Import components without doing the ../../../
     resolveSrc(),

@@ -91,6 +91,21 @@ function eslintLoader() {
 }
 
 /**
+ * Parse .csv files with PapaParse and return it in a JSON format
+ */
+function csvLoader() {
+  return (context, { addLoader }) => addLoader({
+    test: /\.csv$/,
+    loader: 'csv-loader',
+    options: {
+      dynamicTyping: true,
+      header: true,
+      skipEmptyLines: true,
+    },
+  })
+}
+
+/**
  * You will be able to import starting from the src folder so you don't have to ../../../
  */
 function resolveSrc() {
@@ -153,6 +168,7 @@ module.exports = {
   fontLoader,
   glslifyLoader,
   eslintLoader,
+  csvLoader,
   resolveSrc,
   prependEntry,
   mode,
