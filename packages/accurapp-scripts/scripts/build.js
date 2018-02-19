@@ -2,6 +2,10 @@ process.on('unhandledRejection', err => { throw err })
 process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 process.env.PUBLIC_URL = process.env.PUBLIC_URL || ''
 
+if (process.env.PUBLIC_URL.startsWith('/') || process.env.PUBLIC_URL.endsWith('/')) {
+  throw new Error(`The PUBLIC_URL env variable cannot have trailing or leading slashes: '${process.env.PUBLIC_URL}'`)
+}
+
 require('dotenv').config({ silent: true })
 
 const chalk = require('chalk')
