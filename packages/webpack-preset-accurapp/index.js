@@ -49,7 +49,7 @@ function accuPreset(config = []) {
     setOutput({
       path: path.resolve('./build'),
       filename: 'app.[chunkhash:8].js',
-      publicPath: `/${process.env.PUBLIC_URL}`,
+      publicPath: process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}/` : '/',
     }),
 
     // Loaders
