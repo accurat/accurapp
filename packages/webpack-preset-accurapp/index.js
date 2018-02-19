@@ -20,6 +20,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
+const Dotenv = require('dotenv-webpack')
 
 const {
   babel,
@@ -78,10 +79,11 @@ function accuPreset(config = []) {
     resolveSrc(),
 
     addPlugins([
-      // Makes some environment variables available to the JS code
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        'process.env.PUBLIC_URL': JSON.stringify(process.env.PUBLIC_URL),
+      // Like webpack.DefinePlugin, but also reads the .env file, giving however priority to
+      // the envs already there (like NODE_ENV or variable set from the command line or CI)
+      new Dotenv({
+        systemvars: true,
+        silent: true,
       }),
       // Makes some environment variables available in index.html. Example: %PUBLIC_URL%
       new InterpolateHtmlPlugin({
