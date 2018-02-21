@@ -28,6 +28,5 @@
     "semver": "^5.4.1",
     "webpack": "^3.5.6",
     "webpack-dev-server": "^2.7.1"
-  },
-  "devDependencies": {}
+  }
 }
