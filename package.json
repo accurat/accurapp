@@ -15,6 +15,6 @@
   ],
   "devDependencies": {
     "eslint-config-accurapp": "file:./packages/eslint-config-accurapp",
-    "lerna": "2.1.2"
+    "lerna": "^2.9.0"
   }
 }
