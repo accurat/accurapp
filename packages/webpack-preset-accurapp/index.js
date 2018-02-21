@@ -1,4 +1,3 @@
-const webpack = require('webpack')
 const {
   createConfig,
   addPlugins,
@@ -30,6 +29,7 @@ const {
   glslifyLoader,
   eslintLoader,
   csvLoader,
+  svgLoader,
   resolveSrc,
   prependEntry,
   mode,
@@ -76,6 +76,7 @@ function accuPreset(config = []) {
     videoLoader(),
     glslifyLoader(),
     csvLoader(),
+    svgLoader(),
 
     // Import components without doing the ../../../
     resolveSrc(),
@@ -90,7 +91,7 @@ function accuPreset(config = []) {
       // Makes some environment variables available in index.html. Example: %PUBLIC_URL%
       new InterpolateHtmlPlugin({
         'NODE_ENV': process.env.NODE_ENV,
-        'PUBLIC_URL': process.env.PUBLIC_URL,
+        'PUBLIC_URL': process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}` : '',
       }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin({
@@ -118,6 +119,7 @@ function accuPreset(config = []) {
         compress: true,
         clientLogLevel: 'none',
         contentBase: './public/',
+        publicPath: process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}/` : '/',
         watchContentBase: true,
         quiet: true,
         watchOptions: {

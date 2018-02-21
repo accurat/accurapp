@@ -105,6 +105,55 @@ function csvLoader() {
   })
 }
 
+// Allows you to use two kinds of imports for SVG:
+// import logoUrl from './logo.svg'; gives you the URL.
+// import { ReactComponent as Logo } from './logo.svg'; gives you a component.
+function svgLoader() {
+  return (context, { addLoader }) => addLoader({
+    test: /\.svg$/,
+    use: [
+      // {
+      //   loader: 'babel-loader',
+      //   options: {
+      //     highlightCode: true,
+      //     cacheDirectory: true,
+      //     compact: process.env.NODE_ENV === 'production',
+      //   },
+      // },
+      {
+        loader: 'svgr/webpack',
+        options: {
+          // TODO uncomment this when this issue will be resolved
+          // https://github.com/smooth-code/svgr/issues/52
+          // svgo: {
+          //   pretty: true,
+          //   multipass: true,
+          //   plugins: [
+          //     { sortAttrs: true },
+          //     { removeDimensions: true },
+          //     { inlineStyles: true },
+          //     { removeStyleElement: true },
+          //     { convertColors: { currentColor: true } },
+          //     { removeAttrs: { attrs: '(xmlns.*)' } },
+          //   ],
+          // },
+          semi: false,
+          singleQuote: true,
+          trailingComma: 'es5',
+          icon: true,
+        },
+      },
+      {
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: fileNameTemplate,
+        },
+      },
+    ],
+  })
+}
+
 /**
  * You will be able to import starting from the src folder so you don't have to ../../../
  */
@@ -169,6 +218,7 @@ module.exports = {
   glslifyLoader,
   eslintLoader,
   csvLoader,
+  svgLoader,
   resolveSrc,
   prependEntry,
   mode,
