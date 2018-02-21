@@ -138,13 +138,13 @@ if (isRealRun) {
 
 if (isYesInstall) {
   const devDependenciesToInstall = isTesting
-    ? devDependencies.map(dep => `file:${path.join(__dirname, `../${dep}`)}`) // Local package
+    ? devDependencies.map(dep => path.join(__dirname, `../${dep}`)) // Local package
     : devDependencies
   log.ok(`Installing dev packages: ${devDependenciesToInstall.map(d => chalk.cyan(d)).join(', ')}`)
-  if (isRealRun) exec(`yarn add --dev --ignore-scripts ${devDependenciesToInstall.join(' ')}`, appDir)
+  if (isRealRun) exec(`yarn add --dev ${devDependenciesToInstall.join(' ')}`, appDir)
 
   log.ok(`Installing packages: ${chalk.cyan(dependencies.join(', '))}`)
-  if (isRealRun) exec(`yarn add --ignore-scripts ${dependencies.join(' ')}`, appDir)
+  if (isRealRun) exec(`yarn add ${dependencies.join(' ')}`, appDir)
 } else {
   log.info(`Not running 'yarn add/install' because you chose so.`)
 }

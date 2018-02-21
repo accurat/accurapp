@@ -15,7 +15,7 @@
     "create-accurapp": "./index.js"
   },
   "dependencies": {
-    "accurapp-scripts": "^4.0.0",
+    "accurapp-scripts": "^3.2.10",
     "chalk": "^2.3.0",
     "cross-spawn": "^6.0.4",
     "figlet": "^1.2.0",

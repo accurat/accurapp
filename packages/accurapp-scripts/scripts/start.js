@@ -1,8 +1,6 @@
-process.on('unhandledRejection', err => { throw err })
 process.env.NODE_ENV = 'development'
 process.env.PUBLIC_URL = ''
-
-require('dotenv').config({ silent: true })
+require('dotenv').config() // gives precedence to the env variables already present
 
 const chalk = require('chalk')
 const detect = require('detect-port')
