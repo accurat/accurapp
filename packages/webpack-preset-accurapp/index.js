@@ -49,7 +49,7 @@ function accuPreset(config = []) {
     entryPoint('./src/index.js'),
     setOutput({
       path: path.resolve('./build'),
-      filename: 'app.[chunkhash:8].js',
+      filename: 'app.[hash:8].js',
       publicPath: process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}/` : '/',
     }),
 
@@ -88,15 +88,15 @@ function accuPreset(config = []) {
         systemvars: true,
         silent: true,
       }),
-      // Makes some environment variables available in index.html. Example: %PUBLIC_URL%
-      new InterpolateHtmlPlugin({
-        'NODE_ENV': process.env.NODE_ENV,
-        'PUBLIC_URL': process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}` : '',
-      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin({
         inject: true,
         template: './src/index.html',
+      }),
+      // Makes some environment variables available in index.html. Example: %PUBLIC_URL%
+      new InterpolateHtmlPlugin({
+        'NODE_ENV': process.env.NODE_ENV,
+        'PUBLIC_URL': process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}` : '',
       }),
       // Check case of paths, so case-sensitive filesystems won't complain:
       new CaseSensitivePathsPlugin(),

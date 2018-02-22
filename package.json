@@ -2,16 +2,21 @@
   "name": "accurapp",
   "private": true,
   "scripts": {
-    "clean": "rm -rf node_modules && rm -rf packages/*/node_modules && yarn cache clean",
+    "clean": "rm -rf node_modules; rm -rf packages/*/node_modules; rm yarn.lock; yarn cache clean",
     "lint": "node node_modules/eslint/bin/eslint.js packages",
     "publish": "tasks/release.sh",
-    "create-test-app": "rm -rf test-app && node packages/create-accurapp/index.js test-app --testing"
+    "create-test-app": "rm -rf test-app; node packages/create-accurapp/index.js test-app --testing"
   },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
-    "eslint-config-accurapp": "file:./packages/eslint-config-accurapp",
+    "eslint-config-accurapp": "./packages/eslint-config-accurapp",
     "lerna": "^2.9.0"
+  },
+  "resolutions": {
+    "**/file-loader": "1.1.9",
+    "**/webpack": "4.0.0-beta.2",
+    "**/webpack-dev-server": "3.0.0-beta.2"
   }
 }

@@ -87,7 +87,7 @@ function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
   }
 
   // You have changed a file, bundle is now "invalidated", and Webpack is recompiling a bundle
-  compiler.plugin('invalid', (filePath) => {
+  compiler.hooks.invalid.tap('invalid', (filePath) => {
     const filePathRelative = path.relative(process.cwd(), filePath)
     console.log()
     log.info(`Compiling ${chalk.cyan(filePathRelative)}...`)
@@ -96,7 +96,7 @@ function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
   let isFirstCompile = true
 
   // Webpack has finished recompiling the bundle (whether or not you have warnings or errors)
-  compiler.plugin('done', (stats) => {
+  compiler.hooks.done.tap('done', (stats) => {
     const messages = formatWebpackMessages(stats.toJson({}, true))
     const isSuccessful = messages.errors.length + messages.warnings.length === 0
 

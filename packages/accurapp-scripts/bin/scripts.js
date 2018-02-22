@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 if (parseFloat(process.versions.node) < 7) throw new Error('Sorry, Node 7+ is required! Tip: use `nvm` for painless upgrades.')
 
-// warn if any accurapp package is outdated
+// Makes the script crash on unhandled rejections instead of silently ignoring them
+process.on('unhandledRejection', err => { throw err })
+
+// Warn if any accurapp package is outdated
 if (!process.env.CI) {
   const latestVersion = require('latest-version')
   const semver = require('semver')
@@ -25,7 +28,7 @@ if (!process.env.CI) {
     })
 }
 
-// start the designated script
+// Start the designated script
 const script = process.argv[2]
 const scriptPath = '../scripts/' + script
 
