@@ -41,6 +41,7 @@ module.exports = {
     'flowtype',
     'promise',
     'react',
+    'filenames',
   ],
 
   env: {
@@ -62,7 +63,8 @@ module.exports = {
     'object-curly-spacing': ['warn', 'always'],
     'block-spacing': ['warn', 'always'],
     'padded-blocks': ['warn', { blocks: 'never', switches: 'never', classes: 'never' }],
-    'no-implicit-coercion': 'warn',
+    'no-shadow': 'warn',
+    'import/order': ['warn', { groups: ['builtin', 'external'] }],
     'react/sort-comp': 'warn',
     'react/jsx-indent': ['warn', 2],
     'react/jsx-indent-props': ['warn', 2],
@@ -82,6 +84,7 @@ module.exports = {
     'promise/catch-or-return': 'warn',
     'promise/no-callback-in-promise': 'warn',
     'promise/no-return-wrap': 'warn',
+    'filenames/match-exported': 'warn',
     // ERRORS
     'no-redeclare': 'error',
     'no-undef': 'error',
@@ -89,6 +92,9 @@ module.exports = {
     'no-use-before-define': ['error', { functions: false, classes: true, variables: true }],
     'callback-return': ['error', ['callback', 'cb', 'next', 'done']],
     'handle-callback-err': 'error',
+    'no-implicit-coercion': 'error',
+    'no-bitwise': 'error',
+    'prefer-template': 'error',
     'react/no-unused-prop-types': 'error',
     'react/jsx-no-bind': ['error', { ignoreRefs: true }],
     'react/react-in-jsx-scope': 'error',
