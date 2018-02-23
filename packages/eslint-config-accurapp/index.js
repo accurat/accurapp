@@ -1,22 +1,22 @@
 function errorToWarn(ruleValue) {
   if (ruleValue === 2 || ruleValue === 'error') {
-    return 1
+    return 'warn'
   }
   if (Array.isArray(ruleValue)) {
     if (ruleValue[0] === 2 || ruleValue[0] === 'error') {
-      ruleValue[0] = 1
+      ruleValue[0] = 'warn'
       return ruleValue
     }
   }
   return ruleValue
 }
 
-var standardJSRules = require('eslint-config-standard').rules
-var standardJSRulesWarn = Object.keys(standardJSRules).reduce(function (acc, ruleName) {
+const standardJSRules = require('eslint-config-standard').rules
+const standardJSRulesWarn = Object.keys(standardJSRules).reduce(function (acc, ruleName) {
   if (ruleName.indexOf('standard') === 0) return acc
 
-  var ruleValue = standardJSRules[ruleName]
-  var ruleValueNew = errorToWarn(ruleValue)
+  const ruleValue = standardJSRules[ruleName]
+  const ruleValueNew = errorToWarn(ruleValue)
   if (ruleName.startsWith('node/')) return acc // filter out eslint-plugin-node rules because they error
   acc[ruleName] = ruleValueNew
   return acc
@@ -28,12 +28,11 @@ module.exports = {
   parser: 'babel-eslint',
 
   parserOptions: {
-    ecmaVersion: 8,
+    ecmaVersion: 9,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
       generators: true,
-      experimentalObjectRestSpread: true,
     },
   },
 
@@ -57,42 +56,42 @@ module.exports = {
 
   rules: Object.assign(standardJSRulesWarn, {
     // WARNINGS
-    'comma-dangle': [1, 'always-multiline'], // No risks, beacuse it will be transpiled
-    'space-before-function-paren': [1, { anonymous: 'always', named: 'never' }],
-    'key-spacing': [1, { beforeColon: false, afterColon: true, mode: 'minimum' }],
-    'object-curly-spacing': [1, 'always'],
-    'block-spacing': [1, 'always'],
-    'padded-blocks': [1, { blocks: 'never', switches: 'never', classes: 'never' }],
-    'no-implicit-coercion': 1,
-    'react/sort-comp': 1,
-    'react/jsx-indent': [1, 2],
-    'react/jsx-indent-props': [1, 2],
-    'react/jsx-wrap-multilines': 1,
-    'react/jsx-equals-spacing': [1, 'never'],
-    'react/jsx-no-duplicate-props': [1, { ignoreCase: true }],
-    'react/jsx-no-undef': 1,
-    'react/jsx-pascal-case': [1, { allowAllCaps: true, ignore: [] }],
-    'react/jsx-uses-react': 1,
-    'react/jsx-uses-vars': 1,
-    'react/no-danger-with-children': 1,
-    'react/no-deprecated': 1,
-    'react/no-direct-mutation-state': 1,
-    'react/no-is-mounted': 1,
-    'react/require-render-return': 1,
-    'react/style-prop-object': 1,
-    'promise/catch-or-return': 1,
-    'promise/no-callback-in-promise': 1,
-    'promise/no-return-wrap': 1,
+    'comma-dangle': ['warn', 'always-multiline'], // No risks, beacuse it will be transpiled
+    'space-before-function-paren': ['warn', { anonymous: 'always', named: 'never' }],
+    'key-spacing': ['warn', { beforeColon: false, afterColon: true, mode: 'minimum' }],
+    'object-curly-spacing': ['warn', 'always'],
+    'block-spacing': ['warn', 'always'],
+    'padded-blocks': ['warn', { blocks: 'never', switches: 'never', classes: 'never' }],
+    'no-implicit-coercion': 'warn',
+    'react/sort-comp': 'warn',
+    'react/jsx-indent': ['warn', 2],
+    'react/jsx-indent-props': ['warn', 2],
+    'react/jsx-wrap-multilines': 'warn',
+    'react/jsx-equals-spacing': ['warn', 'never'],
+    'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
+    'react/jsx-no-undef': 'warn',
+    'react/jsx-pascal-case': ['warn', { allowAllCaps: true, ignore: [] }],
+    'react/jsx-uses-react': 'warn',
+    'react/jsx-uses-vars': 'warn',
+    'react/no-danger-with-children': 'warn',
+    'react/no-deprecated': 'warn',
+    'react/no-direct-mutation-state': 'warn',
+    'react/no-is-mounted': 'warn',
+    'react/require-render-return': 'warn',
+    'react/style-prop-object': 'warn',
+    'promise/catch-or-return': 'warn',
+    'promise/no-callback-in-promise': 'warn',
+    'promise/no-return-wrap': 'warn',
     // ERRORS
-    'no-redeclare': 2,
-    'no-undef': 2,
-    'no-unexpected-multiline': 2,
-    'no-use-before-define': [2, { functions: false, classes: true, variables: true }],
-    'callback-return': [2, ['callback', 'cb', 'next', 'done']],
-    'handle-callback-err': 2,
-    'react/no-unused-prop-types': 2,
-    'react/jsx-no-bind': [2, { ignoreRefs: true }],
-    'react/react-in-jsx-scope': 2,
-    'promise/no-nesting': 2,
+    'no-redeclare': 'error',
+    'no-undef': 'error',
+    'no-unexpected-multiline': 'error',
+    'no-use-before-define': ['error', { functions: false, classes: true, variables: true }],
+    'callback-return': ['error', ['callback', 'cb', 'next', 'done']],
+    'handle-callback-err': 'error',
+    'react/no-unused-prop-types': 'error',
+    'react/jsx-no-bind': ['error', { ignoreRefs: true }],
+    'react/react-in-jsx-scope': 'error',
+    'promise/no-nesting': 'error',
   }),
 }
