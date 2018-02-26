@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const fs = require('fs-extra')
 const path = require('path')
+const fs = require('fs-extra')
 const spawn = require('cross-spawn')
 const chalk = require('chalk')
 const meow = require('meow')
@@ -111,7 +111,6 @@ const packageJson = {
     production: ['last 2 versions', 'ie 11'],
     development: ['last 1 Chrome version'],
   },
-  sideEffects: false,
 }
 if (isRealRun) writePackageJson(appDir, packageJson)
 

@@ -6,9 +6,9 @@ if (process.env.PUBLIC_URL.startsWith('/') || process.env.PUBLIC_URL.endsWith('/
   throw new Error(`The PUBLIC_URL env variable cannot have trailing or leading slashes: '${process.env.PUBLIC_URL}'`)
 }
 
-const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs-extra')
+const chalk = require('chalk')
 const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, printFileSizes } = require('./_utils')
 
 const appDir = process.cwd()

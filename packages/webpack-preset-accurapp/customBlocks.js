@@ -189,9 +189,9 @@ function prependEntryPostHook(context, util) {
  * Block for webpack4's mode and its options
  * TODO remove this block when it will be supported in webpack-blocks
  */
-function mode(mode, options = {}) {
+function mode(modeString, options = {}) {
   return (context, { merge }) => merge({
-    mode,
+    mode: modeString,
     optimization: options,
   })
 }
@@ -210,6 +210,16 @@ function uglify(options = {}) {
   })
 }
 
+/**
+ * Block for webpack4's optimization config
+ * TODO remove this block when it will be supported in webpack-blocks
+ */
+function optimization(options = {}) {
+  return (context, { merge }) => merge({
+    optimization: options,
+  })
+}
+
 module.exports = {
   babel,
   imageLoader,
@@ -223,4 +233,5 @@ module.exports = {
   prependEntry,
   mode,
   uglify,
+  optimization,
 }

@@ -26,11 +26,14 @@ if (!process.env.CI) {
         console.log(yellowBox(message))
       }
     })
+    .catch(() => {
+      // Promise failed probably because there's no internet, do nothing
+    })
 }
 
 // Start the designated script
 const script = process.argv[2]
-const scriptPath = '../scripts/' + script
+const scriptPath = `../scripts/${script}`
 
 try {
   require.resolve(scriptPath) // Check if exists without running

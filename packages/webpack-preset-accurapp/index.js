@@ -1,3 +1,4 @@
+const path = require('path')
 const {
   createConfig,
   addPlugins,
@@ -13,7 +14,6 @@ const { css } = require('@webpack-blocks/assets')
 const devServer = require('@webpack-blocks/dev-server')
 const postcss = require('@webpack-blocks/postcss')
 const autoprefixer = require('autoprefixer')
-const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
@@ -34,6 +34,7 @@ const {
   prependEntry,
   mode,
   uglify,
+  optimization,
 } = require('./customBlocks')
 
 const cssLoaderOpts = {
@@ -80,6 +81,10 @@ function accuPreset(config = []) {
 
     // Import components without doing the ../../../
     resolveSrc(),
+
+    // True tree-shaking,
+    // don't evaluate and don't include in the bundle non-directly-imported modules
+    optimization({ sideEffects: false }),
 
     addPlugins([
       // Like webpack.DefinePlugin, but also reads the .env file, giving however priority to
@@ -133,6 +138,7 @@ function accuPreset(config = []) {
         new WatchMissingNodeModulesPlugin('node_modules'),
       ]),
       // Faster 'cheap-module-eval-source-map' instead of the standard 'cheap-module-source-map'
+      // and better sourcemaps instead of 'eval' of the development mode
       sourceMaps('cheap-module-eval-source-map'),
       // Turn off performance hints during development
       performance({ hints: false }),
