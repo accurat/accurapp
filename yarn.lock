@@ -2613,7 +2613,7 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-enhanced-resolve@^4.0.0-beta.2:
+enhanced-resolve@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-4.0.0.tgz#e34a6eaa790f62fccd71d93959f56b2b432db10a"
   dependencies:
@@ -2694,7 +2694,7 @@ escodegen@~1.3.2:
     source-map "~0.1.33"
 
 eslint-config-accurapp@./packages/eslint-config-accurapp:
-  version "3.0.1"
+  version "4.0.0"
   dependencies:
     babel-eslint "^8.2.2"
     eslint "^4.18.1"
@@ -2718,9 +2718,9 @@ eslint-import-resolver-node@^0.3.1:
     debug "^2.6.9"
     resolve "^1.5.0"
 
-eslint-loader@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/eslint-loader/-/eslint-loader-1.9.0.tgz#7e1be9feddca328d3dcfaef1ad49d5beffe83a13"
+eslint-loader@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-loader/-/eslint-loader-2.0.0.tgz#d136619b5c684e36531ffc28c60a56e404608f5d"
   dependencies:
     loader-fs-cache "^1.0.0"
     loader-utils "^1.0.2"
@@ -4953,6 +4953,24 @@ micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+micromatch@^3.1.8:
+  version "3.1.9"
+  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-3.1.9.tgz#15dc93175ae39e52e93087847096effc73efcf89"
+  dependencies:
+    arr-diff "^4.0.0"
+    array-unique "^0.3.2"
+    braces "^2.3.1"
+    define-property "^2.0.2"
+    extend-shallow "^3.0.2"
+    extglob "^2.0.4"
+    fragment-cache "^0.2.1"
+    kind-of "^6.0.2"
+    nanomatch "^1.2.9"
+    object.pick "^1.3.0"
+    regex-not "^1.0.0"
+    snapdragon "^0.8.1"
+    to-regex "^3.0.1"
+
 miller-rabin@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/miller-rabin/-/miller-rabin-4.0.1.tgz#f080351c865b0dc562a8462966daa53543c78a4d"
@@ -5131,6 +5149,10 @@ ncname@1.0.x:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+neo-async@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.0.tgz#76b1c823130cca26acfbaccc8fbaf0a2fa33b18f"
 
 nice-try@^1.0.4:
   version "1.0.4"
@@ -7236,7 +7258,7 @@ table@^4.0.1:
     slice-ansi "1.0.0"
     string-width "^2.1.1"
 
-tapable@^1.0.0, tapable@^1.0.0-beta.5:
+tapable@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-1.0.0.tgz#cbb639d9002eed9c6b5975eb20598d7936f1f9f2"
 
@@ -7489,9 +7511,22 @@ uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
 
-uglifyjs-webpack-plugin@^1.1.1, uglifyjs-webpack-plugin@^1.1.8:
+uglifyjs-webpack-plugin@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.2.0.tgz#f706fa4c655000a086b4a97c7d835ed0f6e9b0ef"
+  dependencies:
+    cacache "^10.0.1"
+    find-cache-dir "^1.0.0"
+    schema-utils "^0.4.2"
+    serialize-javascript "^1.4.0"
+    source-map "^0.6.1"
+    uglify-es "^3.3.4"
+    webpack-sources "^1.1.0"
+    worker-farm "^1.5.2"
+
+uglifyjs-webpack-plugin@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.2.2.tgz#e7516d4367afdb715c3847841eb46f94c45ca2b9"
   dependencies:
     cacache "^10.0.1"
     find-cache-dir "^1.0.0"
@@ -7744,9 +7779,9 @@ webidl-conversions@^4.0.0, webidl-conversions@^4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
 
-webpack-dev-middleware@2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-2.0.5.tgz#2a1d07afb599e1993033d72c2181ec2344c15e31"
+webpack-dev-middleware@2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-2.0.6.tgz#a51692801e8310844ef3e3790e1eacfe52326fd4"
   dependencies:
     loud-rejection "^1.6.0"
     memory-fs "~0.4.1"
@@ -7756,9 +7791,9 @@ webpack-dev-middleware@2.0.5:
     url-join "^2.0.2"
     webpack-log "^1.0.1"
 
-webpack-dev-server@3.0.0-beta.2, webpack-dev-server@^2.9.1:
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-3.0.0-beta.2.tgz#f31fc521d7d681452fd8257db4ffce3e2c61b2ac"
+webpack-dev-server@3.0.0, webpack-dev-server@^2.9.1:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-3.0.0.tgz#0ca2d293dc7a7b1a94fc5fd62cfca2a9fa61bcf7"
   dependencies:
     ansi-html "0.0.7"
     array-includes "^3.0.3"
@@ -7785,7 +7820,7 @@ webpack-dev-server@3.0.0-beta.2, webpack-dev-server@^2.9.1:
     spdy "^3.4.1"
     strip-ansi "^3.0.0"
     supports-color "^5.1.0"
-    webpack-dev-middleware "2.0.5"
+    webpack-dev-middleware "2.0.6"
     yargs "9.0.1"
 
 webpack-log@^1.0.1:
@@ -7816,25 +7851,26 @@ webpack-sources@^1.0.1, webpack-sources@^1.1.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@4.0.0-beta.2:
-  version "4.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.0.0-beta.2.tgz#22e741b2ac553ef0df6393abd757d1849abbdca9"
+webpack@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.0.0.tgz#423c2d27cb050e7655c6ea25ce27bfcbfcb56731"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^3.0.0"
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
-    async "^2.1.2"
     chrome-trace-event "^0.1.1"
-    enhanced-resolve "^4.0.0-beta.2"
+    enhanced-resolve "^4.0.0"
     eslint-scope "^3.7.1"
     loader-runner "^2.3.0"
     loader-utils "^1.1.0"
     memory-fs "~0.4.1"
+    micromatch "^3.1.8"
     mkdirp "~0.5.0"
+    neo-async "^2.5.0"
     node-libs-browser "^2.0.0"
     schema-utils "^0.4.2"
-    tapable "^1.0.0-beta.5"
+    tapable "^1.0.0"
     uglifyjs-webpack-plugin "^1.1.1"
     watchpack "^1.4.0"
     webpack-sources "^1.0.1"

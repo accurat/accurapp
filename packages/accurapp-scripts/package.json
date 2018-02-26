@@ -31,7 +31,7 @@
     "path": "^0.12.7",
     "react-dev-utils": "/Users/accurat_mf/Code/create-react-app/packages/react-dev-utils",
     "semver": "^5.5.0",
-    "webpack": "4.0.0-beta.2",
-    "webpack-dev-server": "3.0.0-beta.2"
+    "webpack": "4.0.0",
+    "webpack-dev-server": "3.0.0"
   }
 }
