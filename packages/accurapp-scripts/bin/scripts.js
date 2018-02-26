@@ -12,6 +12,7 @@ if (!process.env.CI) {
 
   const currentDeps = [
     require('../package.json'),
+    require('../../babel-preset-accurapp/package.json'),
     require('../../eslint-config-accurapp/package.json'),
     require('../../webpack-preset-accurapp/package.json'),
   ]
