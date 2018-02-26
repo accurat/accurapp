@@ -25,6 +25,7 @@
     "file-loader": "^1.1.9",
     "glslify-loader": "^1.0.2",
     "html-webpack-plugin": "webpack-contrib/html-webpack-plugin",
+    "postcss-nested": "^3.0.0",
     "raw-loader": "1.0.0-beta.0",
     "react-dev-utils": "/Users/accurat_mf/Code/create-react-app/packages/react-dev-utils",
     "svgr": "^1.8.1",

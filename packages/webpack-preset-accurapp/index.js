@@ -14,6 +14,7 @@ const { css } = require('@webpack-blocks/assets')
 const devServer = require('@webpack-blocks/dev-server')
 const postcss = require('@webpack-blocks/postcss')
 const autoprefixer = require('autoprefixer')
+const nested = require('postcss-nested')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
@@ -64,6 +65,7 @@ function accuPreset(config = []) {
     postcss({
       plugins: [
         autoprefixer({ flexbox: 'no-2009' }),
+        nested,
       ],
     }),
     match(['*.{js,jsx}', '!*node_modules*'], [
