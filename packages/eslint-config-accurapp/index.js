@@ -57,6 +57,10 @@ module.exports = {
 
   rules: Object.assign(standardJSRulesWarn, {
     // WARNINGS
+    indent: ['warn', 2, {
+      SwitchCase: 1,
+      flatTernaryExpressions: true,
+    }],
     'comma-dangle': ['warn', 'always-multiline'], // No risks, beacuse it will be transpiled
     'space-before-function-paren': ['warn', { anonymous: 'always', named: 'never' }],
     'key-spacing': ['warn', { beforeColon: false, afterColon: true, mode: 'minimum' }],
