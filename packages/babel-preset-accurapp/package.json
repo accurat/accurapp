@@ -5,7 +5,8 @@
   "repository": "accurat/accurapp",
   "license": "MIT",
   "engines": {
-    "node": ">=7"
+    "node": ">=7",
+    "yarn": ">=1.2.1"
   },
   "files": [
     "index.js"

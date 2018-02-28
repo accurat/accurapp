@@ -10,6 +10,10 @@
   "workspaces": [
     "packages/*"
   ],
+  "engines": {
+    "node": ">=7",
+    "yarn": ">=1.2.1"
+  },
   "devDependencies": {
     "eslint-config-accurapp": "./packages/eslint-config-accurapp",
     "lerna": "^2.9.0"
