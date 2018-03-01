@@ -48,6 +48,23 @@ module.exports = buildWebpackConfig([
 ])
 ```
 
+To add a loader, for example, TypeScript Loader:
+
+```js
+const buildWebpackConfig = require('webpack-preset-accurapp')
+
+function tsLoader() {
+  return (context, { addLoader }) => addLoader({
+    test: /\.tsx?$/,
+    loader: 'ts-loader',
+  })
+}
+
+module.exports = buildWebpackConfig([
+  tsLoader(),
+])
+```
+
 #### Customizing Babel
 ```js
 // TODO do a babel-preset-accurapp if we need to customize babel
