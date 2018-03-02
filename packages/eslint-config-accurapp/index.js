@@ -90,7 +90,6 @@ module.exports = {
     'react/no-is-mounted': 'warn',
     'react/require-render-return': 'warn',
     'react/style-prop-object': 'warn',
-    'react/destructuring-assignment': 'warn',
     'react/jsx-max-depth': ['warn', { max: 8 }],
     'react/jsx-max-props-per-line': ['warn', { maximum: 5 }],
     'react/self-closing-comp': ['warn', { 'component': true, 'html': true }],
