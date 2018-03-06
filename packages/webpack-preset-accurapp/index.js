@@ -19,7 +19,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
-const MinifyPlugin = require('babel-minify-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const {
   imageLoader,
@@ -140,10 +140,29 @@ function accuPreset(config = []) {
         ],
       }),
       addPlugins([
-        new MinifyPlugin({
-          removeConsole: true,
-        }, {
-          comments: false,
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            ecma: 8,
+            compress: {
+              // Remove all console.logs
+              drop_console: true,
+              // Disabled because of an issue with Uglify breaking seemingly valid code:
+              // https://github.com/facebook/create-react-app/issues/2376
+              // Pending further investigation:
+              // https://github.com/mishoo/UglifyJS2/issues/2011
+              comparisons: false,
+            },
+            output: {
+              // Turned on because emoji and regex is not minified properly using default
+              // https://github.com/facebook/create-react-app/issues/2488
+              ascii_only: true,
+            },
+          },
+          // Use multi-process parallel running to improve the build speed
+          // Default number of concurrent runs: os.cpus().length - 1
+          parallel: true,
+          // Enable file caching
+          cache: true,
         }),
       ]),
     ]),
