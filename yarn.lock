@@ -4241,6 +4241,14 @@ is-fullwidth-code-point@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/is-fullwidth-code-point/-/is-fullwidth-code-point-2.0.0.tgz#a3b30a5c4f199183167aaab93beefae3ddfb654f"
 
+is-git-status-clean@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/is-git-status-clean/-/is-git-status-clean-1.0.0.tgz#dc7d2c4d58987e4c8e54f7f9a5d1caafeabea116"
+  dependencies:
+    chalk "^2.3.2"
+    indent-string "^3.2.0"
+    meow "^4.0.0"
+
 is-glob@^2.0.0, is-glob@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/is-glob/-/is-glob-2.0.1.tgz#d096f926a3ded5600f3fdfd91198cb0888c2d863"

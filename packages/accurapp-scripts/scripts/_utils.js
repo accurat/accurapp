@@ -12,10 +12,10 @@ const columnify = require('columnify')
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
 
 const log = {
-  ok(...a) { console.log('::: ' + chalk.yellow(...a)) },
-  warn(...a) { console.error('!!! ' + chalk.yellow(...a)) },
-  err(...a) { console.error('!!! ' + chalk.red(...a)) },
-  info(...a) { console.log('--- ' + chalk.blue(...a)) },
+  ok(...a) { console.log(`::: ${chalk.yellow(...a)}`) },
+  warn(...a) { console.error(`!!! ${chalk.yellow(...a)}`) },
+  err(...a) { console.error(`!!! ${chalk.red(...a)}`) },
+  info(...a) { console.log(`--- ${chalk.blue(...a)}`) },
 }
 
 function noop() {}

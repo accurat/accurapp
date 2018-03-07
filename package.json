@@ -4,8 +4,8 @@
   "scripts": {
     "clean": "rm -rf node_modules; rm -rf packages/*/node_modules; rm yarn.lock; yarn cache clean",
     "lint": "node node_modules/eslint/bin/eslint.js packages",
-    "publish": "tasks/release.sh",
-    "create-test-app": "rm -rf test-app; node packages/create-accurapp/index.js test-app --testing"
+    "create-test-app": "rm -rf test-app; node packages/create-accurapp/index.js test-app --testing",
+    "publish": "is-git-status-clean && lerna publish --independent"
   },
   "workspaces": [
     "packages/*"
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "eslint-config-accurapp": "./packages/eslint-config-accurapp",
+    "is-git-status-clean": "^1.0.0",
     "lerna": "^2.9.0"
   },
   "resolutions": {
