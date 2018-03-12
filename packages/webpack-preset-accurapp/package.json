@@ -18,7 +18,7 @@
     "@webpack-blocks/postcss": "^1.0.0-rc",
     "@webpack-blocks/webpack": "^1.0.0-rc",
     "autoprefixer": "^8.1.0",
-    "babel-loader": "8.0.0-beta.0",
+    "babel-loader": "8.0.0-beta.2",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "csv-loader": "^2.1.1",
     "dotenv-webpack": "^1.5.5",
@@ -32,7 +32,7 @@
     "svgr": "^1.8.1",
     "thread-loader": "^1.1.5",
     "uglifyjs-webpack-plugin": "^1.2.2",
-    "url-loader": "1.0.1",
-    "webpack": "4.1.0"
+    "url-loader": "^1.0.1",
+    "webpack": "^4.1.1"
   }
 }

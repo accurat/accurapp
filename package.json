@@ -21,7 +21,7 @@
   },
   "resolutions": {
     "**/file-loader": "1.1.11",
-    "**/webpack": "4.1.0",
-    "**/webpack-dev-server": "3.1.0"
+    "**/webpack": "4.1.1",
+    "**/webpack-dev-server": "3.1.1"
   }
 }
