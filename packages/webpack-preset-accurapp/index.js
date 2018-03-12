@@ -179,16 +179,6 @@ function accuPreset(config = []) {
           compress: {
             // Remove all console.logs
             drop_console: true,
-            // Disabled because of an issue with Uglify breaking seemingly valid code:
-            // https://github.com/facebook/create-react-app/issues/2376
-            // Pending further investigation:
-            // https://github.com/mishoo/UglifyJS2/issues/2011
-            comparisons: false,
-          },
-          output: {
-            // Turned on because emoji and regex is not minified properly using default
-            // https://github.com/facebook/create-react-app/issues/2488
-            ascii_only: true,
           },
         },
         // Use multi-process parallel running to improve the build speed
