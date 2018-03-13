@@ -38,14 +38,6 @@ const {
   optimization,
 } = require('./customBlocks')
 
-const cssLoaderOpts = {
-  minimize: process.env.NODE_ENV === 'production',
-  sourceMap: process.env.NODE_ENV !== 'production',
-}
-const babelLoaderOpts = {
-  compact: process.env.NODE_ENV === 'production',
-}
-
 function accuPreset(config = []) {
   return createConfig([
     entryPoint('./src/index.js'),
@@ -56,11 +48,20 @@ function accuPreset(config = []) {
     }),
 
     // Loaders
-    match(['*.css', '!*.module.css'], [
-      css(cssLoaderOpts),
+    // TODO use this when the new version of webpack-block is released
+    // match(['*.css', '!*.module.css'], [
+    // ]),
+    match('*.css', { exclude: /^.*\.module.css$/ }, [
+      css({
+        minimize: process.env.NODE_ENV === 'production',
+        sourceMap: process.env.NODE_ENV !== 'production',
+      }),
     ]),
     match('*.module.css', [
-      css.modules(cssLoaderOpts),
+      css.modules({
+        minimize: process.env.NODE_ENV === 'production',
+        sourceMap: process.env.NODE_ENV !== 'production',
+      }),
     ]),
     postcss({
       plugins: [
@@ -68,11 +69,25 @@ function accuPreset(config = []) {
         nested,
       ],
     }),
-    match(['*.{js,jsx}', '!*node_modules*'], [
-      babel(babelLoaderOpts),
+    // TODO use this when the new version of webpack-block is released
+    // match(['*.{js,jsx}', '!*node_modules*'], [
+    // ]),
+    match('*.{js,jsx}', { exclude: /node_modules/ }, [
+      babel({
+        compact: process.env.NODE_ENV === 'production',
+      }),
     ]),
-    match('*node_modules*.{js,jsx}', [
-      babel(babelLoaderOpts),
+    // Only transpile the latest stable ECMAScript features from node_modules.
+    // This is because some node_modules may be written in a newer ECMAScript
+    // version than the browsers you're actially supporting
+    match('*.js', { include: /node_modules/ }, [
+      babel({
+        compact: process.env.NODE_ENV === 'production',
+        babelrc: false,
+        presets: [
+          ['@babel/preset-env', { modules: false }],
+        ],
+      }),
     ]),
     fontLoader(),
     imageLoader(),
