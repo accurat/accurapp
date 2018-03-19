@@ -74,7 +74,7 @@ module.exports = {
     'no-useless-concat': 'warn',
     'no-implicit-coercion': 'warn',
     'no-bitwise': 'warn',
-    'lines-between-class-members': 'warn',
+    'lines-between-class-members': ['warn', 'always', { exceptAfterSingleLine: true }],
     'react/jsx-indent': ['warn', 2],
     'react/jsx-indent-props': ['warn', 2],
     'react/jsx-wrap-multilines': ['warn', { return: 'parens-new-line', arrow: 'parens-new-line' }],
