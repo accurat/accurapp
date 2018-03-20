@@ -12,11 +12,11 @@
     "index.js"
   ],
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.40",
-    "@babel/polyfill": "^7.0.0-beta.40",
-    "@babel/preset-env": "^7.0.0-beta.40",
-    "@babel/preset-react": "^7.0.0-beta.40",
-    "@babel/preset-stage-0": "^7.0.0-beta.40",
+    "@babel/core": "^7.0.0-beta.42",
+    "@babel/polyfill": "^7.0.0-beta.42",
+    "@babel/preset-env": "^7.0.0-beta.42",
+    "@babel/preset-react": "^7.0.0-beta.42",
+    "@babel/preset-stage-0": "^7.0.0-beta.42",
     "babel-plugin-lodash": "^3.3.2",
     "babel-plugin-macros": "^2.2.0"
   }
