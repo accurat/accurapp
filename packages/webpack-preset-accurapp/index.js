@@ -99,9 +99,13 @@ function accuPreset(config = []) {
     // Import components without doing the ../../../
     resolveSrc(),
 
-    // True tree-shaking,
-    // don't evaluate and don't include in the bundle non-directly-imported modules
-    optimization({ sideEffects: false }),
+    optimization({
+      // Automatically split vendor and app code
+      // https://twitter.com/wSokra/status/969633336732905474
+      splitChunks: {
+        chunks: 'all',
+      },
+    }),
 
     addPlugins([
       // Like webpack.DefinePlugin, but also reads the .env file, giving however priority to
