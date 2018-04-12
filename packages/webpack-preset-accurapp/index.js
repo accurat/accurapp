@@ -172,7 +172,7 @@ function buildWebpackConfig(config = []) {
         publicPath: process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}/` : '/',
       }),
 
-      // Use sourcemaps only in staging is specified,
+      // Use sourcemaps only if specified, like in staging,
       // don't use them by default when building
       ...(process.env.GENERATE_SOURCEMAP === 'true' ? [sourceMaps('source-map')] : []),
 
@@ -189,7 +189,7 @@ function buildWebpackConfig(config = []) {
           compress: {
             ecma: 5,
             // Remove all console.logs
-            drop_console: true,
+            drop_console: process.env.GENERATE_SOURCEMAP !== 'true',
             // Disabled because of an issue with Uglify breaking seemingly valid code:
             // https://github.com/facebook/create-react-app/issues/2376
             // Pending further investigation:

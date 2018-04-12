@@ -108,7 +108,9 @@ function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
       }
     } else if (messages.errors.length > 0) {
       log.err('Errors in compiling:')
-      messages.errors.forEach(message => { console.log(listLine(message, chalk.red)) })
+      // Only log the first error. Others are often indicative
+      // of the same problem, but confuse the reader with noise
+      console.log(listLine(messages.errors[0], chalk.red))
       onError()
     } else if (messages.warnings.length > 0) {
       log.warn('Compiled with warnings:')

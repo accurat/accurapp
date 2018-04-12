@@ -24,6 +24,7 @@ function runDevServer(port) {
   const devServerConfig = Object.assign({
     host: HOST,
     public: urls.lanUrlForConfig,
+    https: PROTOCOL === 'https',
   }, readWebpackConfig().devServer)
   const devServer = new WebpackDevServer(compiler, devServerConfig)
   devServer.listen(port, HOST, err => {
