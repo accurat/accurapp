@@ -1,6 +1,6 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
-const fileNameTemplate = '[name].[chunkhash:8].[ext]'
+const fileNameTemplate = '[name].[contenthash:8].[ext]'
 
 /**
  * The thread-loader parallelizes code compilation, useful with babel since
@@ -16,6 +16,7 @@ function babel(options = {}) {
         {
           loader: 'babel-loader',
           options: Object.assign({
+            compact: process.env.NODE_ENV === 'production',
             cacheDirectory: true,
             highlightCode: true,
           }, options),
@@ -68,25 +69,12 @@ function fontLoader() {
 
 /**
  * GLSLify is a node-style module system for WebGL shaders,
- * allowing you to install GLSL modules from npm and use them in your shaders.
+ * allowing you to install GLSL modules from npm and use them in your shaders
  */
 function glslifyLoader() {
   return (context, { addLoader }) => addLoader({
     test: /\.(glsl|frag|vert)$/,
     use: ['raw-loader', 'glslify-loader'],
-  })
-}
-
-/**
- * Run ESLint on every required file.
- */
-function eslintLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.(js|jsx)$/,
-    enforce: 'pre', // It's important to do this before Babel processes the JS.
-    exclude: /node_modules/,
-    loader: 'eslint-loader',
-    options: { useEslintrc: true },
   })
 }
 
@@ -226,7 +214,6 @@ module.exports = {
   videoLoader,
   fontLoader,
   glslifyLoader,
-  eslintLoader,
   csvLoader,
   svgLoader,
   resolveSrc,

@@ -1,5 +1,6 @@
 process.env.NODE_ENV = 'development'
 process.env.PUBLIC_URL = ''
+process.env.GENERATE_SOURCEMAP = 'true'
 require('dotenv').config() // gives precedence to the env variables already present
 
 const chalk = require('chalk')
@@ -11,9 +12,10 @@ const { log, createWebpackCompiler, readWebpackConfig, coloredBanner } = require
 
 const HOST = process.env.HOST || '0.0.0.0'
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8000
+const PROTOCOL = process.env.HTTPS === 'true' ? 'https' : 'http'
 
 function runDevServer(port) {
-  const urls = prepareUrls('http', HOST, port)
+  const urls = prepareUrls(PROTOCOL, HOST, port)
   const compiler = createWebpackCompiler(() => {
     log.info(`The app is running at: ${chalk.cyan(urls.localUrlForTerminal)}`)
     log.info(`Or on your network at: ${chalk.cyan(urls.lanUrlForTerminal)}`)

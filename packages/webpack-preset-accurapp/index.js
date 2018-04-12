@@ -13,6 +13,7 @@ const {
 const { css } = require('@webpack-blocks/assets')
 const devServer = require('@webpack-blocks/dev-server')
 const postcss = require('@webpack-blocks/postcss')
+const eslint = require('@webpack-blocks/eslint')
 const autoprefixer = require('autoprefixer')
 const nested = require('postcss-nested')
 
@@ -28,7 +29,6 @@ const {
   videoLoader,
   fontLoader,
   glslifyLoader,
-  eslintLoader,
   csvLoader,
   svgLoader,
   resolveSrc,
@@ -38,29 +38,21 @@ const {
   optimization,
 } = require('./customBlocks')
 
-function accuPreset(config = []) {
+function buildWebpackConfig(config = []) {
   return createConfig([
     entryPoint('./src/index.js'),
-    setOutput({
-      path: path.resolve('./build'),
-      filename: 'app.[hash:8].js',
-      publicPath: process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}/` : '/',
-    }),
 
     // Loaders
-    // TODO use this when the new version of webpack-block is released
-    // match(['*.css', '!*.module.css'], [
-    // ]),
-    match('*.css', { exclude: /^.*\.module.css$/ }, [
+    match(['*.css', '!*.module.css'], [
       css({
         minimize: process.env.NODE_ENV === 'production',
-        sourceMap: process.env.NODE_ENV !== 'production',
+        sourceMap: process.env.GENERATE_SOURCEMAP === 'true',
       }),
     ]),
     match('*.module.css', [
       css.modules({
         minimize: process.env.NODE_ENV === 'production',
-        sourceMap: process.env.NODE_ENV !== 'production',
+        sourceMap: process.env.GENERATE_SOURCEMAP === 'true',
       }),
     ]),
     postcss({
@@ -69,20 +61,14 @@ function accuPreset(config = []) {
         nested,
       ],
     }),
-    // TODO use this when the new version of webpack-block is released
-    // match(['*.{js,jsx}', '!*node_modules*'], [
-    // ]),
-    match('*.{js,jsx}', { exclude: /node_modules/ }, [
-      babel({
-        compact: process.env.NODE_ENV === 'production',
-      }),
+    match(['*.{js,jsx}', '!*node_modules*'], [
+      babel(),
     ]),
     // Only transpile the latest stable ECMAScript features from node_modules.
     // This is because some node_modules may be written in a newer ECMAScript
     // version than the browsers you're actially supporting
     match('*.js', { include: /node_modules/ }, [
       babel({
-        compact: process.env.NODE_ENV === 'production',
         babelrc: false,
         presets: [
           ['@babel/preset-env', { modules: false }],
@@ -104,6 +90,7 @@ function accuPreset(config = []) {
       // https://twitter.com/wSokra/status/969633336732905474
       splitChunks: {
         chunks: 'all',
+        name: 'vendors',
       },
     }),
 
@@ -129,14 +116,14 @@ function accuPreset(config = []) {
     ]),
 
     //
-    // $$$$$$$\     $$$$$$$$\    $$\    $$\
-    // $$  __$$\    $$  _____|   $$ |   $$ |
-    // $$ |  $$ |   $$ |         $$ |   $$ |
-    // $$ |  $$ |   $$$$$\       \$$\  $$  |
-    // $$ |  $$ |   $$  __|       \$$\$$  /
-    // $$ |  $$ |   $$ |           \$$$  /
-    // $$$$$$$  |   $$$$$$$$\       \$  /
-    // \_______/    \________|       \_/
+    //  $$$$$$\    $$$$$$$$\     $$$$$$\     $$$$$$$\    $$$$$$$$\
+    // $$  __$$\   \__$$  __|   $$  __$$\    $$  __$$\   \__$$  __|
+    // $$ /  \__|     $$ |      $$ /  $$ |   $$ |  $$ |     $$ |
+    // \$$$$$$\       $$ |      $$$$$$$$ |   $$$$$$$  |     $$ |
+    //  \____$$\      $$ |      $$  __$$ |   $$  __$$<      $$ |
+    // $$\   $$ |     $$ |      $$ |  $$ |   $$ |  $$ |     $$ |
+    // \$$$$$$  |     $$ |      $$ |  $$ |   $$ |  $$ |     $$ |
+    //  \______/      \__|      \__|  \__|   \__|  \__|     \__|
     //
     env('development', [
       mode('development'),
@@ -145,7 +132,7 @@ function accuPreset(config = []) {
         compress: true,
         clientLogLevel: 'none',
         contentBase: './public/',
-        publicPath: process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}/` : '/',
+        publicPath: '/',
         watchContentBase: true,
         quiet: true,
         watchOptions: {
@@ -153,51 +140,65 @@ function accuPreset(config = []) {
         },
         overlay: false,
       }),
-      eslintLoader(),
+      eslint(),
       addPlugins([
         // Automatic rediscover of packages after `npm install`
         new WatchMissingNodeModulesPlugin('node_modules'),
       ]),
-      // Faster 'cheap-module-eval-source-map' instead of the standard 'cheap-module-source-map'
-      // and better sourcemaps instead of 'eval' of the development mode
-      sourceMaps('cheap-module-eval-source-map'),
+      // Faster 'cheap-module-source-map' sourcemaps in development
+      sourceMaps('cheap-module-source-map'),
       // Turn off performance hints during development
-      performance({ hints: false }),
+      performance(false),
     ]),
 
     //
-    //  $$$$$$\     $$$$$$$$\     $$$$$$\      $$$$$$\     $$$$$$\    $$\   $$\     $$$$$$\
-    // $$  __$$\    \__$$  __|   $$  __$$\    $$  __$$\    \_$$  _|   $$$\  $$ |   $$  __$$\
-    // $$ /  \__|      $$ |      $$ /  $$ |   $$ /  \__|     $$ |     $$$$\ $$ |   $$ /  \__|
-    // \$$$$$$\        $$ |      $$$$$$$$ |   $$ |$$$$\      $$ |     $$ $$\$$ |   $$ |$$$$\
-    //  \____$$\       $$ |      $$  __$$ |   $$ |\_$$ |     $$ |     $$ \$$$$ |   $$ |\_$$ |
-    // $$\   $$ |      $$ |      $$ |  $$ |   $$ |  $$ |     $$ |     $$ |\$$$ |   $$ |  $$ |
-    // \$$$$$$  |      $$ |      $$ |  $$ |   \$$$$$$  |   $$$$$$\    $$ | \$$ |   \$$$$$$  |
-    //  \______/       \__|      \__|  \__|    \______/    \______|   \__|  \__|    \______/
-    //
-    env('staging', [
-      mode('production', { minimize: false }),
-      sourceMaps('source-map'),
-    ]),
-
-    //
-    // $$$$$$$\     $$$$$$$\      $$$$$$\     $$$$$$$\
-    // $$  __$$\    $$  __$$\    $$  __$$\    $$  __$$\
-    // $$ |  $$ |   $$ |  $$ |   $$ /  $$ |   $$ |  $$ |
-    // $$$$$$$  |   $$$$$$$  |   $$ |  $$ |   $$ |  $$ |
-    // $$  ____/    $$  __$$<    $$ |  $$ |   $$ |  $$ |
-    // $$ |         $$ |  $$ |   $$ |  $$ |   $$ |  $$ |
-    // $$ |         $$ |  $$ |    $$$$$$  |   $$$$$$$  |
-    // \__|         \__|  \__|    \______/    \_______/
+    // $$$$$$$\     $$\   $$\    $$$$$$\    $$\          $$$$$$$\
+    // $$  __$$\    $$ |  $$ |   \_$$  _|   $$ |         $$  __$$\
+    // $$ |  $$ |   $$ |  $$ |     $$ |     $$ |         $$ |  $$ |
+    // $$$$$$$\ |   $$ |  $$ |     $$ |     $$ |         $$ |  $$ |
+    // $$  __$$\    $$ |  $$ |     $$ |     $$ |         $$ |  $$ |
+    // $$ |  $$ |   $$ |  $$ |     $$ |     $$ |         $$ |  $$ |
+    // $$$$$$$  |   \$$$$$$  |   $$$$$$\    $$$$$$$$\    $$$$$$$  |
+    // \_______/     \______/    \______|   \________|   \_______/
     //
     env('production', [
       mode('production'),
+      setOutput({
+        path: path.resolve('./build'),
+        filename: 'app.[contenthash:8].js',
+        chunkFilename: '[name].[contenthash:8].chunk.js',
+        publicPath: process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}/` : '/',
+      }),
+
+      // Use sourcemaps only in staging is specified,
+      // don't use them by default when building
+      ...(process.env.GENERATE_SOURCEMAP === 'true' ? [sourceMaps('source-map')] : []),
+
       uglify({
         uglifyOptions: {
-          ecma: 8,
+          parse: {
+            // we want uglify-js to parse ecma 8 code. However, we don't want it
+            // to apply any minfication steps that turns valid ecma 5 code
+            // into invalid ecma 5 code. This is why the 'compress' and 'output'
+            // sections only apply transformations that are ecma 5 safe
+            // https://github.com/facebook/create-react-app/pull/4234
+            ecma: 8,
+          },
           compress: {
+            ecma: 5,
             // Remove all console.logs
             drop_console: true,
+            // Disabled because of an issue with Uglify breaking seemingly valid code:
+            // https://github.com/facebook/create-react-app/issues/2376
+            // Pending further investigation:
+            // https://github.com/mishoo/UglifyJS2/issues/2011
+            comparisons: false,
+          },
+          output: {
+            ecma: 5,
+            // Turned on because emoji and regex is not minified properly using default
+            // https://github.com/facebook/create-react-app/issues/2488
+            ascii_only: true,
           },
         },
         // Use multi-process parallel running to improve the build speed
@@ -205,6 +206,9 @@ function accuPreset(config = []) {
         parallel: true,
         // Enable file caching
         cache: true,
+        // Uglification in staging is alright because we have sourcemaps
+        // that show the original code
+        sourceMap: process.env.GENERATE_SOURCEMAP === 'true',
       }),
     ]),
 
@@ -212,4 +216,6 @@ function accuPreset(config = []) {
   ])
 }
 
-module.exports = accuPreset
+module.exports = {
+  buildWebpackConfig,
+}

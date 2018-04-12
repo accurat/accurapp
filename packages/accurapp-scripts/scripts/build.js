@@ -1,5 +1,6 @@
-process.env.NODE_ENV = process.env.NODE_ENV || 'production'
+process.env.NODE_ENV = 'production'
 process.env.PUBLIC_URL = process.env.PUBLIC_URL || ''
+process.env.GENERATE_SOURCEMAP = process.env.GENERATE_SOURCEMAP === 'true' ? 'true' : 'false'
 require('dotenv').config() // gives precedence to the env variables already present
 
 if (process.env.PUBLIC_URL.startsWith('/') || process.env.PUBLIC_URL.endsWith('/')) {

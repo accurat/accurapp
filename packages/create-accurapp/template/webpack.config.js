@@ -1,2 +1,2 @@
-const buildWebpackConfig = require('webpack-preset-accurapp')
+const { buildWebpackConfig } = require('webpack-preset-accurapp')
 module.exports = buildWebpackConfig()

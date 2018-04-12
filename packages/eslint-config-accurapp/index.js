@@ -17,7 +17,6 @@ const standardJSRulesWarn = Object.keys(standardJSRules).reduce(function (acc, r
 
   const ruleValue = standardJSRules[ruleName]
   const ruleValueNew = errorToWarn(ruleValue)
-  if (ruleName.startsWith('node/')) return acc // filter out eslint-plugin-node rules because they error
   acc[ruleName] = ruleValueNew
   return acc
 }, {})
@@ -28,7 +27,7 @@ module.exports = {
   parser: 'babel-eslint',
 
   parserOptions: {
-    ecmaVersion: 9,
+    ecmaVersion: 2018,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
@@ -69,6 +68,7 @@ module.exports = {
     'padded-blocks': ['warn', { blocks: 'never', switches: 'never', classes: 'never' }],
     'no-shadow': 'warn',
     'import/order': ['warn', { groups: ['builtin', 'external'] }],
+    'import/named': 'warn',
     'jsx-quotes': ['warn', 'prefer-double'],
     'prefer-template': 'warn',
     'no-useless-concat': 'warn',
@@ -95,11 +95,9 @@ module.exports = {
     'react/self-closing-comp': ['warn', { 'component': true, 'html': true }],
     'react/jsx-first-prop-new-line': ['warn', 'multiline'],
     'react/jsx-no-bind': ['warn', { ignoreRefs: true }],
-    // 'react/no-did-mount-set-state': 'warn',
-    // 'react/no-did-update-set-state': 'warn',
-    // 'react/no-will-update-set-state': 'warn',
     'promise/no-callback-in-promise': 'warn',
     'promise/no-return-wrap': 'warn',
+
     // ERRORS
     'no-redeclare': 'error',
     'no-undef': 'error',
@@ -119,5 +117,13 @@ module.exports = {
     'react/react-in-jsx-scope': 'error',
     'promise/no-nesting': 'error',
     'no-copy-paste-default-export/default': 'error',
+
+    // DISABLED ESLINT-CONFIG-STANDARD RULES
+    // disable no-debugger because otherwise prettier removes it on save,
+    // this is ok because debugger is stripped by uglify
+    'no-debugger': 'off',
+    // disable eslint-plugin-node rules because they error
+    'node/no-deprecated-api': 'off',
+    'node/process-exit-as-throw': 'off',
   }),
 }

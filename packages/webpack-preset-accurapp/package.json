@@ -1,7 +1,7 @@
 {
   "name": "webpack-preset-accurapp",
   "version": "3.1.12",
-  "description": "Webpack configuration used by Accurat, base on webpack-blocks",
+  "description": "Webpack configuration used by Accurat, based on webpack-blocks",
   "repository": "accurat/accurapp",
   "license": "MIT",
   "engines": {
@@ -13,10 +13,11 @@
     "customBlocks.js"
   ],
   "dependencies": {
-    "@webpack-blocks/assets": "^1.0.0-rc",
-    "@webpack-blocks/dev-server": "^1.0.0-rc",
-    "@webpack-blocks/postcss": "^1.0.0-rc",
-    "@webpack-blocks/webpack": "^1.0.0-rc",
+    "@webpack-blocks/assets": "^1.0.0",
+    "@webpack-blocks/dev-server": "^1.0.0",
+    "@webpack-blocks/eslint": "^1.0.0",
+    "@webpack-blocks/postcss": "^1.0.0",
+    "@webpack-blocks/webpack": "^1.0.0",
     "autoprefixer": "^8.1.0",
     "babel-loader": "8.0.0-beta.2",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
@@ -25,14 +26,14 @@
     "eslint-loader": "^2.0.0",
     "file-loader": "^1.1.11",
     "glslify-loader": "^1.0.2",
-    "html-webpack-plugin": "webpack-contrib/html-webpack-plugin",
+    "html-webpack-plugin": "^3.2.0",
     "postcss-nested": "^3.0.0",
     "raw-loader": "1.0.0-beta.0",
-    "react-dev-utils": "zanettin/react-dev-utils",
+    "react-dev-utils": "/Users/accurat_mf/Code/create-react-app/packages/react-dev-utils",
     "svgr": "^1.8.1",
     "thread-loader": "^1.1.5",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "url-loader": "^1.0.1",
-    "webpack": "^4.1.1"
+    "webpack": "^4.5.0"
   }
 }
