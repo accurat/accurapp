@@ -143,6 +143,16 @@ function svgLoader() {
 }
 
 /**
+ * Suppot .json5 files https://json5.org/
+ */
+function json5Loader() {
+  return (context, { addLoader }) => addLoader({
+    test: /\.json5$/,
+    loader: 'json5-loader',
+  })
+}
+
+/**
  * You will be able to import starting from the src folder so you don't have to ../../../
  */
 function resolveSrc() {
@@ -216,6 +226,7 @@ module.exports = {
   glslifyLoader,
   csvLoader,
   svgLoader,
+  json5Loader,
   resolveSrc,
   prependEntry,
   mode,

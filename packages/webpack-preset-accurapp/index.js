@@ -31,6 +31,7 @@ const {
   glslifyLoader,
   csvLoader,
   svgLoader,
+  json5Loader,
   resolveSrc,
   prependEntry,
   mode,
@@ -81,6 +82,7 @@ function buildWebpackConfig(config = []) {
     glslifyLoader(),
     csvLoader(),
     svgLoader(),
+    json5Loader(),
 
     // Import components without doing the ../../../
     resolveSrc(),
