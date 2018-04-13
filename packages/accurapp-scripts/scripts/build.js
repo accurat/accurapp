@@ -24,6 +24,10 @@ function clearBuildFolder() {
 }
 
 function copyPublicFolder() {
+  if (!fs.existsSync(appPublic)) {
+    return
+  }
+
   log.info(`Copying ${chalk.cyan('public/')} into ${chalk.cyan(relativeAppBuildPath)}`)
   fs.copySync(appPublic, appBuild, {
     overwrite: true,
