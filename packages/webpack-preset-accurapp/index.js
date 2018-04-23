@@ -98,10 +98,12 @@ function buildWebpackConfig(config = []) {
 
     addPlugins([
       // Like webpack.DefinePlugin, but also reads the .env file, giving however priority to
-      // the envs already there (like NODE_ENV or variable set from the command line or CI)
+      // the envs already there (like NODE_ENV or variable set from the command line or CI).
+      // Also it reads the .env.example if executed during a CI
       new Dotenv({
         systemvars: true,
         silent: true,
+        safe: process.env.CI === 'true',
       }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin({
