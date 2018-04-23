@@ -12,11 +12,11 @@
     "index.js"
   ],
   "dependencies": {
-    "babel-eslint": "^8.2.2",
+    "babel-eslint": "^8.2.3",
     "eslint": "5.0.0-alpha.0",
     "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-flowtype": "^2.46.1",
-    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-flowtype": "^2.46.3",
+    "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-no-copy-paste-default-export": "^0.0.3",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
