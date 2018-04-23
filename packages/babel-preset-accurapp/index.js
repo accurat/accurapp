@@ -14,7 +14,12 @@ module.exports = function (context, opts = {}) {
         // Adds __self attribute to JSX which React will use for some warnings
         development: isDevelopment,
       }],
-      require('@babel/preset-stage-0').default,
+      [require('@babel/preset-stage-0').default, {
+        // Enable loose mode to use assignment instead of defineProperty
+        // in the @babel/plugin-proposal-class-properties
+        // See discussion in https://github.com/facebook/create-react-app/issues/4263
+        loose: true,
+      }],
     ],
     plugins: [
       require('babel-plugin-lodash'),
