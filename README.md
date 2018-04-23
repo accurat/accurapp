@@ -130,7 +130,6 @@ Add your custom rules to the `.eslintrc`
     "no-shadow": "off"
   }
 }
-
 ```
 
 #### Customizing Babel
@@ -189,6 +188,7 @@ Here are instead the available Env Variables for the **yarn build** script:
 │   ├── index.html
 │   └── index.js
 ├── .babelrc
+├── .env.example
 ├── .eslintrc
 ├── .gitignore
 ├── bitbucket-pipelines.yml
@@ -252,6 +252,15 @@ This will override the default `csv-loader` for that file.
 
 [See the related docs](https://webpack.js.org/concepts/loaders/#inline).
 
+Make sure to disable the related eslint rule like this:
+```js
+{
+  "extends": "eslint-config-accurapp",
+  "rules": {
+    "import/no-webpack-loader-syntax": "off"
+  }
+}
+```
 
 ## Contributing
 If you make some edits and wish to test them locally you can run `yarn create-test-app` which creates a test app using the local packages.
