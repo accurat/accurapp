@@ -81,7 +81,7 @@ function buildWebpackConfig(config = []) {
     videoLoader(),
     glslifyLoader(),
     csvLoader(),
-    svgLoader(),
+    // svgLoader(),
     json5Loader(),
 
     // Import components without doing the ../../../
