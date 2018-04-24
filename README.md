@@ -1,4 +1,5 @@
 # AccurApp
+
 This is a project kickstarter customized for the specific needs of Accurat.
 
 It was originally forked from [create-react-app](https://github.com/facebookincubator/create-react-app/),
