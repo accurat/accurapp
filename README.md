@@ -48,6 +48,8 @@ These are the available commands once you created a project:
 - `yarn start` starts a server locally, accessible both from your browser and from another machine using your same wi-fi
 - `yarn build` builds the project for production, ready to be deployed from the `build/` folder
 
+**NOTE**: you need to have at least Node v6.x and yarn v1.2.1, make sure you have the correct versions if you run into some problems running these commands. You can check their version by running `node -v` and `yarn -v`.
+
 ## Customization
 #### Customizing Webpack
 You can pass a custom webpack config to the `buildWebpackConfig` function in the project's `webpack.config.js`.
