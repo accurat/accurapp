@@ -10,6 +10,7 @@ const gzipSize = require('gzip-size').sync
 const indentString = require('indent-string')
 const columnify = require('columnify')
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
+const browserslist = require('browserslist')
 
 const log = {
   ok(...a) { console.log(`::: ${chalk.yellow(...a)}`) },
@@ -175,6 +176,12 @@ function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 512 * 1024) 
   }
 }
 
+function extractBrowserslistString() {
+  const appDir = process.cwd()
+  const browsersListConfig = browserslist.loadConfig({ path: appDir })
+  return Array.isArray(browsersListConfig) ? browsersListConfig.join(', ') : browsersListConfig
+}
+
 module.exports = {
   log,
   noop,
@@ -186,4 +193,5 @@ module.exports = {
   readWebpackConfig,
   createWebpackCompiler,
   printFileSizes,
+  extractBrowserslistString,
 }

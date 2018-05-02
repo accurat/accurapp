@@ -177,6 +177,16 @@ Here are instead the available Env Variables for the **yarn build** script:
 - **PUBLIC_URL** - use this if the application is hosted on a subpath, it will be used to resolve assets (default `/`)
 - **GENERATE_SOURCEMAP** use this if you want to generate the external sourcemaps files (default `false`)
 
+You get another Env Variable which is not customizable directly, process.env.**BROWSERSLIST**, both for the `yarn start` and `yarn build` script. It is built from the `browserslist` field in the `package.json`, and you can use it in your app like this:
+```js
+import isBrowserSupported from 'is-browser-supported'
+
+if (!isBrowserSupported(navigator.userAgent, process.env.BROWSERSLIST)) {
+  // show the "unsupported browsers" overlay
+}
+```
+
+
 ## Project Scaffolding
 ```
 ├── build             # created when you run yarn build

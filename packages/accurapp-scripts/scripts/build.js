@@ -10,7 +10,9 @@ if (process.env.PUBLIC_URL.startsWith('/') || process.env.PUBLIC_URL.endsWith('/
 const path = require('path')
 const fs = require('fs-extra')
 const chalk = require('chalk')
-const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, printFileSizes } = require('./_utils')
+const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, printFileSizes, extractBrowserslistString } = require('./_utils')
+
+process.env.BROWSERSLIST = extractBrowserslistString()
 
 const appDir = process.cwd()
 const config = readWebpackConfig()

@@ -8,7 +8,9 @@ const detect = require('detect-port')
 const WebpackDevServer = require('webpack-dev-server')
 const openOrRefreshBrowser = require('react-dev-utils/openBrowser')
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils')
-const { log, createWebpackCompiler, readWebpackConfig, coloredBanner } = require('./_utils')
+const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, extractBrowserslistString } = require('./_utils')
+
+process.env.BROWSERSLIST = extractBrowserslistString()
 
 const HOST = process.env.HOST || '0.0.0.0'
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8000
