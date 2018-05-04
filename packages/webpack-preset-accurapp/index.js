@@ -16,6 +16,8 @@ const postcss = require('@webpack-blocks/postcss')
 const eslint = require('@webpack-blocks/eslint')
 const autoprefixer = require('autoprefixer')
 const nested = require('postcss-nested')
+const fuss = require('postcss-fuss')
+const fussFunctions = require('postcss-fuss/fuss-functions')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
@@ -60,6 +62,7 @@ function buildWebpackConfig(config = []) {
       plugins: [
         autoprefixer({ flexbox: 'no-2009' }),
         nested,
+        fuss({ functions: fussFunctions }),
       ],
     }),
     match(['*.{js,jsx}', '!*node_modules*'], [

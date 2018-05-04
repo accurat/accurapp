@@ -28,6 +28,7 @@
     "glslify-loader": "^1.0.2",
     "html-webpack-plugin": "^3.2.0",
     "json5-loader": "^1.0.1",
+    "postcss-fuss": "^0.2.0",
     "postcss-nested": "^3.0.0",
     "raw-loader": "1.0.0-beta.0",
     "react-dev-utils": "/Users/accurat_mf/Code/create-react-app/packages/react-dev-utils",
@@ -35,6 +36,6 @@
     "thread-loader": "^1.1.5",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
-    "webpack": "^4.6.0"
+    "webpack": "^4.7.0"
   }
 }
