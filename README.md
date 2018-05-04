@@ -15,7 +15,7 @@ but significant amounts of code were rewritten and simplified. Here are some add
 - **JSON5 webpack loader** to import .json5 files. [Read more about JSON5 here](https://json5.org/).
 
 ## Table of contents
-- [Creating a new project](#creating-a-new project)
+- [Creating a new project](#creating-a-new-project)
 - [Customization](#customization)
   - [Customizing Webpack](#customizing-webpack)
   - [Customizing Eslint](#customizing-eslint)
@@ -40,8 +40,17 @@ Then you just `cd project-name`, run `yarn start` and start creating awesome stu
 1. Choose `I have an existing project` and follow the instructions
 
 #### Setting up the automatic deploy
+If you're using bitbucket pipelines:
 1. Go into `Settings > Pipelines - Settings` and enable Bitbucket Pipelines
 1. Go into `Settings > Pipelines - Environment Variables` and add the environment variables `DEPLOY_CUSTOMER`, `DEPLOY_PROJECT`, `SLACK_CHANNEL`
+
+Otherwise if you're using netlify:
+1. Login into [netlify.com](https://app.netlify.com/)
+1. Click `New site from Git`
+1. Click `Bitbucket` and select the repo you created from the list
+1. Select `accurat` from the team list
+1. Deploy site!
+1. Enable the slack notifications to the desired channel
 
 #### Commands
 These are the available commands once you created a project:
