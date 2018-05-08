@@ -221,6 +221,26 @@ if (!isBrowserSupported(navigator.userAgent, process.env.BROWSERSLIST)) {
 ```
 
 ## F.A.Q.
+#### How do I enable hot reloading?
+Just wrap the react render in a function, and add these few lines in the `index.js`:
+```js
+function renderApp() {
+  ReactDOM.render(<App/>, document.getElementById('root'))
+}
+
+// First render
+renderApp()
+
+// Hot module reloading
+if (module.hot) {
+  module.hot.accept('components/App', () => {
+    console.clear()
+    renderApp()
+  })
+}
+```
+The first argument to `module.hot.accept` must be the root component of the app, often the `Routes` component is used.
+
 #### Where do I put the images?
 You can put them in the `src/images` folder and require them from the js like this:
 ```js
