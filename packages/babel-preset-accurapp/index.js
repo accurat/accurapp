@@ -19,7 +19,7 @@ module.exports = function (context, opts = {}) {
         // in the @babel/plugin-proposal-class-properties
         // See discussion in https://github.com/facebook/create-react-app/issues/4263
         loose: true,
-        // The new decorators proposal is not supported yetin Babel
+        // The new decorators proposal is not supported yet in Babel
         // Remove this option when they will be supported
         decoratorsLegacy: true,
       }],

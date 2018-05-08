@@ -14,7 +14,7 @@
   "dependencies": {
     "babel-eslint": "^8.2.3",
     "eslint": "5.0.0-alpha.0",
-    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard": "^12.0.0-alpha.0",
     "eslint-plugin-flowtype": "^2.46.3",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-no-copy-paste-default-export": "^0.0.3",

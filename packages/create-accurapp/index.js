@@ -11,8 +11,8 @@ const { coloredBanner, log } = require('accurapp-scripts/scripts/_utils')
 const dependencies = [
   'react',
   'react-dom',
-  // 'd3',
-  // 'lodash',
+  'd3',
+  'lodash',
 ]
 
 const devDependencies = [
