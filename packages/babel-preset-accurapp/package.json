@@ -4,6 +4,12 @@
   "description": "Babel preset used by Accurat",
   "repository": "accurat/accurapp",
   "license": "MIT",
+  "keywords": [
+    "babel",
+    "preset",
+    "accurapp",
+    "accurat"
+  ],
   "engines": {
     "node": ">=7",
     "yarn": ">=1.2.1"

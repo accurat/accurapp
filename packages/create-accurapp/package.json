@@ -4,6 +4,11 @@
   "description": "Create accurat apps with minimum flexible build configuration",
   "repository": "accurat/accurapp",
   "license": "MIT",
+  "keywords": [
+    "create",
+    "accurapp",
+    "accurat"
+  ],
   "engines": {
     "node": ">=7",
     "yarn": ">=1.2.1"

@@ -4,6 +4,13 @@
   "description": "Webpack configuration used by Accurat, based on webpack-blocks",
   "repository": "accurat/accurapp",
   "license": "MIT",
+  "keywords": [
+    "webpack",
+    "webpack-blocks",
+    "preset",
+    "accurapp",
+    "accurat"
+  ],
   "engines": {
     "node": ">=7",
     "yarn": ">=1.2.1"

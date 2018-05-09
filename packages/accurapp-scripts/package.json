@@ -4,6 +4,11 @@
   "description": "Scripts for AccurApp",
   "repository": "accurat/accurapp",
   "license": "MIT",
+  "keywords": [
+    "scripts",
+    "accurapp",
+    "accurat"
+  ],
   "engines": {
     "node": ">=7",
     "yarn": ">=1.2.1"
