@@ -25,7 +25,7 @@
     "@webpack-blocks/eslint": "^1.0.0",
     "@webpack-blocks/postcss": "^1.0.0",
     "@webpack-blocks/webpack": "^1.0.0",
-    "autoprefixer": "^8.4.1",
+    "autoprefixer": "^8.5.0",
     "babel-loader": "8.0.0-beta.2",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "csv-loader": "^2.1.1",
@@ -39,15 +39,15 @@
     "postcss-nested": "^3.0.0",
     "raw-loader": "1.0.0-beta.0",
     "react-dev-utils": "marcofugaro/react-dev-utils",
-    "svgr": "^1.8.1",
+    "svgr": "^1.9.2",
     "thread-loader": "^1.1.5",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
-    "webpack": "^4.7.0"
+    "webpack": "^4.8.3"
   },
   "resolutions": {
     "**/file-loader": "1.1.11",
-    "**/webpack": "4.7.0",
+    "**/webpack": "4.8.3",
     "**/webpack-dev-server": "3.1.4",
     "**/webpack-merge": "4.1.2"
   }
