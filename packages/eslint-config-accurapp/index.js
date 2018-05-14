@@ -95,6 +95,7 @@ module.exports = {
     'react/self-closing-comp': ['warn', { 'component': true, 'html': true }],
     'react/jsx-first-prop-new-line': ['warn', 'multiline'],
     'react/jsx-no-bind': ['warn', { ignoreRefs: true }],
+    'react/no-typos': 'warn',
     'promise/no-callback-in-promise': 'warn',
     'promise/no-return-wrap': 'warn',
 
