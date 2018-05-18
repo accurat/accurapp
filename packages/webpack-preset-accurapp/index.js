@@ -42,29 +42,30 @@ const {
 } = require('./customBlocks')
 
 function buildWebpackConfig(config = []) {
+  const cssOptions = {
+    minimize: process.env.NODE_ENV === 'production',
+    sourceMap: process.env.GENERATE_SOURCEMAP === 'true',
+  }
+  const postcssOptions = {
+    plugins: [
+      autoprefixer({ flexbox: 'no-2009' }),
+      nested,
+      fuss({ functions: fussFunctions }),
+    ],
+  }
+
   return createConfig([
     entryPoint('./src/index.js'),
 
     // Loaders
     match(['*.css', '!*.module.css'], [
-      css({
-        minimize: process.env.NODE_ENV === 'production',
-        sourceMap: process.env.GENERATE_SOURCEMAP === 'true',
-      }),
+      css(cssOptions),
+      postcss(postcssOptions),
     ]),
     match('*.module.css', [
-      css.modules({
-        minimize: process.env.NODE_ENV === 'production',
-        sourceMap: process.env.GENERATE_SOURCEMAP === 'true',
-      }),
+      css.modules(cssOptions),
+      postcss(postcssOptions),
     ]),
-    postcss({
-      plugins: [
-        autoprefixer({ flexbox: 'no-2009' }),
-        nested,
-        fuss({ functions: fussFunctions }),
-      ],
-    }),
     match(['*.{js,jsx}', '!*node_modules*'], [
       babel(),
     ]),

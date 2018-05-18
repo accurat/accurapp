@@ -29,7 +29,7 @@ module.exports = buildWebpackConfig()
   "presets": ["accurapp"]
 }
 ```
-and run `yarn add --dev bebel-preset-accurapp`
+and run `yarn add --dev babel-preset-accurapp`
 
 - setting the `NODE_ENV` from the outside is being deprecated, it is preferred to use different Env variables or some argv arguments.
 So the previous CI script for staging
