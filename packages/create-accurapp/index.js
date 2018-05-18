@@ -13,6 +13,9 @@ const dependencies = [
   'react-dom',
   'd3',
   'lodash',
+  'modern-normalize',
+  '@accurat/tachyons-lite',
+  'tachyons-extra',
 ]
 
 const devDependencies = [
