@@ -22,6 +22,7 @@ but significant amounts of code were rewritten and simplified. Here are some add
   - [Customizing Babel](#customizing-babel)
   - [Setting Env Variables](#cetting-env-variables)
   - [Customizing Env Variables](#customizing-env-variables)
+- [Available Env Variables](#available-env-variables)
 - [Project Scaffolding](#project-scaffolding)
 - [F.A.Q.](#f.a.q.)
 - [Contributing](#contributing)
@@ -183,15 +184,25 @@ Here are the available Env Variables for the **yarn start** script:
 - **HTTPS** - Set this to `true` if you wish to use HTTPS in development (default `false`)
 
 Here are instead the available Env Variables for the **yarn build** script:
-- **PUBLIC_URL** - use this if the application is hosted on a subpath, it will be used to resolve assets (default `/`)
-- **GENERATE_SOURCEMAP** use this if you want to generate the external sourcemaps files (default `false`)
+- **PUBLIC_URL** - Use this if the application is hosted on a subpath, it will be used to resolve assets (default `/`)
+- **GENERATE_SOURCEMAP** - Use this if you want to generate the external sourcemaps files (default `false`)
 
-You get another Env Variable which is not customizable directly, process.env.**BROWSERSLIST**, both for the `yarn start` and `yarn build` script. It is built from the `browserslist` field in the `package.json`, and you can use it in your app like this:
+## Available Env Variables
+These are the Env Variables that Accurapp provides you, you cannot modify them directly:
+- **LATEST_COMMIT** - The latest commit hash, useful if you want to display a build version in your application
+- **LATEST_COMMIT_TIMESTAMP** - The UTC timestamp of the latest commit, you can use it like this:
+
+```js
+new Date(Number(process.env.LATEST_COMMIT_TIMESTAMP))
+```
+
+- **BROWSERSLIST** - It is built from the `browserslist` field in the `package.json`, and you can use it in your app like this:
+
 ```js
 import isBrowserSupported from 'is-browser-supported'
 
 if (!isBrowserSupported(navigator.userAgent, process.env.BROWSERSLIST)) {
-  // show the "unsupported browsers" overlay
+  // show the "unsupported browser" overlay
 }
 ```
 

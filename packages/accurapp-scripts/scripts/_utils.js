@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const cp = require('child_process')
 const webpack = require('webpack')
 const chalk = require('chalk')
 const figlet = require('figlet')
@@ -182,6 +183,16 @@ function extractBrowserslistString() {
   return Array.isArray(browsersListConfig) ? browsersListConfig.join(', ') : browsersListConfig
 }
 
+function extractLatestCommitHash() {
+  return cp.execSync('git log -n1 --format=format:"%h"')
+}
+
+function extractLatestCommitTimestamp() {
+  const unixTimestamp = cp.execSync('git log -n1 --format=format:"%ct"')
+  const utcTimestamp = `${unixTimestamp}000`
+  return utcTimestamp
+}
+
 module.exports = {
   log,
   noop,
@@ -194,4 +205,6 @@ module.exports = {
   createWebpackCompiler,
   printFileSizes,
   extractBrowserslistString,
+  extractLatestCommitHash,
+  extractLatestCommitTimestamp,
 }
