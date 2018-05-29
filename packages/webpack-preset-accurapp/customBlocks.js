@@ -59,7 +59,7 @@ function videoLoader() {
  */
 function fontLoader() {
   return (context, { addLoader }) => addLoader({
-    test: /\.(eot|ttf|woff|woff2)(\?.*)?$/,
+    test: /\.(eot|ttf|otf|woff|woff2)(\?.*)?$/,
     loader: 'file-loader',
     options: {
       name: fileNameTemplate,
