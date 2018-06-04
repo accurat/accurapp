@@ -3,10 +3,6 @@ process.env.PUBLIC_URL = process.env.PUBLIC_URL || ''
 process.env.GENERATE_SOURCEMAP = process.env.GENERATE_SOURCEMAP === 'true' ? 'true' : 'false'
 require('dotenv').config() // gives precedence to the env variables already present
 
-if (process.env.PUBLIC_URL.startsWith('/') || process.env.PUBLIC_URL.endsWith('/')) {
-  throw new Error(`The PUBLIC_URL env variable cannot have trailing or leading slashes: '${process.env.PUBLIC_URL}'`)
-}
-
 const path = require('path')
 const fs = require('fs-extra')
 const chalk = require('chalk')
@@ -15,6 +11,9 @@ const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, printFileS
 process.env.BROWSERSLIST = extractBrowserslistString()
 process.env.LATEST_COMMIT = extractLatestCommitHash()
 process.env.LATEST_COMMIT_TIMESTAMP = extractLatestCommitTimestamp()
+if (process.env.PUBLIC_URL.endsWith('/')) {
+  process.env.PUBLIC_URL = process.env.PUBLIC_URL.slice(0, -1)
+}
 
 const appDir = process.cwd()
 const config = readWebpackConfig()

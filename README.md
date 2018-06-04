@@ -184,7 +184,17 @@ Here are the available Env Variables for the **yarn start** script:
 - **HTTPS** - Set this to `true` if you wish to use HTTPS in development (default `false`)
 
 Here are instead the available Env Variables for the **yarn build** script:
-- **PUBLIC_URL** - Use this if the application is hosted on a subpath, it will be used to resolve assets (default `/`)
+- **PUBLIC_URL** - Use this if the application is hosted on a subpath, it will be used to resolve assets (default `/`).
+Here are some examples of its usage:
+```html
+<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+```
+```js
+render() {
+  return <img src={`${process.env.PUBLIC_URL}/img/logo.png`} />;
+}
+```
+
 - **GENERATE_SOURCEMAP** - Use this if you want to generate the external sourcemaps files (default `false`)
 
 ## Available Env Variables

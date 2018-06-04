@@ -135,6 +135,9 @@ function buildWebpackConfig(config = []) {
     //
     env('development', [
       mode('development'),
+      setOutput({
+        publicPath: '/',
+      }),
       prependEntry('react-dev-utils/webpackHotDevClient'),
       devServer({
         compress: true,
@@ -175,7 +178,7 @@ function buildWebpackConfig(config = []) {
         path: path.resolve('./build'),
         filename: 'app.[contenthash:8].js',
         chunkFilename: '[name].[contenthash:8].chunk.js',
-        publicPath: process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}/` : '/',
+        publicPath: process.env.PUBLIC_URL ? `${process.env.PUBLIC_URL}/` : '/',
       }),
 
       // Use sourcemaps only if specified, like in staging,
