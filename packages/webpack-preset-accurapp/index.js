@@ -117,7 +117,7 @@ function buildWebpackConfig(config = []) {
       // Makes some environment variables available in index.html. Example: %PUBLIC_URL%
       new InterpolateHtmlPlugin({
         'NODE_ENV': process.env.NODE_ENV,
-        'PUBLIC_URL': process.env.PUBLIC_URL ? `/${process.env.PUBLIC_URL}` : '',
+        'PUBLIC_URL': process.env.PUBLIC_URL,
       }),
       // Check case of paths, so case-sensitive filesystems won't complain:
       new CaseSensitivePathsPlugin(),
@@ -178,7 +178,7 @@ function buildWebpackConfig(config = []) {
         path: path.resolve('./build'),
         filename: 'app.[contenthash:8].js',
         chunkFilename: '[name].[contenthash:8].chunk.js',
-        publicPath: process.env.PUBLIC_URL ? `${process.env.PUBLIC_URL}/` : '/',
+        publicPath: `${process.env.PUBLIC_URL}/`,
       }),
 
       // Use sourcemaps only if specified, like in staging,
