@@ -18,6 +18,7 @@ const autoprefixer = require('autoprefixer')
 const nested = require('postcss-nested')
 const fuss = require('postcss-fuss')
 const fussFunctions = require('postcss-fuss/fuss-functions')
+const colorModFunction = require('postcss-color-mod-function')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
@@ -51,6 +52,7 @@ function buildWebpackConfig(config = []) {
       autoprefixer({ flexbox: 'no-2009' }),
       nested,
       fuss({ functions: fussFunctions }),
+      colorModFunction(),
     ],
   }
 

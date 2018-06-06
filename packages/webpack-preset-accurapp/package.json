@@ -35,6 +35,7 @@
     "glslify-loader": "^1.0.2",
     "html-webpack-plugin": "^3.2.0",
     "json5-loader": "^1.0.1",
+    "postcss-color-mod-function": "^2.4.2",
     "postcss-fuss": "^0.2.0",
     "postcss-nested": "^3.0.0",
     "raw-loader": "1.0.0-beta.0",
