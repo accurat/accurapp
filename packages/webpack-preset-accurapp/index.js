@@ -74,14 +74,16 @@ function buildWebpackConfig(config = []) {
     // Only transpile the latest stable ECMAScript features from node_modules.
     // This is because some node_modules may be written in a newer ECMAScript
     // version than the browsers you're actially supporting
-    match('*.js', { include: /node_modules/ }, [
-      babel({
-        babelrc: false,
-        presets: [
-          ['@babel/preset-env', { modules: false }],
-        ],
-      }),
-    ]),
+    ...(process.env.TRANSPILE_NODE_MODULES === 'true' ? [
+      match('*.js', { include: /node_modules/ }, [
+        babel({
+          babelrc: false,
+          presets: [
+            ['@babel/preset-env', { modules: false }],
+          ],
+        }),
+      ]),
+    ] : []),
     fontLoader(),
     imageLoader(),
     videoLoader(),

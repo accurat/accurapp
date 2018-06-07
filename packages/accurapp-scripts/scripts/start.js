@@ -1,5 +1,6 @@
 process.env.NODE_ENV = 'development'
 process.env.PUBLIC_URL = ''
+process.env.TRANSPILE_NODE_MODULES = process.env.TRANSPILE_NODE_MODULES || 'true'
 process.env.GENERATE_SOURCEMAP = 'true'
 require('dotenv').config() // gives precedence to the env variables already present
 
