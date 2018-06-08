@@ -16,7 +16,7 @@ function babel(options = {}) {
           loader: 'thread-loader',
           options: {
             // Keep workers alive for more effective watch mode
-            poolTimeout: Infinity,
+            ...(process.env.NODE_ENV === 'development' && { poolTimeout: Infinity }),
           },
         },
         {
