@@ -9,6 +9,7 @@ const {
   performance,
   sourceMaps,
   match,
+  when,
 } = require('@webpack-blocks/webpack')
 const { css } = require('@webpack-blocks/assets')
 const devServer = require('@webpack-blocks/dev-server')
@@ -74,7 +75,7 @@ function buildWebpackConfig(config = []) {
     // Only transpile the latest stable ECMAScript features from node_modules.
     // This is because some node_modules may be written in a newer ECMAScript
     // version than the browsers you're actially supporting
-    ...(process.env.TRANSPILE_NODE_MODULES === 'true' ? [
+    when(process.env.TRANSPILE_NODE_MODULES === 'true', [
       match('*.js', { include: /node_modules/ }, [
         babel({
           babelrc: false,
@@ -83,7 +84,7 @@ function buildWebpackConfig(config = []) {
           ],
         }),
       ]),
-    ] : []),
+    ]),
     fontLoader(),
     imageLoader(),
     videoLoader(),
@@ -187,7 +188,9 @@ function buildWebpackConfig(config = []) {
 
       // Use sourcemaps only if specified, like in staging,
       // don't use them by default when building
-      ...(process.env.GENERATE_SOURCEMAP === 'true' ? [sourceMaps('source-map')] : []),
+      when(process.env.GENERATE_SOURCEMAP === 'true', [
+        sourceMaps('source-map'),
+      ]),
 
       uglify({
         uglifyOptions: {
