@@ -11,6 +11,7 @@ const gzipSize = require('gzip-size').sync
 const indentString = require('indent-string')
 const columnify = require('columnify')
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
+const prettyMs = require('pretty-ms')
 const browserslist = require('browserslist')
 
 const log = {
@@ -99,11 +100,13 @@ function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
 
   // Webpack has finished recompiling the bundle (whether or not you have warnings or errors)
   compiler.hooks.done.tap('done', (stats) => {
-    const messages = formatWebpackMessages(stats.toJson({}, true))
+    const statsJson = stats.toJson({})
+    const messages = formatWebpackMessages(statsJson)
+    const time = prettyMs(statsJson.time)
     const isSuccessful = messages.errors.length + messages.warnings.length === 0
 
     if (isSuccessful) {
-      log.ok('Compiled successfully!')
+      log.ok(`Compiled successfully in ${chalk.cyan(time)}!`)
       if (isFirstCompile) {
         onFirstReadyCallback()
         isFirstCompile = false
@@ -115,7 +118,7 @@ function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
       console.log(listLine(messages.errors[0], chalk.red))
       onError()
     } else if (messages.warnings.length > 0) {
-      log.warn('Compiled with warnings:')
+      log.warn(`Compiled$ in ${chalk.cyan(time)} with warnings:`)
       messages.warnings.forEach(message => { console.log(listLine(message, chalk.yellow)) })
     }
   })
