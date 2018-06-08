@@ -197,6 +197,8 @@ render() {
 
 - **GENERATE_SOURCEMAP** - Use this if you want to generate the external sourcemaps files (default `false`)
 
+- **TRANSPILE_NODE_MODULES** - Set this to false if you want to disable the babel transpilation of the `node_modules` (default `true`)
+
 ## Available Env Variables
 These are the Env Variables that Accurapp provides you, you cannot modify them directly:
 - **LATEST_COMMIT** - The latest commit hash, useful if you want to display a build version in your application
