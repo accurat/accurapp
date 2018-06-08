@@ -109,6 +109,7 @@ const packageJson = {
   scripts: {
     start: 'accurapp-scripts start',
     build: 'accurapp-scripts build',
+    lint: 'accurapp-scripts lint',
   },
   browserslist: {
     production: [ '>0.25%', 'not ie 11', 'not op_mini all' ],

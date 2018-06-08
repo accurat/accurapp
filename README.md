@@ -57,6 +57,10 @@ Otherwise if you're using netlify:
 These are the available commands once you created a project:
 - `yarn start` starts a server locally, accessible both from your browser and from another machine using your same wi-fi
 - `yarn build` builds the project for production, ready to be deployed from the `build/` folder
+- `yarn lint` lints with eslint the `src/` folder. You can pass any [eslint options](https://eslint.org/docs/user-guide/command-line-interface#options) to the lint command, for example if you want to use eslint's fix option, you do it like this:
+```json
+"lint-fix": "accurapp-scripts lint --fix",
+```
 
 **NOTE**: you need to have at least Node v6.x and yarn v1.2.1, make sure you have the correct versions if you run into some problems running these commands. You can check their version by running `node -v` and `yarn -v`.
 

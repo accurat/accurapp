@@ -51,3 +51,8 @@ now becomes
     - GENERATE_SOURCEMAP=true yarn build
 ```
 This is more explicit.
+
+- add the lint script to scripts section in the package.json:
+```json
+"lint": "accurapp-scripts lint",
+```
