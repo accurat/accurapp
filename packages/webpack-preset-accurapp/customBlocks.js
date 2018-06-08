@@ -12,7 +12,13 @@ function babel(options = {}) {
       // setting `test` defaults here, in case there is no `context.match` data
       test: /\.(js|jsx)$/,
       use: [
-        'thread-loader',
+        {
+          loader: 'thread-loader',
+          options: {
+            // Keep workers alive for more effective watch mode
+            poolTimeout: Infinity,
+          },
+        },
         {
           loader: 'babel-loader',
           options: Object.assign({
