@@ -187,13 +187,23 @@ function extractBrowserslistString() {
 }
 
 function extractLatestCommitHash() {
-  return cp.execSync('git log -n1 --format=format:"%h"')
+  try {
+    return cp.execSync('git log -n1 --format=format:"%h"')
+  } catch (e) {
+    // Probably git is not available, return an empty string instead
+    return ''
+  }
 }
 
 function extractLatestCommitTimestamp() {
-  const unixTimestamp = cp.execSync('git log -n1 --format=format:"%ct"')
-  const utcTimestamp = `${unixTimestamp}000`
-  return utcTimestamp
+  try {
+    const unixTimestamp = cp.execSync('git log -n1 --format=format:"%ct"')
+    const utcTimestamp = `${unixTimestamp}000`
+    return utcTimestamp
+  } catch (e) {
+    // Probably git is not available, return time of the build instead
+    return Date.now()
+  }
 }
 
 module.exports = {
