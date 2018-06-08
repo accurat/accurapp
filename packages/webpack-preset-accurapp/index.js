@@ -13,7 +13,6 @@ const {
 } = require('@webpack-blocks/webpack')
 const { css } = require('@webpack-blocks/assets')
 const devServer = require('@webpack-blocks/dev-server')
-const postcss = require('@webpack-blocks/postcss')
 const eslint = require('@webpack-blocks/eslint')
 const autoprefixer = require('autoprefixer')
 const nested = require('postcss-nested')
@@ -25,10 +24,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Dotenv = require('dotenv-webpack')
 
 const {
   babel,
+  postcss,
+  extractCss,
   imageLoader,
   videoLoader,
   fontLoader,
@@ -47,6 +49,7 @@ function buildWebpackConfig(config = []) {
   const cssOptions = {
     minimize: process.env.NODE_ENV === 'production',
     sourceMap: process.env.GENERATE_SOURCEMAP === 'true',
+    ...(process.env.NODE_ENV === 'production' && { styleLoader: false }),
   }
   const postcssOptions = {
     plugins: [
@@ -62,10 +65,16 @@ function buildWebpackConfig(config = []) {
 
     // Loaders
     match(['*.css', '!*.module.css'], [
+      when(process.env.NODE_ENV === 'production', [
+        extractCss(),
+      ]),
       css(cssOptions),
       postcss(postcssOptions),
     ]),
     match('*.module.css', [
+      when(process.env.NODE_ENV === 'production', [
+        extractCss(),
+      ]),
       css.modules(cssOptions),
       postcss(postcssOptions),
     ]),
@@ -185,6 +194,16 @@ function buildWebpackConfig(config = []) {
         chunkFilename: '[name].[contenthash:8].chunk.js',
         publicPath: `${process.env.PUBLIC_URL}/`,
       }),
+
+      addPlugins([
+        // Extract the css and import it from the <head>,
+        // this prevents the Flash Of Unstyled Content that could happen
+        // when leaving css inside the javascript
+        new MiniCssExtractPlugin({
+          filename: 'app.[contenthash:8].css',
+          chunkFilename: '[name].[contenthash:8].chunk.css',
+        }),
+      ]),
 
       // Use sourcemaps only if specified, like in staging,
       // don't use them by default when building

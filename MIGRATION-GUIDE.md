@@ -27,7 +27,6 @@ module.exports = buildWebpackConfig()
 ```json
   "resolutions": {
     "**/file-loader": "1.1.11",
-    "**/postcss-loader": "2.1.5"
   }
 ```
 then run `rm -rf node_modules/; rm yarn.lock; yarn`

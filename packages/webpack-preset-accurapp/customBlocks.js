@@ -1,4 +1,5 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const fileNameTemplate = '[name].[contenthash:8].[ext]'
 
@@ -26,6 +27,42 @@ function babel(options = {}) {
             cacheDirectory: true,
             highlightCode: true,
           }, options),
+        },
+      ],
+    }, context.match)
+  )
+}
+
+/**
+ * Applies postcss plugins transformations to the css
+ * TODO remove this block when it will be updated in webpack-blocks
+ */
+function postcss(options = {}) {
+  return (context, { addLoader }) => addLoader(
+    Object.assign({
+      test: /\.css$/,
+      use: [
+        {
+          loader: 'postcss-loader',
+          options,
+        },
+      ],
+    }, context.match)
+  )
+}
+
+/**
+ * Extracts the css and puts it in the <head>
+ * TODO use this also in development when this issue is fixed
+ * https://github.com/webpack-contrib/mini-css-extract-plugin/issues/34
+ */
+function extractCss() {
+  return (context, { addLoader }) => addLoader(
+    Object.assign({
+      test: /\.css$/,
+      use: [
+        {
+          loader: MiniCssExtractPlugin.loader,
         },
       ],
     }, context.match)
@@ -226,6 +263,8 @@ function optimization(options = {}) {
 
 module.exports = {
   babel,
+  postcss,
+  extractCss,
   imageLoader,
   videoLoader,
   fontLoader,

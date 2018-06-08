@@ -116,7 +116,6 @@ const packageJson = {
   },
   resolutions: {
     '**/file-loader': '1.1.11',
-    '**/postcss-loader': '2.1.5',
   },
 }
 if (isRealRun) writePackageJson(appDir, packageJson)
