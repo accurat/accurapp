@@ -61,6 +61,10 @@ These are the available commands once you created a project:
 ```json
 "lint-fix": "accurapp-scripts lint --fix",
 ```
+- `yarn prettier` prettifies all the code in the `src/` folder, overwriting the files. You can pass options also to this command, for example if you want to print only the files which would be prettified but don't overwrite them:
+```json
+"prettier-check": "accurapp-scripts prettier --list-different",
+```
 
 **NOTE**: you need to have at least Node v6.x and yarn v1.2.1, make sure you have the correct versions if you run into some problems running these commands. You can check their version by running `node -v` and `yarn -v`.
 

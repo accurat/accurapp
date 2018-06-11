@@ -110,6 +110,7 @@ const packageJson = {
     start: 'accurapp-scripts start',
     build: 'accurapp-scripts build',
     lint: 'accurapp-scripts lint',
+    prettier: 'accurapp-scripts prettier',
   },
   browserslist: {
     production: [ '>0.25%', 'not ie 11', 'not op_mini all' ],
