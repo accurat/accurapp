@@ -118,7 +118,7 @@ function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
       console.log(listLine(messages.errors[0], chalk.red))
       onError()
     } else if (messages.warnings.length > 0) {
-      log.warn(`Compiled$ in ${chalk.cyan(time)} with warnings:`)
+      log.warn(`Compiled in ${chalk.cyan(time)} with warnings:`)
       messages.warnings.forEach(message => { console.log(listLine(message, chalk.yellow)) })
     }
   })
