@@ -5,6 +5,7 @@
     "clean": "rm -rf node_modules; rm -rf packages/*/node_modules; rm yarn.lock; yarn cache clean",
     "lint": "node node_modules/eslint/bin/eslint.js packages",
     "create-test-app": "rm -rf test-app; node packages/create-accurapp/index.js test-app --testing",
+    "create-test-app-build": "(yarn create-test-app; cd test-app/; yarn build)",
     "publish": "is-git-status-clean && lerna publish --independent"
   },
   "workspaces": [
