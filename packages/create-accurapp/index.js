@@ -117,6 +117,7 @@ const packageJson = {
   },
   resolutions: {
     '**/file-loader': '1.1.11',
+    '**/core-js': '2.5.7',
   },
 }
 if (isRealRun) writePackageJson(appDir, packageJson)
