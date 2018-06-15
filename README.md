@@ -37,7 +37,8 @@ _(**Note**: if it says `npx: command not found` update your node version by runn
 Then you just `cd project-name`, run `yarn start` and start creating awesome stuff! 🎉
 
 #### Setting up bitbucket
-1. Create a new repo
+1. Create a new repo - [link](https://bitbucket.org/repo/create)
+1. Be sure to choose `accurat` as Owner, not yourself.
 1. Choose `I have an existing project` and follow the instructions
 
 #### Setting up the automatic deploy
