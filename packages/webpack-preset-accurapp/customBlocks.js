@@ -1,7 +1,9 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const fileNameTemplate = '[name].[contenthash:8].[ext]'
+// TODO use contenthash when this issue will be resolved
+// https://github.com/webpack/loader-utils/issues/112
+const fileNameTemplate = '[name].[hash:8].[ext]'
 
 /**
  * The thread-loader parallelizes code compilation, useful with babel since
@@ -262,6 +264,7 @@ function optimization(options = {}) {
 }
 
 module.exports = {
+  fileNameTemplate,
   babel,
   postcss,
   extractCss,
