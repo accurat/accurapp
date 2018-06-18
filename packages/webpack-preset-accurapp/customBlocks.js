@@ -141,50 +141,48 @@ function csvLoader() {
 // Allows you to use two kinds of imports for SVG:
 // import logoUrl from './logo.svg'; gives you the URL.
 // import { ReactComponent as Logo } from './logo.svg'; gives you a component.
-function svgLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.svg$/,
-    use: [
-      // {
-      //   loader: 'babel-loader',
-      //   options: {
-      //     highlightCode: true,
-      //     cacheDirectory: true,
-      //     compact: process.env.NODE_ENV === 'production',
-      //   },
-      // },
-      {
-        loader: 'svgr/webpack',
-        options: {
-          // TODO uncomment this when this issue will be resolved
-          // https://github.com/smooth-code/svgr/issues/52
-          // svgo: {
-          //   pretty: true,
-          //   multipass: true,
-          //   plugins: [
-          //     { sortAttrs: true },
-          //     { removeDimensions: true },
-          //     { inlineStyles: true },
-          //     { removeStyleElement: true },
-          //     { convertColors: { currentColor: true } },
-          //     { removeAttrs: { attrs: '(xmlns.*)' } },
-          //   ],
-          // },
-          semi: false,
-          singleQuote: true,
-          trailingComma: 'es5',
-          icon: true,
+function reactSvgLoader() {
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            highlightCode: true,
+            cacheDirectory: true,
+            compact: process.env.NODE_ENV === 'production',
+          },
         },
-      },
-      {
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: fileNameTemplate,
+        {
+          loader: '@svgr/webpack',
+          options: {
+            semi: false,
+            trailingComma: 'all',
+            svgAttributes: {
+              fill: 'currentColor',
+            },
+            svgoConfig: {
+              multipass: true,
+              pretty: process.env.NODE_ENV === 'development',
+              indent: 2,
+              plugins: [
+                { sortAttrs: true },
+                { removeDimensions: true },
+                { convertColors: { currentColor: true } },
+              ],
+            },
+          },
         },
-      },
-    ],
-  })
+        {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: fileNameTemplate,
+          },
+        },
+      ],
+    })
 }
 
 /**
@@ -273,7 +271,7 @@ module.exports = {
   fontLoader,
   glslifyLoader,
   csvLoader,
-  svgLoader,
+  reactSvgLoader,
   json5Loader,
   resolveSrc,
   prependEntry,

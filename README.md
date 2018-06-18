@@ -10,6 +10,7 @@ but significant amounts of code were rewritten and simplified. Here are some add
 - Possibility to define your custom **supported browsers** (both for dev and prod) in the `browserslist` field of `package.json`. This will affect the Babel transpilation and the CSS Autoprefixing.
 - **GLSL webpack loader** to import shaders and require shaders within shaders.
 - **CSV webpack loader** to import .csv files as an array of JSONs.
+- **React SVG loader** to import .svg files as react components, useful for icons. Svgs get also optimized with [svgo](https://github.com/svg/svgo).
 - **CSS Modules** support in files that end with `*.module.css`. [Read more about CSS Modules here](https://github.com/css-modules/css-modules).
 - **CSS postprocessing** using postcss to enable [Autoprefixing](https://github.com/postcss/autoprefixer) and [CSS Nesting](https://github.com/postcss/postcss-nested).
 - **JSON5 webpack loader** to import .json5 files. [Read more about JSON5 here](https://json5.org/).
@@ -253,11 +254,18 @@ if (!isBrowserSupported(navigator.userAgent, process.env.BROWSERSLIST)) {
 ```
 
 ## F.A.Q.
-#### How do I enable hot reloading?
-Just wrap the react render in a function, and add these few lines in the `index.js`:
+#### How do I enable hot reloading for the state?
+By default, hot reloading is enabled for the react components tree in accurapp, but if you want to hot-reload also the [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree) files, your `index.js` should look like this:
 ```js
+let state = State.create()
+
 function renderApp() {
-  ReactDOM.render(<App/>, document.getElementById('root'))
+  ReactDOM.render(
+    <MobxProvider state={state}>
+      <App/>
+    </MobxProvider>,
+    document.getElementById('root'),
+  )
 }
 
 // First render
@@ -265,7 +273,16 @@ renderApp()
 
 // Hot module reloading
 if (module.hot) {
+  // Some component changed, rerender the app
+  // and let the react-diffing handle the changes
   module.hot.accept('components/App', () => {
+    console.clear()
+    renderApp()
+  })
+
+  // Store definition changed, recreate a new one from old state and rerender
+  module.hot.accept('state', () => {
+    state = State.create(getSnapshot(state))
     console.clear()
     renderApp()
   })
@@ -313,6 +330,47 @@ You usually put the assets you require from the `index.html` here. Like for exam
 You should try as much as possible to require the .css and .js file from the `src` folder, so they are bundled and optimized. For example if you need a service worker file, use the [sw-precache-webpack-plugin](https://github.com/goldhand/sw-precache-webpack-plugin).
 
 You should also try as much as possible to avoid putting images in the `public` folder, because missing images would cause 404 errors for the users instead of compilation errors.
+
+#### How do I handle svg files?
+By default you can import svgs as files, like you would do for images:
+```js
+import logo from 'images/logo.svg'
+
+console.log(logo) // /logo.84287d09.svg
+
+function Header() {
+  // Import result is the URL of your svg
+  return <img src={logo} alt="Logo" />
+}
+```
+
+But if the svg is an icon, and you need to apply some styles to it, you can also import it as a react component, and pass it some `className` or `style` props:
+```js
+import { ReactComponent as PencilIcon } from 'icons/pencil.svg'
+
+// It's like doing
+// function PencilIcon(props) {
+//   return (
+//     <svg viewBox="..." {...props}>
+//       ...
+//     </svg>
+//   )
+// }
+
+function Edit() {
+  // .db displays the svg as a block, removing the little space
+  // underneath that the default inline-block svg has
+  //
+  // .w1 sets the dimensions, you can also set the dimensions
+  // in px using the style attribute
+  //
+  // .black colors the icon black, like you would do with text
+  return <PencilIcon className="db w1 black" />
+}
+```
+Under the hood, the loader basically wraps the svg file inside a react component, so you can treat it as such.
+
+Furthermore it optimizes and minifies the svg using [svgo](https://github.com/svg/svgo), so it cleans up automatically the ugly and noisy svg that Illustrator exports 🙌.
 
 #### How do I override a webpack loader?
 The easiest way to override a loader is to do it inline, by prefixing the import with a `!`.

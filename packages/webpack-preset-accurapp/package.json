@@ -20,6 +20,7 @@
     "customBlocks.js"
   ],
   "dependencies": {
+    "@svgr/webpack": "^2.0.0",
     "@webpack-blocks/assets": "^1.0.0",
     "@webpack-blocks/dev-server": "^1.0.0",
     "@webpack-blocks/eslint": "^1.0.0",
@@ -41,7 +42,6 @@
     "postcss-nested": "^3.0.0",
     "raw-loader": "1.0.0-beta.0",
     "react-dev-utils": "marcofugaro/react-dev-utils",
-    "svgr": "^1.10.0",
     "thread-loader": "^1.1.5",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
