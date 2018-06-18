@@ -157,8 +157,6 @@ function reactSvgLoader() {
         {
           loader: '@svgr/webpack',
           options: {
-            semi: false,
-            trailingComma: 'all',
             svgAttributes: {
               fill: 'currentColor',
             },
