@@ -6715,9 +6715,9 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dev-utils@marcofugaro/react-dev-utils:
+react-dev-utils@marcofugaro/react-dev-utils#update1:
   version "5.0.0"
-  resolved "https://codeload.github.com/marcofugaro/react-dev-utils/tar.gz/6b23b5a0580360f1b91b80ebefe9d73418d5c5e9"
+  resolved "https://codeload.github.com/marcofugaro/react-dev-utils/tar.gz/1d533b781b4a225d70e60caa64ba4d9dcbf368ea"
   dependencies:
     "@babel/code-frame" "7.0.0-beta.46"
     address "1.0.3"
