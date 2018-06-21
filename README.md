@@ -1,9 +1,9 @@
-# AccurApp
+## ![AccurApp](logo.png)
 
-This is a project kickstarter customized for the specific needs of Accurat.
+**AccurApp** is a project kickstarter customized for the specific needs of [Accurat](http://accurat.it/).
 
 It was originally forked from [create-react-app](https://github.com/facebookincubator/create-react-app/),
-but significant amounts of code were rewritten and simplified. Here are some added features:
+but significant amounts of code were rewritten and simplified. Here are some shiny features:
 
 - **ESLint** config based on [StandardJS](https://standardjs.com/) with some opinionated customizations, also with addition of a lot of React rules. [See all the rules here](https://github.com/accurat/accurapp/blob/master/packages/eslint-config-accurapp/index.js).
 - **Babel** preset based on the supported browsers with the addition of the [stage-0](https://babeljs.io/docs/plugins/preset-stage-0/) preset and the [macros](https://github.com/kentcdodds/babel-plugin-macros) plugin. Node_modules are transpiled also.
