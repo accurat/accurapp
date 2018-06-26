@@ -75,6 +75,8 @@ module.exports = {
     'no-implicit-coercion': 'warn',
     'no-bitwise': 'warn',
     'lines-between-class-members': ['warn', 'always', { exceptAfterSingleLine: true }],
+    'array-element-newline': ['warn', 'consistent'],
+    'prefer-object-spread': 'warn',
     'react/jsx-indent': ['warn', 2],
     'react/jsx-indent-props': ['warn', 2],
     'react/jsx-wrap-multilines': ['warn', { return: 'parens-new-line', arrow: 'parens-new-line' }],
@@ -96,6 +98,7 @@ module.exports = {
     'react/jsx-first-prop-new-line': ['warn', 'multiline'],
     'react/jsx-no-bind': ['warn', { ignoreRefs: true }],
     'react/no-typos': 'warn',
+    'react/jsx-props-no-multi-spaces': 'warn',
     'promise/no-callback-in-promise': 'warn',
     'promise/no-return-wrap': 'warn',
 
