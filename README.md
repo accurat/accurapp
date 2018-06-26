@@ -134,16 +134,6 @@ module.exports = buildWebpackConfig([
 ])
   ```
 
-In addition, this is the way to add support for Typescript into the project.
-```js
-const { buildWebpackConfig } = require('webpack-preset-accurapp')
-const typescript = require('@webpack-blocks/typescript')
-
-module.exports = buildWebpackConfig([
-  typescript(),
-])
-```
-
 #### Customizing Eslint
 Add your custom rules to the `.eslintrc`
 ```js
@@ -371,6 +361,55 @@ function Edit() {
 Under the hood, the loader basically wraps the svg file inside a react component, so you can treat it as such.
 
 Furthermore it optimizes and minifies the svg using [svgo](https://github.com/svg/svgo), so it cleans up automatically the ugly and noisy svg that Illustrator exports 🙌.
+
+#### How do I enable TypeScript?
+TypesScript is not enabled by default in accurapp for now, this is what you have to do.
+
+After having done `yarn add --dev webpack-blocks-ts`, use it in the webpack config:
+```js
+const { buildWebpackConfig } = require('webpack-preset-accurapp')
+const typescript = require('webpack-blocks-ts')
+
+module.exports = buildWebpackConfig([
+  typescript({ silent: true }),
+])
+```
+
+Then add a `tsconfig.json` in the project root, a default tsconfig looks like this:
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "build",
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": false,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "webpack.config.js"
+  ]
+}
+```
+
+Then what is left to do is to add as devDependencies the types of the libraries you're using, for example:
+```js
+yarn add --dev @types/react @types/react-dom
+```
 
 #### How do I override a webpack loader?
 The easiest way to override a loader is to do it inline, by prefixing the import with a `!`.
