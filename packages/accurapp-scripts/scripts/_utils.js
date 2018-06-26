@@ -107,10 +107,6 @@ function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
 
     if (isSuccessful) {
       log.ok(`Compiled successfully in ${chalk.cyan(time)}!`)
-      if (isFirstCompile) {
-        onFirstReadyCallback()
-        isFirstCompile = false
-      }
     } else if (messages.errors.length > 0) {
       log.err('Errors in compiling:')
       // Only log the first error. Others are often indicative
@@ -120,6 +116,13 @@ function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
     } else if (messages.warnings.length > 0) {
       log.warn(`Compiled in ${chalk.cyan(time)} with warnings:`)
       messages.warnings.forEach(message => { console.log(listLine(message, chalk.yellow)) })
+    }
+
+    // If the first time compiles, also with warnings,
+    // call the onFirstReadyCallback
+    if (isFirstCompile && messages.errors.length === 0) {
+      onFirstReadyCallback()
+      isFirstCompile = false
     }
   })
 
