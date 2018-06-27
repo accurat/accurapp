@@ -406,9 +406,9 @@ Then add a `tsconfig.json` in the project root, a default tsconfig looks like th
 }
 ```
 
-Then what is left to do is to add as devDependencies the types of the libraries you're using, for example:
+Then what is left to do is to add as devDependencies typescript and the types of the libraries you're using, for example:
 ```js
-yarn add --dev @types/react @types/react-dom
+yarn add --dev typescript @types/react @types/react-dom
 ```
 
 #### How do I override a webpack loader?
