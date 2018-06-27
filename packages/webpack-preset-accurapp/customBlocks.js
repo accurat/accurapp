@@ -166,6 +166,7 @@ function reactSvgLoader() {
               indent: 2,
               plugins: [
                 { sortAttrs: true },
+                { removeViewBox: false },
                 { removeDimensions: true },
                 { convertColors: { currentColor: true } },
               ],
