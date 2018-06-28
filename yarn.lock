@@ -3144,7 +3144,7 @@ escodegen@~1.3.2:
     source-map "~0.1.33"
 
 eslint-config-accurapp@./packages/eslint-config-accurapp:
-  version "4.1.0-beta.10"
+  version "4.1.0-beta.11"
   dependencies:
     babel-eslint "^8.2.5"
     eslint "5.0.1"
@@ -6719,9 +6719,9 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dev-utils@marcofugaro/react-dev-utils#update1:
+react-dev-utils@marcofugaro/react-dev-utils#update2:
   version "5.0.0"
-  resolved "https://codeload.github.com/marcofugaro/react-dev-utils/tar.gz/1d533b781b4a225d70e60caa64ba4d9dcbf368ea"
+  resolved "https://codeload.github.com/marcofugaro/react-dev-utils/tar.gz/f417e28657a85330749bbacb0f9d2231b1232b3c"
   dependencies:
     "@babel/code-frame" "7.0.0-beta.46"
     address "1.0.3"
