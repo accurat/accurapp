@@ -25,7 +25,7 @@ but significant amounts of code were rewritten and simplified. Here are some shi
   - [Customizing Env Variables](#customizing-env-variables)
 - [Available Env Variables](#available-env-variables)
 - [Project Scaffolding](#project-scaffolding)
-- [F.A.Q.](#f.a.q.)
+- [F.A.Q.](#faq)
 - [Contributing](#contributing)
 
 ## Creating a new project
