@@ -22,6 +22,10 @@ module.exports = function (context, opts = {}) {
         // The new decorators proposal is not supported yet in Babel
         // Remove this option when they will be supported
         decoratorsLegacy: true,
+        // There are multiple pipelines proposals in Babel beta,
+        // the minimal (the only one for now) doesn't support await
+        // Remove this option when it will be more standardized
+        pipelineProposal: 'minimal',
       }],
     ],
     plugins: [
