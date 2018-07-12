@@ -20,7 +20,7 @@
     "customBlocks.js"
   ],
   "dependencies": {
-    "@svgr/webpack": "^2.1.0",
+    "@svgr/webpack": "^2.1.1",
     "@webpack-blocks/assets": "^1.0.0",
     "@webpack-blocks/dev-server": "^1.0.0",
     "@webpack-blocks/eslint": "^1.0.0",
@@ -38,13 +38,13 @@
     "mini-css-extract-plugin": "^0.4.1",
     "postcss-color-mod-function": "^2.4.2",
     "postcss-fuss": "^0.2.0",
-    "postcss-loader": "^2.1.5",
+    "postcss-loader": "^2.1.6",
     "postcss-nested": "^3.0.0",
     "raw-loader": "1.0.0-beta.0",
     "react-dev-utils": "marcofugaro/react-dev-utils#update4",
     "thread-loader": "^1.1.5",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "url-loader": "^1.0.1",
-    "webpack": "^4.15.1"
+    "webpack": "^4.16.0"
   }
 }
