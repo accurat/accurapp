@@ -384,7 +384,7 @@ Then add a `tsconfig.json` in the project root, a default tsconfig looks like th
     "outDir": "build",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "es7", "es2017", "ESNext", "dom"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
