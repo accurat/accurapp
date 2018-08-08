@@ -6,7 +6,7 @@ const spawn = require('cross-spawn')
 const chalk = require('chalk')
 const meow = require('meow')
 const indentString = require('indent-string')
-const { coloredBanner, log } = require('accurapp-scripts/scripts/_utils')
+const { coloredBanner, log, createEnvFile } = require('accurapp-scripts/scripts/_utils')
 
 const dependencies = [
   'react',
@@ -168,6 +168,9 @@ if (isYesGit && isReadyGit) {
   if (!isYesGit) log.info(`Not running 'git init/add/commit' because you chose so.`)
   if (!isReadyGit) log.info(`Not running 'git init/add/commit' because there is no '.gitignore' file.`)
 }
+
+log.ok(`Creating your local .env file`)
+createEnvFile(appDir)
 
 log.ok(`Done! Have fun with your new app.`)
 log.info(`Quick tip:\n

@@ -1,6 +1,6 @@
 const path = require('path')
-const fs = require('fs')
 const cp = require('child_process')
+const fs = require('fs-extra')
 const webpack = require('webpack')
 const chalk = require('chalk')
 const figlet = require('figlet')
@@ -209,6 +209,17 @@ function extractLatestCommitTimestamp() {
   }
 }
 
+function createEnvFile(appDir) {
+  const envPath = path.resolve(appDir, '.env')
+  const envExamplePath = path.resolve(appDir, '.env.example')
+
+  if (fs.existsSync(envPath)) {
+    return
+  }
+
+  fs.copySync(envExamplePath, envPath)
+}
+
 module.exports = {
   log,
   noop,
@@ -223,4 +234,5 @@ module.exports = {
   extractBrowserslistString,
   extractLatestCommitHash,
   extractLatestCommitTimestamp,
+  createEnvFile,
 }

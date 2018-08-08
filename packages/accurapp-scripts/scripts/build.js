@@ -7,7 +7,7 @@ require('dotenv').config() // gives precedence to the env variables already pres
 const path = require('path')
 const fs = require('fs-extra')
 const chalk = require('chalk')
-const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, printFileSizes, extractBrowserslistString, extractLatestCommitHash, extractLatestCommitTimestamp } = require('./_utils')
+const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, printFileSizes, extractBrowserslistString, extractLatestCommitHash, extractLatestCommitTimestamp, createEnvFile } = require('./_utils')
 
 process.env.BROWSERSLIST = extractBrowserslistString()
 process.env.LATEST_COMMIT = extractLatestCommitHash()
@@ -17,6 +17,11 @@ if (process.env.PUBLIC_URL.endsWith('/')) {
 }
 
 const appDir = process.cwd()
+
+if (process.env.CI === 'true') {
+  createEnvFile(appDir)
+}
+
 const config = readWebpackConfig()
 const appPublic = path.join(appDir, 'public')
 const appBuild = config.output.path

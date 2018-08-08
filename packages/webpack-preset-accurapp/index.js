@@ -121,7 +121,6 @@ function buildWebpackConfig(config = []) {
       new Dotenv({
         systemvars: true,
         silent: true,
-        safe: process.env.CI === 'true',
       }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin({
