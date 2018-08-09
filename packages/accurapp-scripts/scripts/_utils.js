@@ -209,17 +209,6 @@ function extractLatestCommitTimestamp() {
   }
 }
 
-function createEnvFile(appDir) {
-  const envPath = path.resolve(appDir, '.env')
-  const envExamplePath = path.resolve(appDir, '.env.example')
-
-  if (fs.existsSync(envPath)) {
-    return
-  }
-
-  fs.copySync(envExamplePath, envPath)
-}
-
 module.exports = {
   log,
   noop,
@@ -234,5 +223,4 @@ module.exports = {
   extractBrowserslistString,
   extractLatestCommitHash,
   extractLatestCommitTimestamp,
-  createEnvFile,
 }

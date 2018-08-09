@@ -170,7 +170,14 @@ if (isYesGit && isReadyGit) {
 }
 
 log.ok(`Creating your local .env file`)
-createEnvFile(appDir)
+if (isRealRun) {
+  const envPath = path.resolve(appDir, '.env')
+  const envExamplePath = path.resolve(appDir, '.env.example')
+
+  if (!fs.existsSync(envPath)) {
+    fs.copySync(envExamplePath, envPath)
+  }
+}
 
 log.ok(`Done! Have fun with your new app.`)
 log.info(`Quick tip:\n
