@@ -3,4 +3,5 @@
   command = "yarn build"
 
 [build.environment]
+  CI = "true"
   GENERATE_SOURCEMAP = "true"
