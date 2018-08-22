@@ -1,13 +1,13 @@
+require('dotenv').config() // gives precedence to the env variables already present
 process.env.NODE_ENV = 'production'
 process.env.PUBLIC_URL = process.env.PUBLIC_URL || ''
 process.env.TRANSPILE_NODE_MODULES = process.env.TRANSPILE_NODE_MODULES || 'true'
 process.env.GENERATE_SOURCEMAP = process.env.GENERATE_SOURCEMAP === 'true' ? 'true' : 'false'
-require('dotenv').config() // gives precedence to the env variables already present
 
 const path = require('path')
 const fs = require('fs-extra')
 const chalk = require('chalk')
-const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, printFileSizes, extractBrowserslistString, extractLatestCommitHash, extractLatestCommitTimestamp, createEnvFile } = require('./_utils')
+const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, printFileSizes, extractBrowserslistString, extractLatestCommitHash, extractLatestCommitTimestamp } = require('./_utils')
 
 process.env.BROWSERSLIST = extractBrowserslistString()
 process.env.LATEST_COMMIT = extractLatestCommitHash()

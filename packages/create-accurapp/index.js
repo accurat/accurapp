@@ -6,7 +6,7 @@ const spawn = require('cross-spawn')
 const chalk = require('chalk')
 const meow = require('meow')
 const indentString = require('indent-string')
-const { coloredBanner, log, createEnvFile } = require('accurapp-scripts/scripts/_utils')
+const { coloredBanner, log } = require('accurapp-scripts/scripts/_utils')
 
 const dependencies = [
   'react',
