@@ -14,23 +14,39 @@ module.exports = function (context, opts = {}) {
         // Adds __self attribute to JSX which React will use for some warnings
         development: isDevelopment,
       }],
-      [require('@babel/preset-stage-0').default, {
-        // Enable loose mode to use assignment instead of defineProperty
-        // in the @babel/plugin-proposal-class-properties
-        // See discussion in https://github.com/facebook/create-react-app/issues/4263
-        loose: true,
-        // The new decorators proposal is not supported yet in Babel
-        // Remove this option when they will be supported
-        decoratorsLegacy: true,
-        // There are multiple pipelines proposals in Babel beta,
-        // the minimal (the only one for now) doesn't support await
-        // Remove this option when it will be more standardized
-        pipelineProposal: 'minimal',
-      }],
     ],
     plugins: [
       require('babel-plugin-lodash'),
       require('babel-plugin-macros'),
+
+      // ----------- Stage 0 -----------
+      require('@babel/plugin-proposal-function-bind').default,
+
+      // ----------- Stage 1 -----------
+      require('@babel/plugin-proposal-export-default-from').default,
+      require('@babel/plugin-proposal-logical-assignment-operators').default,
+      require('@babel/plugin-proposal-optional-chaining').default,
+      // The minimal proposal doesn't support await
+      // Switch to the newer proposal when it will be supported
+      [require('@babel/plugin-proposal-pipeline-operator').default, { proposal: 'minimal' }],
+      require('@babel/plugin-proposal-nullish-coalescing-operator').default,
+      require('@babel/plugin-proposal-do-expressions').default,
+
+      // ----------- Stage 2 -----------
+      // Use the default proposal when it will be finalized
+      [require('@babel/plugin-proposal-decorators').default, { legacy: true }],
+      require('@babel/plugin-proposal-function-sent').default,
+      require('@babel/plugin-proposal-export-namespace-from').default,
+      require('@babel/plugin-proposal-numeric-separator').default,
+      require('@babel/plugin-proposal-throw-expressions').default,
+
+      // ----------- Stage 3 -----------
+      require('@babel/plugin-syntax-dynamic-import').default,
+      require('@babel/plugin-syntax-import-meta').default,
+      // Enable loose mode to use assignment instead of defineProperty
+      // See discussion in https://github.com/facebook/create-react-app/issues/4263
+      [require('@babel/plugin-proposal-class-properties').default, { loose: true }],
+      require('@babel/plugin-proposal-json-strings').default,
     ],
   }
 }

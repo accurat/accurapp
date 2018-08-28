@@ -20,14 +20,14 @@
     "customBlocks.js"
   ],
   "dependencies": {
-    "@babel/plugin-transform-react-constant-elements": "^7.0.0-beta.55",
+    "@babel/plugin-transform-react-constant-elements": "^7.0.0",
     "@svgr/webpack": "^2.1.1",
     "@webpack-blocks/assets": "^1.0.0",
     "@webpack-blocks/dev-server": "^1.0.0",
     "@webpack-blocks/eslint": "^1.0.0",
     "@webpack-blocks/webpack": "^1.0.0",
     "autoprefixer": "^8.6.5",
-    "babel-loader": "8.0.0-beta.2",
+    "babel-loader": "8.0.0",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "csv-loader": "^3.0.2",
     "dotenv-webpack": "^1.5.7",
