@@ -116,9 +116,6 @@ const packageJson = {
     production: [ '>0.25%', 'not ie 11', 'not op_mini all' ],
     development: ['last 1 Chrome version'],
   },
-  resolutions: {
-    '**/file-loader': '1.1.11',
-  },
 }
 if (isRealRun) writePackageJson(appDir, packageJson)
 

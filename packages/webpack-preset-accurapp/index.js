@@ -10,10 +10,14 @@ const {
   sourceMaps,
   match,
   when,
+  setMode,
+  optimization,
 } = require('@webpack-blocks/webpack')
 const { css } = require('@webpack-blocks/assets')
 const devServer = require('@webpack-blocks/dev-server')
 const eslint = require('@webpack-blocks/eslint')
+const uglify = require('@webpack-blocks/uglify')
+// const postcss = require('@webpack-blocks/postcss')
 const autoprefixer = require('autoprefixer')
 const nested = require('postcss-nested')
 const fuss = require('postcss-fuss')
@@ -26,6 +30,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Dotenv = require('dotenv-webpack')
+const cssnano = require('cssnano')
 
 const {
   babel,
@@ -40,15 +45,12 @@ const {
   json5Loader,
   resolveSrc,
   prependEntry,
-  mode,
-  uglify,
-  optimization,
 } = require('./customBlocks')
 
 function buildWebpackConfig(config = []) {
   const cssOptions = {
-    minimize: process.env.NODE_ENV === 'production',
-    sourceMap: process.env.GENERATE_SOURCEMAP === 'true',
+    // Disabled during development because otherwise it would FOUC
+    sourceMap: process.env.GENERATE_SOURCEMAP === 'true' && process.env.NODE_ENV !== 'development',
     ...(process.env.NODE_ENV === 'production' && { styleLoader: false }),
   }
   const postcssOptions = {
@@ -57,6 +59,7 @@ function buildWebpackConfig(config = []) {
       nested,
       fuss({ functions: fussFunctions }),
       colorModFunction(),
+      ...(process.env.NODE_ENV === 'production' ? [cssnano()] : []),
     ],
   }
 
@@ -148,7 +151,7 @@ function buildWebpackConfig(config = []) {
     //  \______/      \__|      \__|  \__|   \__|  \__|     \__|
     //
     env('development', [
-      mode('development'),
+      setMode('development'),
       setOutput({
         publicPath: '/',
       }),
@@ -187,7 +190,7 @@ function buildWebpackConfig(config = []) {
     // \_______/     \______/    \______|   \________|   \_______/
     //
     env('production', [
-      mode('production'),
+      setMode('production'),
       setOutput({
         path: path.resolve('./build'),
         filename: 'app.[contenthash:8].js',

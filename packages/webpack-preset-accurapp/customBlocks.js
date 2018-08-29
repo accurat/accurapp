@@ -36,8 +36,25 @@ function babel(options = {}) {
 }
 
 /**
+ * Extracts the css and puts it in the <head>
+ */
+function extractCss() {
+  return (context, { addLoader }) => addLoader(
+    Object.assign({
+      test: /\.css$/,
+      use: [
+        {
+          loader: MiniCssExtractPlugin.loader,
+        },
+      ],
+    }, context.match)
+  )
+}
+
+/**
  * Applies postcss plugins transformations to the css
- * TODO remove this block when it will be updated in webpack-blocks
+ * TODO remove this block when this PR will be resolved
+ * https://github.com/andywer/webpack-blocks/pull/293
  */
 function postcss(options = {}) {
   return (context, { addLoader }) => addLoader(
@@ -47,24 +64,6 @@ function postcss(options = {}) {
         {
           loader: 'postcss-loader',
           options,
-        },
-      ],
-    }, context.match)
-  )
-}
-
-/**
- * Extracts the css and puts it in the <head>
- * TODO use this also in development when this issue is fixed
- * https://github.com/webpack-contrib/mini-css-extract-plugin/issues/34
- */
-function extractCss() {
-  return (context, { addLoader }) => addLoader(
-    Object.assign({
-      test: /\.css$/,
-      use: [
-        {
-          loader: MiniCssExtractPlugin.loader,
         },
       ],
     }, context.match)
@@ -225,41 +224,6 @@ function prependEntryPostHook(context, util) {
   }
 }
 
-/**
- * Block for webpack4's mode and its options
- * TODO remove this block when it will be supported in webpack-blocks
- */
-function mode(modeString, options = {}) {
-  return (context, { merge }) => merge({
-    mode: modeString,
-    optimization: options,
-  })
-}
-
-/**
- * Webpack4 uglify block
- * TODO remove this block when it will be supported in webpack-blocks
- */
-function uglify(options = {}) {
-  return (context, { merge }) => merge({
-    optimization: {
-      minimizer: [
-        new UglifyJsPlugin(options),
-      ],
-    },
-  })
-}
-
-/**
- * Block for webpack4's optimization config
- * TODO remove this block when it will be supported in webpack-blocks
- */
-function optimization(options = {}) {
-  return (context, { merge }) => merge({
-    optimization: options,
-  })
-}
-
 module.exports = {
   fileNameTemplate,
   babel,
@@ -274,7 +238,4 @@ module.exports = {
   json5Loader,
   resolveSrc,
   prependEntry,
-  mode,
-  uglify,
-  optimization,
 }

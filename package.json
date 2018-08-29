@@ -20,11 +20,5 @@
     "eslint-config-accurapp": "./packages/eslint-config-accurapp",
     "is-git-status-clean": "^1.0.0",
     "lerna": "^3.1.4"
-  },
-  "resolutions": {
-    "**/file-loader": "2.0.0",
-    "**/webpack": "4.17.1",
-    "**/webpack-dev-server": "3.1.6",
-    "**/webpack-merge": "4.1.4"
   }
 }

@@ -23,14 +23,6 @@ module.exports = buildWebpackConfig()
   }
 ```
 
-- If you're getting some css error, you will also need to add this to your package.json:
-```json
-  "resolutions": {
-    "**/file-loader": "1.1.11",
-  }
-```
-then run `rm -rf node_modules/; rm yarn.lock; yarn`
-
 - You can now configure Babel, make a new `.babelrc` in the project root with these contents
 ```json
 {
