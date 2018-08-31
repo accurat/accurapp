@@ -34,7 +34,7 @@ module.exports = function (context, opts = {}) {
 
       // ----------- Stage 2 -----------
       // Use the default proposal when it will be finalized
-      [require('@babel/plugin-proposal-decorators').default, { legacy: true }],
+      [require('@babel/plugin-proposal-decorators').default, { legacy: true, decoratorsBeforeExport: true }],
       require('@babel/plugin-proposal-function-sent').default,
       require('@babel/plugin-proposal-export-namespace-from').default,
       require('@babel/plugin-proposal-numeric-separator').default,
