@@ -1,18 +1,20 @@
-process.on('unhandledRejection', err => { throw err })
-process.env.NODE_ENV = process.env.NODE_ENV || 'production'
+require('dotenv').config() // gives precedence to the env variables already present
+process.env.NODE_ENV = 'production'
 process.env.PUBLIC_URL = process.env.PUBLIC_URL || ''
+process.env.TRANSPILE_NODE_MODULES = process.env.TRANSPILE_NODE_MODULES || 'true'
+process.env.GENERATE_SOURCEMAP = process.env.GENERATE_SOURCEMAP === 'true' ? 'true' : 'false'
 
-if (process.env.PUBLIC_URL.startsWith('/') || process.env.PUBLIC_URL.endsWith('/')) {
-  throw new Error(`The PUBLIC_URL env variable cannot have trailing or leading slashes: '${process.env.PUBLIC_URL}'`)
-}
-
-require('dotenv').config({ silent: true })
-
-const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs-extra')
-const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = require('react-dev-utils/FileSizeReporter')
-const { log, createWebpackCompiler, readWebpackConfig, coloredBanner } = require('./_utils')
+const chalk = require('chalk')
+const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, printFileSizes, extractBrowserslistString, extractLatestCommitHash, extractLatestCommitTimestamp } = require('./_utils')
+
+process.env.BROWSERSLIST = extractBrowserslistString()
+process.env.LATEST_COMMIT = extractLatestCommitHash()
+process.env.LATEST_COMMIT_TIMESTAMP = extractLatestCommitTimestamp()
+if (process.env.PUBLIC_URL.endsWith('/')) {
+  process.env.PUBLIC_URL = process.env.PUBLIC_URL.slice(0, -1)
+}
 
 const appDir = process.cwd()
 const config = readWebpackConfig()
@@ -26,6 +28,10 @@ function clearBuildFolder() {
 }
 
 function copyPublicFolder() {
+  if (!fs.existsSync(appPublic)) {
+    return
+  }
+
   log.info(`Copying ${chalk.cyan('public/')} into ${chalk.cyan(relativeAppBuildPath)}`)
   fs.copySync(appPublic, appBuild, {
     overwrite: true,
@@ -57,15 +63,12 @@ function build() {
 
 console.log(coloredBanner('/||||/| accurapp', ['cyan', 'magenta']))
 
-measureFileSizesBeforeBuild(appBuild)
-  .then((previousFileSizes) => {
-    clearBuildFolder()
-    copyPublicFolder()
-    build()
-      .then((stats) => {
-        log.info('File sizes after gzip:')
-        console.log()
-        printFileSizesAfterBuild(stats, previousFileSizes, appBuild)
-        console.log()
-      })
+clearBuildFolder()
+copyPublicFolder()
+build()
+  .then((stats) => {
+    log.info('File sizes:')
+    console.log()
+    printFileSizes(stats, appBuild)
+    console.log()
   })

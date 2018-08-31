@@ -1,42 +1,29 @@
 #!/usr/bin/env node
 
-const fs = require('fs-extra')
 const path = require('path')
+const fs = require('fs-extra')
 const spawn = require('cross-spawn')
 const chalk = require('chalk')
 const meow = require('meow')
-const figlet = require('figlet')
+const indentString = require('indent-string')
+const { coloredBanner, log } = require('accurapp-scripts/scripts/_utils')
 
 const dependencies = [
   'react',
   'react-dom',
   'd3',
   'lodash',
+  'modern-normalize',
+  '@accurat/tachyons-lite',
+  'tachyons-extra',
 ]
 
 const devDependencies = [
   'accurapp-scripts',
   'webpack-preset-accurapp',
   'eslint-config-accurapp',
+  'babel-preset-accurapp',
 ]
-
-const log = {
-  ok(...a) { console.log('::: ' + chalk.yellow(...a)) },
-  err(...a) { console.error('!!! ' + chalk.red(...a)) },
-  info(...a) { console.log('--- ' + chalk.blue(...a)) },
-}
-
-function coloredBanner(text, colors = ['blue', 'red']) {
-  const bannerText = text.replace(/\|/g, 'l') // In BigMoney font, 'l' (lowercase L) are much nicer than '|' (pipes)
-  const bannerColors = { '$': colors[0], '_': colors[1], '|': colors[1], '\\': colors[1], '/': colors[1] }
-  const banner = figlet.textSync(bannerText, { font: 'Big Money-nw' })
-  const colored = banner.replace(/[^\s]/g, (c) => chalk[bannerColors[c] || 'white'](c))
-  return `\n${colored}`
-}
-
-function reindent(text, numSpaces = 2) {
-  return text.split(`\n`).map(l => `${' '.repeat(numSpaces)}${l}`).join(`\n`)
-}
 
 function abort(message, errno = 1) {
   console.error(`\n`)
@@ -65,7 +52,7 @@ const cli = meow({
   description: false,
   inferType: true,
   help: `
-    ${reindent(coloredBanner('/||||/| accurapp', ['red', 'magenta']), 4)}
+    ${indentString(coloredBanner('/||||/| accurapp', ['red', 'magenta']), 4)}
     Usage
       ${chalk.green('$')} ${chalk.cyan('create-accurapp')} ${chalk.yellow('<app-name>')}
 
@@ -122,6 +109,12 @@ const packageJson = {
   scripts: {
     start: 'accurapp-scripts start',
     build: 'accurapp-scripts build',
+    lint: 'accurapp-scripts lint',
+    prettier: 'accurapp-scripts prettier',
+  },
+  browserslist: {
+    production: [ '>0.25%', 'not ie 11', 'not op_mini all' ],
+    development: ['last 1 Chrome version'],
   },
 }
 if (isRealRun) writePackageJson(appDir, packageJson)
@@ -149,13 +142,13 @@ if (isRealRun) {
 
 if (isYesInstall) {
   const devDependenciesToInstall = isTesting
-    ? devDependencies.map(dep => `file:${path.join(__dirname, `../${dep}`)}`) // Local package
+    ? devDependencies.map(dep => path.join(__dirname, `../${dep}`)) // Local package
     : devDependencies
   log.ok(`Installing dev packages: ${devDependenciesToInstall.map(d => chalk.cyan(d)).join(', ')}`)
-  if (isRealRun) exec(`yarn add --dev --ignore-scripts ${devDependenciesToInstall.join(' ')}`, appDir)
+  if (isRealRun) exec(`yarn add --dev ${devDependenciesToInstall.join(' ')}`, appDir)
 
   log.ok(`Installing packages: ${chalk.cyan(dependencies.join(', '))}`)
-  if (isRealRun) exec(`yarn add --ignore-scripts ${dependencies.join(' ')}`, appDir)
+  if (isRealRun) exec(`yarn add ${dependencies.join(' ')}`, appDir)
 } else {
   log.info(`Not running 'yarn add/install' because you chose so.`)
 }
@@ -171,6 +164,16 @@ if (isYesGit && isReadyGit) {
 } else {
   if (!isYesGit) log.info(`Not running 'git init/add/commit' because you chose so.`)
   if (!isReadyGit) log.info(`Not running 'git init/add/commit' because there is no '.gitignore' file.`)
+}
+
+log.ok(`Creating your local .env file`)
+if (isRealRun) {
+  const envPath = path.resolve(appDir, '.env')
+  const envExamplePath = path.resolve(appDir, '.env.example')
+
+  if (!fs.existsSync(envPath)) {
+    fs.copySync(envExamplePath, envPath)
+  }
 }
 
 log.ok(`Done! Have fun with your new app.`)

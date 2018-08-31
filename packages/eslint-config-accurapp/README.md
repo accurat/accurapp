@@ -1,0 +1,5 @@
+# eslint-config-accurapp
+
+This package includes the ESLint configuration used by AccurApp.
+
+[For more info, checkout out the main documentation.](https://github.com/accurat/accurapp)

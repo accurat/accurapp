@@ -11,6 +11,7 @@ dist/
 # misc
 .DS_Store
 .env
+.eslintcache
 
 # npm and yarn log
 *.log

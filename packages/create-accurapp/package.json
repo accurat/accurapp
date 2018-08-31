@@ -1,11 +1,17 @@
 {
   "name": "create-accurapp",
-  "version": "3.1.3",
+  "version": "4.0.0-beta.23",
   "description": "Create accurat apps with minimum flexible build configuration",
   "repository": "accurat/accurapp",
   "license": "MIT",
+  "keywords": [
+    "create",
+    "accurapp",
+    "accurat"
+  ],
   "engines": {
-    "node": ">=6.5"
+    "node": ">=7",
+    "yarn": ">=1.2.1"
   },
   "files": [
     "index.js",
@@ -15,10 +21,12 @@
     "create-accurapp": "./index.js"
   },
   "dependencies": {
-    "chalk": "^1.1.1",
-    "cross-spawn": "^4.0.0",
+    "accurapp-scripts": "^4.0.0-beta.23",
+    "chalk": "^2.4.1",
+    "cross-spawn": "^6.0.5",
     "figlet": "^1.2.0",
-    "fs-extra": "^2.1.2",
-    "meow": "^3.7.0"
+    "fs-extra": "^7.0.0",
+    "indent-string": "^3.2.0",
+    "meow": "^5.0.0"
   }
 }

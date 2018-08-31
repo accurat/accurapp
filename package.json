@@ -2,19 +2,23 @@
   "name": "accurapp",
   "private": true,
   "scripts": {
-    "preinstall": "yarn run clean-yarn-cache",
-    "clean-install": "rm -rf node_modules; rm -rf packages/*/node_modules; yarn run clean-yarn-cache",
-    "clean-yarn-cache": "rm -rf $(yarn cache dir)/*accurapp*",
+    "clean": "rm -rf node_modules; rm -rf packages/*/node_modules; rm yarn.lock; yarn cache clean",
     "lint": "node node_modules/eslint/bin/eslint.js packages",
-    "publish": "tasks/release.sh",
-    "outdated": "for P in $(ls packages); do echo '\\n' === $P ===; cd \"packages/$P/\"; yarn outdated; cd ../..; done",
-    "create-test-app": "yarn run clean-yarn-cache; rm -rf test-app; node packages/create-accurapp/index.js test-app --testing"
+    "create-test-app": "rm -rf test-app; node packages/create-accurapp/index.js test-app --testing",
+    "create-test-app-build": "(yarn create-test-app; cd test-app/; yarn build)",
+    "create-test-app-start": "(yarn create-test-app; cd test-app/; yarn start)",
+    "publish": "is-git-status-clean && lerna publish --npm-client yarn"
   },
   "workspaces": [
     "packages/*"
   ],
+  "engines": {
+    "node": ">=7",
+    "yarn": ">=1.2.1"
+  },
   "devDependencies": {
-    "eslint-config-accurapp": "file:./packages/eslint-config-accurapp",
-    "lerna": "^2.9.0"
+    "eslint-config-accurapp": "./packages/eslint-config-accurapp",
+    "is-git-status-clean": "^1.0.0",
+    "lerna": "^3.1.4"
   }
 }

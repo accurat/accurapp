@@ -1,4 +1,74 @@
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
+// TODO use contenthash when this issue will be resolved
+// https://github.com/webpack/loader-utils/issues/112
 const fileNameTemplate = '[name].[hash:8].[ext]'
+
+/**
+ * The thread-loader parallelizes code compilation, useful with babel since
+ * it transpiles both application javascript and node_modules javascript
+ */
+function babel(options = {}) {
+  return (context, { addLoader }) => addLoader(
+    Object.assign({
+      // setting `test` defaults here, in case there is no `context.match` data
+      test: /\.(js|jsx)$/,
+      use: [
+        {
+          loader: 'thread-loader',
+          options: {
+            // Keep workers alive for more effective watch mode
+            ...(process.env.NODE_ENV === 'development' && { poolTimeout: Infinity }),
+          },
+        },
+        {
+          loader: 'babel-loader',
+          options: Object.assign({
+            compact: process.env.NODE_ENV === 'production',
+            cacheDirectory: true,
+            highlightCode: true,
+          }, options),
+        },
+      ],
+    }, context.match)
+  )
+}
+
+/**
+ * Extracts the css and puts it in the <head>
+ */
+function extractCss() {
+  return (context, { addLoader }) => addLoader(
+    Object.assign({
+      test: /\.css$/,
+      use: [
+        {
+          loader: MiniCssExtractPlugin.loader,
+        },
+      ],
+    }, context.match)
+  )
+}
+
+/**
+ * Applies postcss plugins transformations to the css
+ * TODO remove this block when this PR will be resolved
+ * https://github.com/andywer/webpack-blocks/pull/293
+ */
+function postcss(options = {}) {
+  return (context, { addLoader }) => addLoader(
+    Object.assign({
+      test: /\.css$/,
+      use: [
+        {
+          loader: 'postcss-loader',
+          options,
+        },
+      ],
+    }, context.match)
+  )
+}
 
 /**
  * Images smaller than 10kb are loaded as a base64 encoded url instead of file url
@@ -33,7 +103,7 @@ function videoLoader() {
  */
 function fontLoader() {
   return (context, { addLoader }) => addLoader({
-    test: /\.(eot|ttf|woff|woff2)(\?.*)?$/,
+    test: /\.(eot|ttf|otf|woff|woff2)(\?.*)?$/,
     loader: 'file-loader',
     options: {
       name: fileNameTemplate,
@@ -43,7 +113,7 @@ function fontLoader() {
 
 /**
  * GLSLify is a node-style module system for WebGL shaders,
- * allowing you to install GLSL modules from npm and use them in your shaders.
+ * allowing you to install GLSL modules from npm and use them in your shaders
  */
 function glslifyLoader() {
   return (context, { addLoader }) => addLoader({
@@ -53,15 +123,73 @@ function glslifyLoader() {
 }
 
 /**
- * Run ESLint on every required file.
+ * Parse .csv files with PapaParse and return it in a JSON format
  */
-function eslintLoader() {
+function csvLoader() {
   return (context, { addLoader }) => addLoader({
-    test: /\.(js|jsx)$/,
-    enforce: 'pre', // It's important to do this before Babel processes the JS.
-    exclude: /node_modules/,
-    loader: 'eslint-loader',
-    options: { useEslintrc: true },
+    test: /\.csv$/,
+    loader: 'csv-loader',
+    options: {
+      dynamicTyping: true,
+      header: true,
+      skipEmptyLines: true,
+    },
+  })
+}
+
+// Allows you to use two kinds of imports for SVG:
+// import logoUrl from './logo.svg'; gives you the URL.
+// import { ReactComponent as Logo } from './logo.svg'; gives you a component.
+function reactSvgLoader() {
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            highlightCode: true,
+            cacheDirectory: true,
+            compact: process.env.NODE_ENV === 'production',
+          },
+        },
+        {
+          loader: '@svgr/webpack',
+          options: {
+            svgAttributes: {
+              fill: 'currentColor',
+            },
+            svgoConfig: {
+              multipass: true,
+              pretty: process.env.NODE_ENV === 'development',
+              indent: 2,
+              plugins: [
+                { sortAttrs: true },
+                { removeViewBox: false },
+                { removeDimensions: true },
+                { convertColors: { currentColor: true } },
+              ],
+            },
+          },
+        },
+        {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: fileNameTemplate,
+          },
+        },
+      ],
+    })
+}
+
+/**
+ * Suppot .json5 files https://json5.org/
+ */
+function json5Loader() {
+  return (context, { addLoader }) => addLoader({
+    test: /\.json5$/,
+    loader: 'json5-loader',
   })
 }
 
@@ -97,11 +225,17 @@ function prependEntryPostHook(context, util) {
 }
 
 module.exports = {
+  fileNameTemplate,
+  babel,
+  postcss,
+  extractCss,
   imageLoader,
   videoLoader,
   fontLoader,
   glslifyLoader,
-  eslintLoader,
+  csvLoader,
+  reactSvgLoader,
+  json5Loader,
   resolveSrc,
   prependEntry,
 }
