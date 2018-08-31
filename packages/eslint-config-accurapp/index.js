@@ -32,6 +32,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
       generators: true,
+      legacyDecorators: true,
     },
   },
 
