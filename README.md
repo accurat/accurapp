@@ -40,7 +40,7 @@ Then you just `cd project-name`, run `yarn start` and start creating awesome stu
 #### Setting up bitbucket
 1. Create a new repo - [link](https://bitbucket.org/repo/create)
 1. Be sure to choose `accurat` as Owner, not yourself.
-1. Choose `I have an existing project` and follow the instructions
+1. Choose `Get your local Git repository on Bitbucket` and follow the instructions
 
 #### Setting up the automatic deploy
 If you're using bitbucket pipelines:
@@ -81,7 +81,7 @@ module.exports = buildWebpackConfig({
 })
 ```
 
-Or to make your life easier, you could also use [webpack-blocks](https://github.com/andywer/webpack-blocks/tree/release/1.0), it's a nice level of abstraction over the webpack configuration, you can add loaders, plugins, configuration with just one line.
+Or to make your life easier, you could also use [webpack-blocks](https://github.com/andywer/webpack-blocks/tree/release/release-2.0), it's a nice level of abstraction over the webpack configuration, you can add loaders, plugins, configuration with just one line.
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 const { sass } = require('webpack-blocks')
@@ -119,7 +119,7 @@ function workerLoader() {
 module.exports = buildWebpackConfig([
   workerLoader(),
 ])
-  ```
+```
 
 And this is a way to add a custom plugin.
 ```js
@@ -132,7 +132,20 @@ module.exports = buildWebpackConfig([
     new NpmInstallPlugin(),
   ]),
 ])
-  ```
+```
+
+Also you can still pass a custom webpack config using webpack-blocks.
+```js
+const { buildWebpackConfig } = require('webpack-preset-accurapp')
+const { customConfig } = require('webpack-blocks')
+
+module.exports = buildWebpackConfig([
+  // ...other blocks
+  customConfig({
+    target: 'node',
+  }),
+])
+```
 
 #### Customizing Eslint
 Add your custom rules to the `.eslintrc`
