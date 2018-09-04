@@ -88,7 +88,7 @@ function buildWebpackConfig(config = []) {
     // This is because some node_modules may be written in a newer ECMAScript
     // version than the browsers you're actially supporting
     when(process.env.TRANSPILE_NODE_MODULES === 'true', [
-      match('*.js', { include: /node_modules/ }, [
+      match('*.js', { include: /node_modules/, exclude: /mapbox-gl/ }, [
         babel({
           babelrc: false,
           presets: [
