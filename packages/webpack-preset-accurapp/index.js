@@ -125,6 +125,7 @@ function buildWebpackConfig(config = []) {
         ...(process.env.CI === 'true' && { path: './.env.example' }),
         systemvars: true,
         silent: true,
+        safe: true,
       }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin({
