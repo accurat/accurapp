@@ -100,7 +100,13 @@ function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
 
   // Webpack has finished recompiling the bundle (whether or not you have warnings or errors)
   compiler.hooks.done.tap('done', (stats) => {
-    const statsJson = stats.toJson({ all: false, warnings: true, errors: true })
+    const statsJson = stats.toJson({
+      all: false,
+      warnings: true,
+      errors: true,
+      timings: true,
+    })
+
     const messages = formatWebpackMessages(statsJson)
     const time = prettyMs(statsJson.time)
     const isSuccessful = messages.errors.length + messages.warnings.length === 0
