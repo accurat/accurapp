@@ -100,7 +100,7 @@ function createWebpackCompiler(onFirstReadyCallback = noop, onError = noop) {
 
   // Webpack has finished recompiling the bundle (whether or not you have warnings or errors)
   compiler.hooks.done.tap('done', (stats) => {
-    const statsJson = stats.toJson({})
+    const statsJson = stats.toJson({ all: false, warnings: true, errors: true })
     const messages = formatWebpackMessages(statsJson)
     const time = prettyMs(statsJson.time)
     const isSuccessful = messages.errors.length + messages.warnings.length === 0
@@ -133,7 +133,7 @@ function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 512 * 1024) 
   const assets = (webpackStats.stats || [webpackStats])
     .map(stats =>
       stats
-        .toJson()
+        .toJson({ all: false, assets: true })
         .assets.filter(asset => /\.(js|css)$/.test(asset.name))
         .map(asset => {
           const fileContents = fs.readFileSync(path.join(appBuild, asset.name))
