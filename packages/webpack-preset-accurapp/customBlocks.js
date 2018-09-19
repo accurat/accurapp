@@ -1,4 +1,3 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 // TODO use contenthash when this issue will be resolved
@@ -159,6 +158,7 @@ function reactSvgLoader() {
             svgAttributes: {
               fill: 'currentColor',
             },
+            titleProp: true,
             svgoConfig: {
               multipass: true,
               pretty: process.env.NODE_ENV === 'development',
