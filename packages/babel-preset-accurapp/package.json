@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-accurapp",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "Babel preset used by Accurat",
   "repository": "accurat/accurapp",
   "license": "MIT",
