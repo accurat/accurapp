@@ -28,7 +28,6 @@
     "@webpack-blocks/dev-server": "2.0.0-alpha",
     "@webpack-blocks/eslint": "2.0.0-alpha",
     "@webpack-blocks/postcss": "2.0.0-alpha",
-    "@webpack-blocks/uglify": "2.0.0-alpha",
     "@webpack-blocks/webpack": "2.0.0-alpha",
     "autoprefixer": "9.1.5",
     "babel-loader": "8.0.2",
@@ -50,6 +49,7 @@
     "postcss-nested": "4.1.0",
     "raw-loader": "1.0.0-beta.0",
     "react-dev-utils": "marcofugaro/react-dev-utils#update4",
+    "terser-webpack-plugin": "1.1.0",
     "thread-loader": "1.2.0",
     "url-loader": "1.1.1",
     "webpack": "4.20.0"

@@ -16,7 +16,6 @@ const {
 const { css } = require('@webpack-blocks/assets')
 const devServer = require('@webpack-blocks/dev-server')
 const eslint = require('@webpack-blocks/eslint')
-const uglify = require('@webpack-blocks/uglify')
 // const postcss = require('@webpack-blocks/postcss')
 const autoprefixer = require('autoprefixer')
 const nested = require('postcss-nested')
@@ -45,6 +44,7 @@ const {
   reactSvgLoader,
   json5Loader,
   resolveSrc,
+  terser,
   prependEntry,
 } = require('./customBlocks')
 
@@ -227,10 +227,10 @@ function buildWebpackConfig(config = []) {
         sourceMaps('source-map'),
       ]),
 
-      uglify({
-        uglifyOptions: {
+      terser({
+        terserOptions: {
           parse: {
-            // we want uglify-js to parse ecma 8 code. However, we don't want it
+            // we want terser to parse ecma 8 code. However, we don't want it
             // to apply any minfication steps that turns valid ecma 5 code
             // into invalid ecma 5 code. This is why the 'compress' and 'output'
             // sections only apply transformations that are ecma 5 safe

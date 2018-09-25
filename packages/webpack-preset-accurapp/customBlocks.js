@@ -1,4 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 // TODO use contenthash when this issue will be resolved
 // https://github.com/webpack/loader-utils/issues/112
@@ -204,6 +205,18 @@ function resolveSrc() {
 }
 
 /**
+ * Terser is a mantained fork of uglify-js
+ * https://twitter.com/devongovett/status/1013127516943314944
+ */
+function terser(options) {
+  return (context, { merge }) => merge({
+    optimization: {
+      minimizer: [new TerserPlugin(options)],
+    },
+  })
+}
+
+/**
  * Add entryPoint at beginning of 'entry' array
  */
 function prependEntry(entry) {
@@ -236,5 +249,6 @@ module.exports = {
   reactSvgLoader,
   json5Loader,
   resolveSrc,
+  terser,
   prependEntry,
 }
