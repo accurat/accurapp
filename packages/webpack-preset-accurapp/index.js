@@ -26,6 +26,7 @@ const colorModFunction = require('postcss-color-mod-function')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
+const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -120,6 +121,9 @@ function buildWebpackConfig(config = []) {
         chunks: 'all',
         name: 'vendors',
       },
+      // Keep the runtime chunk seperated to enable long term caching
+      // https://twitter.com/wSokra/status/969679223278505985
+      runtimeChunk: true,
     }),
 
     addPlugins([
@@ -142,6 +146,9 @@ function buildWebpackConfig(config = []) {
         'NODE_ENV': process.env.NODE_ENV,
         'PUBLIC_URL': process.env.PUBLIC_URL,
       }),
+      // Inlines the webpack runtime script. This script is
+      // too small to warrant a network request.
+      new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
       // Check case of paths, so case-sensitive filesystems won't complain:
       new CaseSensitivePathsPlugin(),
     ]),
