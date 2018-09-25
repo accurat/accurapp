@@ -4,6 +4,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // https://github.com/webpack/loader-utils/issues/112
 const fileNameTemplate = '[name].[hash:8].[ext]'
 
+const babelLoaderOptions = {
+  compact: process.env.NODE_ENV === 'production',
+  cacheDirectory: true,
+  // Don't waste time on Gzipping the cache during dev
+  cacheCompression: process.env.NODE_ENV === 'production',
+}
+
 /**
  * The thread-loader parallelizes code compilation, useful with babel since
  * it transpiles both application javascript and node_modules javascript
@@ -23,11 +30,7 @@ function babel(options = {}) {
         },
         {
           loader: 'babel-loader',
-          options: Object.assign({
-            compact: process.env.NODE_ENV === 'production',
-            cacheDirectory: true,
-            highlightCode: true,
-          }, options),
+          options: Object.assign(babelLoaderOptions, options),
         },
       ],
     }, context.match)
@@ -146,11 +149,7 @@ function reactSvgLoader() {
       use: [
         {
           loader: 'babel-loader',
-          options: {
-            highlightCode: true,
-            cacheDirectory: true,
-            compact: process.env.NODE_ENV === 'production',
-          },
+          options: babelLoaderOptions,
         },
         {
           loader: '@svgr/webpack',
