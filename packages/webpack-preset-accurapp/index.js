@@ -88,11 +88,16 @@ function buildWebpackConfig(config = []) {
     // This is because some node_modules may be written in a newer ECMAScript
     // version than the browsers you're actially supporting
     when(process.env.TRANSPILE_NODE_MODULES === 'true', [
-      match('*.js', { include: /node_modules/, exclude: /mapbox-gl/ }, [
+      // mapbox-gl ecluded because of
+      // https://github.com/mapbox/mapbox-gl-js/issues/4359
+      match('*.js', { include: /node_modules/, exclude: /(core-js|mapbox-gl)/ }, [
         babel({
           babelrc: false,
+          // needed to use the polyfill useBuildIns: 'usage'
+          // https://stackoverflow.com/questions/52407499
+          sourceType: 'unambiguous',
           presets: [
-            ['@babel/preset-env', { modules: false }],
+            ['@babel/preset-env', { modules: false, useBuiltIns: 'usage' }],
           ],
         }),
       ]),
