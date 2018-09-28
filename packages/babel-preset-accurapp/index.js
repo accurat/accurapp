@@ -13,6 +13,9 @@ module.exports = function (context, opts = {}) {
         // Adds component stack to warning messages
         // Adds __self attribute to JSX which React will use for some warnings
         development: isDevelopment,
+        // Will use the native built-in instead of trying to polyfill
+        // behavior for any plugins that require one.
+        useBuiltIns: true,
       }],
     ],
     plugins: [

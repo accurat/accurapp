@@ -97,6 +97,11 @@ function buildWebpackConfig(config = []) {
           // needed to use the polyfill useBuildIns: 'usage'
           // https://stackoverflow.com/questions/52407499
           sourceType: 'unambiguous',
+          // If an error happens in a package, it's possible to be
+          // because it was compiled. Thus, we don't want the browser
+          // debugger to show the original code. Instead, the code
+          // being evaluated would be much more helpful.
+          sourceMaps: false,
           presets: [
             ['@babel/preset-env', { modules: false, useBuiltIns: 'usage' }],
           ],
@@ -142,7 +147,7 @@ function buildWebpackConfig(config = []) {
         template: './src/index.html',
       }),
       // Makes some environment variables available in index.html. Example: %PUBLIC_URL%
-      new InterpolateHtmlPlugin({
+      new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
         'NODE_ENV': process.env.NODE_ENV,
         'PUBLIC_URL': process.env.PUBLIC_URL,
       }),
