@@ -541,9 +541,9 @@ module.exports = buildWebpackConfig([
 If you just need the app to work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin).
 
 Otherwise, put the `service-worker.js` file in the `public/` folder, and register it normally.
+</details>
 
 ## Contributing
 If you make some edits and wish to test them locally you can run `yarn create-test-app` which creates a test app using the local packages.
 
 To publish the updated packages, run `yarn run publish`, lerna will detect the packages you changed and ask you for the new version number.
-</details>
