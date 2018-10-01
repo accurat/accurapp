@@ -272,6 +272,7 @@ if (!isBrowserSupported(navigator.userAgent, process.env.BROWSERSLIST)) {
 
 <details>
 <summary>How do I enable hot reloading for the state?</summary>
+
 By default, hot reloading is enabled for the react components tree in accurapp, but if you want to hot-reload also the [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree) files, your `index.js` should look like this:
 ```js
 let state = State.create()
@@ -310,6 +311,7 @@ The first argument to `module.hot.accept` must be the root component of the app,
 
 <details>
 <summary>Where do I put the images?</summary>
+
 You can put them in the `src/images` folder and require them from the js like this:
 ```js
 import logo from 'images/logo.png'
@@ -335,6 +337,7 @@ Also you could tell webpack to automatically optimize the images you import with
 
 <details>
 <summary>Where do I put the custom fonts?</summary>
+
 You can put them in the `src/fonts` folder and require them from the CSS like this (see [css-loader](https://github.com/webpack-contrib/css-loader) for more info):
 
 ```css
@@ -348,6 +351,7 @@ You can put them in the `src/fonts` folder and require them from the CSS like th
 
 <details>
 <summary>What is the `public` folder for?</summary>
+
 You usually put the assets you require from the `index.html` here. Like for example the favicon.
 
 You should try as much as possible to require the .css and .js file from the `src` folder, so they are bundled and optimized. For example if you need a service worker file just for making the app work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin).
@@ -357,6 +361,7 @@ You should also try as much as possible to avoid putting images in the `public` 
 
 <details>
 <summary>How do I handle svg files?</summary>
+
 By default you can import svgs as files, like you would do for images:
 ```js
 import logo from 'images/logo.svg'
@@ -400,6 +405,7 @@ Furthermore it optimizes and minifies the svg using [svgo](https://github.com/sv
 
 <details>
 <summary>How do I enable TypeScript?</summary>
+
 TypesScript is not enabled by default in accurapp for now, this is what you have to do.
 
 After having done `yarn add --dev webpack-blocks-ts`, use it in the webpack config:
@@ -451,6 +457,7 @@ yarn add --dev typescript @types/react @types/react-dom
 
 <details>
 <summary>How do I override a webpack loader?</summary>
+
 The easiest way to override a loader is to do it inline, by prefixing the import with a `!`.
 
 For example:
@@ -475,6 +482,7 @@ Make sure to disable the related eslint rule like this:
 
 <details>
 <summary>What's all the fuss about FUSS?</summary>
+
 Accurapp comes with [postcss-fuss](https://github.com/marcofugaro/postcss-fuss/tree/function-updates), a postcss plugin that lets you generate custom functional css classes, in the [tachyons](https://raw.githubusercontent.com/tachyons-css/tachyons/master/css/tachyons.css) way. It's useful if you want to define custom colors, and don't want to write all the classes by hand. And for many other stuff.
 
 For example, this is what you write in your `style.css`:
@@ -498,6 +506,7 @@ There are other preset functions, like `color-variants()` which outputs both a l
 
 <details>
 <summary>How do I enable prettier?</summary>
+
 Prettier is already configured in the projects scaffolded by accurapp, you just need to install the prettier plugin in your editor of choice and tell it to read the project's configuration.
 
 You should also configure prettier to run on save, it is really useful especially when you paste code from stackoverflow.
@@ -505,6 +514,7 @@ You should also configure prettier to run on save, it is really useful especiall
 
 <details>
 <summary>I need to support IE11. What do I do?</summary>
+
 First of all, we're sorry for you, IE is an asshole.
 
 You first need to edit the `package.json`'s `"browserslist"` field, and change `not ie 11` to `ie 11`. If you need to test in local you can also add `ie 11` to the development browsers.
@@ -518,6 +528,7 @@ You still have some css fixes to do, for example flexbox behaves weirdly, [here 
 
 <details>
 <summary>How do I use a web worker?</summary>
+
 You can use the [worker-loader](https://github.com/webpack-contrib/worker-loader) and configure it to read files ending in `.worker.js`. Here is the code:
 
 ```js
@@ -538,6 +549,7 @@ module.exports = buildWebpackConfig([
 
 <details>
 <summary>How do I use a service worker?</summary>
+
 If you just need the app to work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin).
 
 Otherwise, put the `service-worker.js` file in the `public/` folder, and register it normally.
