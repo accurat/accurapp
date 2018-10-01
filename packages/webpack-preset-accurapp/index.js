@@ -104,6 +104,7 @@ function buildWebpackConfig(config = []) {
           sourceMaps: false,
           presets: [
             ['@babel/preset-env', { modules: false, useBuiltIns: 'usage' }],
+            '@babel/preset-react',
           ],
         }),
       ]),
