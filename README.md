@@ -26,14 +26,14 @@ but significant amounts of code were rewritten and simplified. Here are some shi
 - [Available Env Variables](#available-env-variables)
 - [Project Scaffolding](#project-scaffolding)
 - [F.A.Q.](#faq)
-  - [How do I enable hot reloading for the state?](#how-do-i-enable-hot-reloading-for-the-state)
-  - [Where do I put the images?](#where-do-i-put-the-images)
-  - [Where do I put the custom fonts?](#where-do-i-put-the-custom-fonts)
-  - [What is the public folder for?](#what-is-the-public-folder-for)
-  - [How do I handle svg files?](#how-do-i-handle-svg-files)
-  - [How do I enable TypeScript?](#how-do-i-enable-typescript)
-  - [How do I override a webpack loader?](#how-do-i-override-a-webpack-loader)
-  - [What's all the fuss about FUSS?](#whats-all-the-fuss-about-fuss)
+  - [How do I enable hot reloading for the state?](#faq)
+  - [Where do I put the images?](#faq)
+  - [Where do I put the custom fonts?](#faq)
+  - [What is the public folder for?](#faq)
+  - [How do I handle svg files?](#faq)
+  - [How do I enable TypeScript?](#faq)
+  - [How do I override a webpack loader?](#faq)
+  - [What's all the fuss about FUSS?](#faq)
   - [How do I enable prettier?](#faq)
   - [I need to support IE11. What do I do?](#faq)
   - [How do I use a web worker?](#faq)
@@ -269,7 +269,9 @@ if (!isBrowserSupported(navigator.userAgent, process.env.BROWSERSLIST)) {
 ```
 
 ## F.A.Q.
-#### How do I enable hot reloading for the state?
+
+<details>
+<summary>#### How do I enable hot reloading for the state?</summary>
 By default, hot reloading is enabled for the react components tree in accurapp, but if you want to hot-reload also the [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree) files, your `index.js` should look like this:
 ```js
 let state = State.create()
@@ -304,8 +306,10 @@ if (module.hot) {
 }
 ```
 The first argument to `module.hot.accept` must be the root component of the app, often the `Routes` component is used.
+</details>
 
-#### Where do I put the images?
+<details>
+<summary>#### Where do I put the images?</summary>
 You can put them in the `src/images` folder and require them from the js like this:
 ```js
 import logo from 'images/logo.png'
@@ -327,8 +331,10 @@ or from the CSS (see [css-loader](https://github.com/webpack-contrib/css-loader)
 The advantage is that it creates a hash in the filename to invalidate eventual caching. Another thing is that images that are less than 10,000 bytes are imported as a [data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) instead of a path, to reduce the number of requests to the server.
 
 Also you could tell webpack to automatically optimize the images you import with the [imagemin-webpack-plugin](https://github.com/Klathmon/imagemin-webpack-plugin).
+</details>
 
-#### Where do I put the custom fonts?
+<details>
+<summary>#### Where do I put the custom fonts?</summary>
 You can put them in the `src/fonts` folder and require them from the CSS like this (see [css-loader](https://github.com/webpack-contrib/css-loader) for more info):
 
 ```css
@@ -338,15 +344,19 @@ You can put them in the `src/fonts` folder and require them from the CSS like th
   font-weight: 200;
 }
 ```
+</details>
 
-#### What is the `public` folder for?
+<details>
+<summary>#### What is the `public` folder for?</summary>
 You usually put the assets you require from the `index.html` here. Like for example the favicon.
 
 You should try as much as possible to require the .css and .js file from the `src` folder, so they are bundled and optimized. For example if you need a service worker file just for making the app work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin).
 
 You should also try as much as possible to avoid putting images in the `public` folder, because missing images would cause 404 errors for the users instead of compilation errors.
+</details>
 
-#### How do I handle svg files?
+<details>
+<summary>#### How do I handle svg files?</summary>
 By default you can import svgs as files, like you would do for images:
 ```js
 import logo from 'images/logo.svg'
@@ -386,8 +396,10 @@ function Edit() {
 Under the hood, the loader basically wraps the svg file inside a react component, so you can treat it as such.
 
 Furthermore it optimizes and minifies the svg using [svgo](https://github.com/svg/svgo), so it cleans up automatically the ugly and noisy svg that Illustrator exports 🙌.
+</details>
 
-#### How do I enable TypeScript?
+<details>
+<summary>#### How do I enable TypeScript?</summary>
 TypesScript is not enabled by default in accurapp for now, this is what you have to do.
 
 After having done `yarn add --dev webpack-blocks-ts`, use it in the webpack config:
@@ -435,8 +447,10 @@ Then what is left to do is to add as devDependencies typescript and the types of
 ```js
 yarn add --dev typescript @types/react @types/react-dom
 ```
+</details>
 
-#### How do I override a webpack loader?
+<details>
+<summary>#### How do I override a webpack loader?</summary>
 The easiest way to override a loader is to do it inline, by prefixing the import with a `!`.
 
 For example:
@@ -457,8 +471,10 @@ Make sure to disable the related eslint rule like this:
   }
 }
 ```
+</details>
 
-#### What's all the fuss about FUSS?
+<details>
+<summary>#### What's all the fuss about FUSS?</summary>
 Accurapp comes with [postcss-fuss](https://github.com/marcofugaro/postcss-fuss/tree/function-updates), a postcss plugin that lets you generate custom functional css classes, in the [tachyons](https://raw.githubusercontent.com/tachyons-css/tachyons/master/css/tachyons.css) way. It's useful if you want to define custom colors, and don't want to write all the classes by hand. And for many other stuff.
 
 For example, this is what you write in your `style.css`:
@@ -478,13 +494,17 @@ And this is what the generated css looks like:
 There are other preset functions, like `color-variants()` which outputs both a lighter and darker version of the color, `color-states()` which outputs the classes in the hover active and focus pseudo-classes. You can even create your own custom modifier function!
 
 [More info in the postcss-fuss readme.](https://github.com/marcofugaro/postcss-fuss/tree/function-updates)
+</details>
 
-#### How do I enable prettier?
+<details>
+<summary>#### How do I enable prettier?</summary>
 Prettier is already configured in the projects scaffolded by accurapp, you just need to install the prettier plugin in your editor of choice and tell it to read the project's configuration.
 
 You should also configure prettier to run on save, it is really useful especially when you paste code from stackoverflow.
+</details>
 
-#### I need to support IE11. What do I do?
+<details>
+<summary>#### I need to support IE11. What do I do?</summary>
 First of all, we're sorry for you, IE is an asshole.
 
 You first need to edit the `package.json`'s `"browserslist"` field, and change `not ie 11` to `ie 11`. If you need to test in local you can also add `ie 11` to the development browsers.
@@ -494,8 +514,10 @@ You will now have to provide polyfills for the newer apis you're using, for exam
 Now hopefully you will not have any js errors in IE11 (if not, call Dr. Fugaro).
 
 You still have some css fixes to do, for example flexbox behaves weirdly, [here are some tips on how to handle this issue](https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/).
+</details>
 
-#### How do I use a web worker?
+<details>
+<summary>#### How do I use a web worker?</summary>
 You can use the [worker-loader](https://github.com/webpack-contrib/worker-loader) and configure it to read files ending in `.worker.js`. Here is the code:
 
 ```js
@@ -512,8 +534,10 @@ module.exports = buildWebpackConfig([
   workerLoader(),
 ])
 ```
+</details>
 
-#### How do I use a service worker?
+<details>
+####<summary>How do I use a service worker?</summary>
 If you just need the app to work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin).
 
 Otherwise, put the `service-worker.js` file in the `public/` folder, and register it normally.
@@ -522,3 +546,4 @@ Otherwise, put the `service-worker.js` file in the `public/` folder, and registe
 If you make some edits and wish to test them locally you can run `yarn create-test-app` which creates a test app using the local packages.
 
 To publish the updated packages, run `yarn run publish`, lerna will detect the packages you changed and ask you for the new version number.
+</details>
