@@ -34,6 +34,10 @@ but significant amounts of code were rewritten and simplified. Here are some shi
   - [How do I enable TypeScript?](#how-do-i-enable-typescript)
   - [How do I override a webpack loader?](#how-do-i-override-a-webpack-loader)
   - [What's all the fuss about FUSS?](#whats-all-the-fuss-about-fuss)
+  - [How do I enable prettier?](#faq)
+  - [I need to support IE11. What do I do?](#faq)
+  - [How do I use a web worker?](#faq)
+  - [How do I use a service worker?](#faq)
 - [Contributing](#contributing)
 
 ## Creating a new project
@@ -338,7 +342,7 @@ You can put them in the `src/fonts` folder and require them from the CSS like th
 #### What is the `public` folder for?
 You usually put the assets you require from the `index.html` here. Like for example the favicon.
 
-You should try as much as possible to require the .css and .js file from the `src` folder, so they are bundled and optimized. For example if you need a service worker file, use the [sw-precache-webpack-plugin](https://github.com/goldhand/sw-precache-webpack-plugin).
+You should try as much as possible to require the .css and .js file from the `src` folder, so they are bundled and optimized. For example if you need a service worker file just for making the app work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin).
 
 You should also try as much as possible to avoid putting images in the `public` folder, because missing images would cause 404 errors for the users instead of compilation errors.
 
@@ -474,6 +478,45 @@ And this is what the generated css looks like:
 There are other preset functions, like `color-variants()` which outputs both a lighter and darker version of the color, `color-states()` which outputs the classes in the hover active and focus pseudo-classes. You can even create your own custom modifier function!
 
 [More info in the postcss-fuss readme.](https://github.com/marcofugaro/postcss-fuss/tree/function-updates)
+
+#### How do I enable prettier?
+Prettier is already configured in the projects scaffolded by accurapp, you just need to install the prettier plugin in your editor of choice and tell it to read the project's configuration.
+
+You should also configure prettier to run on save, it is really useful especially when you paste code from stackoverflow.
+
+#### I need to support IE11. What do I do?
+First of all, we're sorry for you, IE is an asshole.
+
+You first need to edit the `package.json`'s `"browserslist"` field, and change `not ie 11` to `ie 11`. If you need to test in local you can also add `ie 11` to the development browsers.
+
+You will now have to provide polyfills for the newer apis you're using, for example [the fetch polyfill](https://github.com/github/fetch), or the [css variables ponyfill](https://github.com/jhildenbiddle/css-vars-ponyfill). Also make sure the tools you're using support IE11, for example MobX v5 has no support for IE11.
+
+Now hopefully you will not have any js errors in IE11 (if not, call Dr. Fugaro).
+
+You still have some css fixes to do, for example flexbox behaves weirdly, [here are some tips on how to handle this issue](https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/).
+
+#### How do I use a web worker?
+You can use the [worker-loader](https://github.com/webpack-contrib/worker-loader) and configure it to read files ending in `.worker.js`. Here is the code:
+
+```js
+const { buildWebpackConfig } = require('webpack-preset-accurapp')
+
+function workerLoader() {
+  return (context, { addLoader }) => addLoader({
+    test: /\.worker\.js$/,
+    loader: 'worker-loader',
+  })
+}
+
+module.exports = buildWebpackConfig([
+  workerLoader(),
+])
+```
+
+#### How do I use a service worker?
+If you just need the app to work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin).
+
+Otherwise, put the `service-worker.js` file in the `public/` folder, and register it normally.
 
 ## Contributing
 If you make some edits and wish to test them locally you can run `yarn create-test-app` which creates a test app using the local packages.
