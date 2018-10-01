@@ -26,6 +26,14 @@ but significant amounts of code were rewritten and simplified. Here are some shi
 - [Available Env Variables](#available-env-variables)
 - [Project Scaffolding](#project-scaffolding)
 - [F.A.Q.](#faq)
+  - [How do I enable hot reloading for the state?](#how-do-i-enable-hot-reloading-for-the-state)
+  - [Where do I put the images?](#where-do-i-put-the-images)
+  - [Where do I put the custom fonts?](#where-do-i-put-the-custom-fonts)
+  - [What is the public folder for?](#what-is-the-public-folder-for)
+  - [How do I handle svg files?](#how-do-i-handle-svg-files)
+  - [How do I enable TypeScript?](#how-do-i-enable-typescript)
+  - [How do I override a webpack loader?](#how-do-i-override-a-webpack-loader)
+  - [What's all the fuss about FUSS?](#whats-all-the-fuss-about-fuss)
 - [Contributing](#contributing)
 
 ## Creating a new project
@@ -445,6 +453,27 @@ Make sure to disable the related eslint rule like this:
   }
 }
 ```
+
+#### What's all the fuss about FUSS?
+Accurapp comes with [postcss-fuss](https://github.com/marcofugaro/postcss-fuss/tree/function-updates), a postcss plugin that lets you generate custom functional css classes, in the [tachyons](https://raw.githubusercontent.com/tachyons-css/tachyons/master/css/tachyons.css) way. It's useful if you want to define custom colors, and don't want to write all the classes by hand. And for many other stuff.
+
+For example, this is what you write in your `style.css`:
+
+```css
+@fuss color(tomato, #ff6347);
+```
+
+And this is what the generated css looks like:
+
+```css
+.tomato { color: #ff6347 }
+.bg-tomato { background-color: #ff6347 }
+.b--tomato { border-color: #ff6347 }
+```
+
+There are other preset functions, like `color-variants()` which outputs both a lighter and darker version of the color, `color-states()` which outputs the classes in the hover active and focus pseudo-classes. You can even create your own custom modifier function!
+
+[More info in the postcss-fuss readme.](https://github.com/marcofugaro/postcss-fuss/tree/function-updates)
 
 ## Contributing
 If you make some edits and wish to test them locally you can run `yarn create-test-app` which creates a test app using the local packages.
