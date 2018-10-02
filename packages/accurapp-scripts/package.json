@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "boxen": "2.0.0",
-    "browserslist": "4.1.1",
+    "browserslist": "4.1.2",
     "chalk": "2.4.1",
     "columnify": "1.5.4",
     "cross-spawn": "6.0.5",

@@ -20,9 +20,9 @@
     "customBlocks.js"
   ],
   "dependencies": {
-    "@babel/core": "7.1.0",
+    "@babel/core": "7.1.2",
     "@babel/plugin-transform-react-constant-elements": "7.0.0",
-    "@svgr/webpack": "2.4.1",
+    "@svgr/webpack": "3.0.0",
     "@webpack-blocks/assets": "2.0.0-alpha",
     "@webpack-blocks/core": "2.0.0-alpha",
     "@webpack-blocks/dev-server": "2.0.0-alpha",
@@ -35,7 +35,7 @@
     "cssnano": "4.1.4",
     "csv-loader": "3.0.2",
     "dotenv-webpack": "1.5.7",
-    "eslint": "5.6.0",
+    "eslint": "5.6.1",
     "eslint-loader": "2.1.1",
     "file-loader": "2.0.0",
     "glslify-loader": "pqml/glslify-loader",
