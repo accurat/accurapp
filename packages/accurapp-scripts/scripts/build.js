@@ -16,7 +16,9 @@ if (process.env.PUBLIC_URL.endsWith('/')) {
   process.env.PUBLIC_URL = process.env.PUBLIC_URL.slice(0, -1)
 }
 
-const appDir = process.cwd()
+// Make sure any symlinks in the project folder are resolved:
+// https://github.com/facebook/create-react-app/issues/637
+const appDir = fs.realpathSync(process.cwd())
 const config = readWebpackConfig()
 const appPublic = path.join(appDir, 'public')
 const appBuild = config.output.path

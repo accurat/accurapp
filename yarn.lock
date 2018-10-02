@@ -4054,6 +4054,20 @@ escodegen@^1.11.0:
   optionalDependencies:
     source-map "~0.6.1"
 
+eslint-config-accurapp@./packages/eslint-config-accurapp:
+  version "4.1.4"
+  dependencies:
+    babel-eslint "10.0.1"
+    eslint "5.6.1"
+    eslint-config-standard "12.0.0"
+    eslint-plugin-flowtype "2.50.3"
+    eslint-plugin-import "2.14.0"
+    eslint-plugin-no-copy-paste-default-export "0.0.3"
+    eslint-plugin-node "7.0.1"
+    eslint-plugin-promise "4.0.1"
+    eslint-plugin-react "7.11.1"
+    eslint-plugin-standard "4.0.0"
+
 eslint-config-standard@12.0.0:
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-12.0.0.tgz#638b4c65db0bd5a41319f96bba1f15ddad2107d9"
@@ -4608,6 +4622,13 @@ find-cache-dir@^2.0.0:
     make-dir "^1.0.0"
     pkg-dir "^3.0.0"
 
+find-up@3.0.0, find-up@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/find-up/-/find-up-3.0.0.tgz#49169f1d7993430646da61ecc5ae355c21c97b73"
+  integrity sha512-1yD6RmLI1XBfxugvORwlck6f75tYL+iR0jqwsOrOxMZyGYqUuDhJ0l4AXdO1iX/FTs9cBAMEk1gWSEx1kSbylg==
+  dependencies:
+    locate-path "^3.0.0"
+
 find-up@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-1.1.2.tgz#6b2e9822b1a2ce0a60ab64d610eccad53cb24d0f"
@@ -4622,13 +4643,6 @@ find-up@^2.0.0, find-up@^2.1.0:
   integrity sha1-RdG35QbHF93UgndaK3eSCjwMV6c=
   dependencies:
     locate-path "^2.0.0"
-
-find-up@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/find-up/-/find-up-3.0.0.tgz#49169f1d7993430646da61ecc5ae355c21c97b73"
-  integrity sha512-1yD6RmLI1XBfxugvORwlck6f75tYL+iR0jqwsOrOxMZyGYqUuDhJ0l4AXdO1iX/FTs9cBAMEk1gWSEx1kSbylg==
-  dependencies:
-    locate-path "^3.0.0"
 
 flat-cache@^1.2.1:
   version "1.3.0"
@@ -6358,7 +6372,7 @@ loader-runner@^2.3.0:
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.3.0.tgz#f482aea82d543e07921700d5a46ef26fdac6b8a2"
   integrity sha1-9IKuqC1UPgeSFwDVpG7yb9rGuKI=
 
-loader-utils@^1.0.2, loader-utils@^1.1.0:
+loader-utils@1.1.0, loader-utils@^1.0.2, loader-utils@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.1.0.tgz#c98aef488bcceda2ffb5e2de646d6a754429f5cd"
   integrity sha1-yYrvSIvM7aL/teLeZG1qdUQp9c0=
@@ -8635,10 +8649,10 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dev-utils@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-6.0.0.tgz#e254f94a29ba0a63561225bbccbdec5f2ec52ade"
-  integrity sha512-EguJx9FYk5oWIVQyNXAp0ER3/o6ch9qbKBzDg3z1KUBPnXdBfOCk6Dez2/SsrPg3LMDu9R5ij3dZESz84dvTzw==
+react-dev-utils@6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-6.0.3.tgz#78662b5fd7b4441140485e80d04d594116c5b1e3"
+  integrity sha512-3fI6rknX4td1/iFM+RtQh56TgSKUn6lvAmzqtYepk6OrTGwG1bEXv0x0NvaUdTwZHwdcdkuaeOeTzZHSbHk4Ug==
   dependencies:
     "@babel/code-frame" "7.0.0"
     address "1.0.3"
@@ -8648,23 +8662,25 @@ react-dev-utils@6.0.0:
     detect-port-alt "1.1.6"
     escape-string-regexp "1.0.5"
     filesize "3.6.1"
+    find-up "3.0.0"
     global-modules "1.0.0"
     gzip-size "5.0.0"
     inquirer "6.2.0"
     is-root "2.0.0"
+    loader-utils "1.1.0"
     opn "5.4.0"
     pkg-up "2.0.0"
-    react-error-overlay "^5.0.0"
+    react-error-overlay "^5.0.3"
     recursive-readdir "2.2.2"
     shell-quote "1.6.1"
     sockjs-client "1.1.5"
     strip-ansi "4.0.0"
     text-table "0.2.0"
 
-react-error-overlay@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.0.0.tgz#d5366b4c52869dba79d742fe2362b4510162de3a"
-  integrity sha512-Rigv3LVfvf1V4UsOvRsoFlrLm5BjDf9aI10Z+7h1QGE0QClq0yq5QBUimGwJbwYbtwZAgMQd64D9Z4ou/OAqkA==
+react-error-overlay@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.0.3.tgz#6eae9350144f3cd036e4f968c5a8bfae542af562"
+  integrity sha512-TLMcjJcNy7BalEHN1iNuIK0E6ODYgExcrdaKraT4kzKVztkrBHI1THTAn3qx7GVvtP4TbCqi+mBjsZqoWtuiEQ==
 
 read-cmd-shim@^1.0.1:
   version "1.0.1"

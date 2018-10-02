@@ -155,7 +155,7 @@ function reactSvgLoader() {
         {
           loader: '@svgr/webpack',
           options: {
-            svgAttributes: {
+            svgProps: {
               fill: 'currentColor',
             },
             titleProp: true,
