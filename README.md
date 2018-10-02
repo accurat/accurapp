@@ -354,7 +354,7 @@ You can put them in the `src/fonts` folder and require them from the CSS like th
 
 You usually put the assets you require from the `index.html` here. Like for example the favicon.
 
-You should try as much as possible to require the .css and .js file from the `src` folder, so they are bundled and optimized. For example if you need a service worker file just for making the app work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin).
+You should try as much as possible to require the .css and .js file from the `src` folder, so they are bundled and optimized. For example if you need a service worker file just for making the app work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin). An alternative is the [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin).
 
 You should also try as much as possible to avoid putting images in the `public` folder, because missing images would cause 404 errors for the users instead of compilation errors.
 </details>
