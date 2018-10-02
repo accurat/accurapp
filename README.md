@@ -64,6 +64,12 @@ Otherwise if you're using netlify:
 1. Click `New site from Git`
 1. Click `Bitbucket` and select the repo you created from the list
 1. Select `accurat` from the team list
+1. Create the project
+1. Go into `Site settings` and click `Change site name` to update the generated url with a more appropriate one
+1. Go into `Build & deploy` > `Edit Settings` and select `Branch deploys: All`
+1. To enable **slack notifications**
+  1. First you have to get the incoming webhook url in slack by going to `Customize Slack` > `Configure apps` > `Custom integrations` > `Incoming WebHooks` and click `Add configuration`
+  1. Then you have to paste it in `Build & deploy` > `Deploy notifications` > `Slack` > `Deploy succeeded`
 1. Deploy site!
 1. Enable the slack notifications to the desired channel
 
