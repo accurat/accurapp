@@ -8,6 +8,8 @@ module.exports = function (context, opts = {}) {
       [require('@babel/preset-env').default, {
         modules: false,
         useBuiltIns: 'usage',
+        // Enable stage 4 proposals, like object rest/spread
+        shippedProposals: true,
       }],
       [require('@babel/preset-react').default, {
         // Adds component stack to warning messages
