@@ -102,7 +102,7 @@ module.exports = {
     'react/require-render-return': 'warn',
     'react/style-prop-object': 'warn',
     'react/jsx-max-depth': ['warn', { max: 8 }],
-    'react/jsx-max-props-per-line': ['warn', { maximum: 5 }],
+    'react/jsx-max-props-per-line': ['warn', { maximum: 6 }],
     'react/self-closing-comp': ['warn', { 'component': true, 'html': true }],
     'react/jsx-first-prop-new-line': ['warn', 'multiline'],
     'react/jsx-no-bind': ['warn', { ignoreRefs: true }],
