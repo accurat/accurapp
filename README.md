@@ -43,7 +43,7 @@ but significant amounts of code were rewritten and simplified. Here are some shi
 ## Creating a new project
 Having installed node (`brew install node`), run this command in the directory where you want to create the `project-name` folder. This command will also handle the project scaffolding, the dependencies installation, and the git initialization with a first commit.
 ```sh
-npx create-accurapp project-name
+npx --ignore-existing create-accurapp project-name
 ```
 _(**Note**: if it says `npx: command not found` update your node version by running `brew upgrade node`)_
 
