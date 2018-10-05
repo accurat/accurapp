@@ -95,7 +95,6 @@ function buildWebpackConfig(config = []) {
       // https://github.com/mapbox/mapbox-gl-js/issues/4359
       match('*.js', { include: /node_modules/, exclude: /(core-js|mapbox-gl)/ }, [
         babel({
-          babelrc: false,
           // needed to use the polyfill useBuildIns: 'usage'
           // https://stackoverflow.com/questions/52407499
           sourceType: 'unambiguous',
@@ -104,10 +103,6 @@ function buildWebpackConfig(config = []) {
           // debugger to show the original code. Instead, the code
           // being evaluated would be much more helpful.
           sourceMaps: false,
-          presets: [
-            ['@babel/preset-env', { modules: false, useBuiltIns: 'usage' }],
-            '@babel/preset-react',
-          ],
         }),
       ]),
     ]),

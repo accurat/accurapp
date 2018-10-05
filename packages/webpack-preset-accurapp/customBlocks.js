@@ -168,6 +168,9 @@ function reactSvgLoader() {
                 { removeViewBox: false },
                 { removeDimensions: true },
                 { convertColors: { currentColor: true } },
+                // TODO remove this next line when this issue will be resolved
+                // https://github.com/smooth-code/svgr/issues/201
+                { inlineStyles: { onlyMatchedOnce: false } },
               ],
             },
           },
