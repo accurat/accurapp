@@ -1,6 +1,6 @@
 {
   "name": "webpack-preset-accurapp",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Webpack configuration used by Accurat, based on webpack-blocks",
   "repository": "accurat/accurapp",
   "license": "MIT",
