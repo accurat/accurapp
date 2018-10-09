@@ -18,6 +18,7 @@ const devServer = require('@webpack-blocks/dev-server')
 const eslint = require('@webpack-blocks/eslint')
 // const postcss = require('@webpack-blocks/postcss')
 const postcssPresetEnv = require('postcss-preset-env')
+const nested = require('postcss-nested')
 const fuss = require('postcss-fuss')
 const fussFunctions = require('postcss-fuss/fuss-functions')
 const colorModFunction = require('postcss-color-mod-function')
@@ -59,7 +60,12 @@ function buildWebpackConfig(config = []) {
       postcssPresetEnv({
         autoprefixer: { flexbox: 'no-2009' },
         stage: 0,
+        features: {
+          // postcss-nested is better than postcss-nesting
+          'nesting-rules': false,
+        },
       }),
+      nested,
       fuss({ functions: fussFunctions }),
       colorModFunction(),
       ...(process.env.NODE_ENV === 'production' ? [cssnano()] : []),
