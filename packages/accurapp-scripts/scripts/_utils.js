@@ -215,6 +215,15 @@ function extractLatestCommitTimestamp() {
   }
 }
 
+function extractLatestTag() {
+  try {
+    return cp.execSync('git describe --abbrev=0 --tags')
+  } catch (e) {
+    // Probably git is not available, return an empty string instead
+    return ''
+  }
+}
+
 module.exports = {
   log,
   noop,
@@ -229,4 +238,5 @@ module.exports = {
   extractBrowserslistString,
   extractLatestCommitHash,
   extractLatestCommitTimestamp,
+  extractLatestTag,
 }

@@ -232,7 +232,8 @@ render() {
 
 ## Available Env Variables
 These are the Env Variables that Accurapp provides you, you cannot modify them directly:
-- **LATEST_COMMIT** - The latest commit hash, useful if you want to display a build version in your application
+- **LATEST_TAG** - The latest git tag you made, useful if you want to display a build version in your application
+- **LATEST_COMMIT** - The latest commit hash, useful if you want to display a more specific build version
 - **LATEST_COMMIT_TIMESTAMP** - The UTC timestamp of the latest commit, you can use it like this:
 
 ```js
