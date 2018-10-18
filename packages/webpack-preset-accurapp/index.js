@@ -109,6 +109,9 @@ function buildWebpackConfig(config = []) {
           // debugger to show the original code. Instead, the code
           // being evaluated would be much more helpful.
           sourceMaps: false,
+          // Fix because it's reading the wrong .babelrc somehow
+          babelrc: false,
+          presets: ['accurapp'],
         }),
       ]),
     ]),
