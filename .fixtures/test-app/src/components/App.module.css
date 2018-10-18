@@ -1,0 +1,7 @@
+.text {
+  background: linear-gradient(to right, #30cfd0 0%, #330867 100%);
+  background-clip: text;
+  color: transparent;
+  font-size: 30rem;
+  font-weight: bold;
+}
