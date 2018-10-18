@@ -115,6 +115,19 @@ function fontLoader() {
 }
 
 /**
+ * Pdfs are loaded as file urls
+ */
+function pdfLoader() {
+  return (context, { addLoader }) => addLoader({
+    test: /\.pdf$/,
+    loader: 'file-loader',
+    options: {
+      name: fileNameTemplate,
+    },
+  })
+}
+
+/**
  * GLSLify is a node-style module system for WebGL shaders,
  * allowing you to install GLSL modules from npm and use them in your shaders
  */
@@ -244,6 +257,7 @@ module.exports = {
   imageLoader,
   videoLoader,
   fontLoader,
+  pdfLoader,
   glslifyLoader,
   csvLoader,
   reactSvgLoader,
