@@ -24,7 +24,7 @@
     "accurapp-scripts": "^4.0.5",
     "chalk": "2.4.1",
     "cross-spawn": "6.0.5",
-    "figlet": "1.2.0",
+    "figlet": "1.2.1",
     "fs-extra": "7.0.0",
     "indent-string": "3.2.0",
     "meow": "5.0.0"

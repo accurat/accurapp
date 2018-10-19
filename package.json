@@ -19,6 +19,6 @@
   "devDependencies": {
     "eslint-config-accurapp": "./packages/eslint-config-accurapp",
     "is-git-status-clean": "1.0.0",
-    "lerna": "3.4.1"
+    "lerna": "3.4.3"
   }
 }
