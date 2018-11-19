@@ -25,7 +25,7 @@ const colorModFunction = require('postcss-color-mod-function')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
-const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin')
+// const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
@@ -135,9 +135,11 @@ function buildWebpackConfig(config = []) {
         chunks: 'all',
         name: 'vendors',
       },
+      // TODO uncomment this when this issue will be resolved
+      // https://github.com/facebook/create-react-app/issues/5856
       // Keep the runtime chunk seperated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: true,
+      // runtimeChunk: true,
     }),
 
     addPlugins([
@@ -155,14 +157,16 @@ function buildWebpackConfig(config = []) {
         inject: true,
         template: './src/index.html',
       }),
+      // TODO uncomment this when this issue will be resolved
+      // https://github.com/facebook/create-react-app/issues/5856
+      // Inlines the webpack runtime script. This script is
+      // too small to warrant a network request.
+      // new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
       // Makes some environment variables available in index.html. Example: %PUBLIC_URL%
       new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
         'NODE_ENV': process.env.NODE_ENV,
         'PUBLIC_URL': process.env.PUBLIC_URL,
       }),
-      // Inlines the webpack runtime script. This script is
-      // too small to warrant a network request.
-      new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
       // Check case of paths, so case-sensitive filesystems won't complain:
       new CaseSensitivePathsPlugin(),
       // This gives some necessary context to module not found errors, such as
