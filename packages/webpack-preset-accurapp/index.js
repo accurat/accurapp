@@ -100,16 +100,13 @@ function buildWebpackConfig(config = []) {
     when(process.env.TRANSPILE_NODE_MODULES === 'true', [
       // mapbox-gl ecluded because of
       // https://github.com/mapbox/mapbox-gl-js/issues/4359
+      // BUG
+      // somehow this config is used also for the main application code 🤔
       match('*.js', { include: /node_modules/, exclude: /(core-js|mapbox-gl)/ }, [
         babel({
           // needed to use the polyfill useBuildIns: 'usage'
           // https://stackoverflow.com/questions/52407499
           sourceType: 'unambiguous',
-          // If an error happens in a package, it's possible to be
-          // because it was compiled. Thus, we don't want the browser
-          // debugger to show the original code. Instead, the code
-          // being evaluated would be much more helpful.
-          sourceMaps: false,
           // Fix because it's reading the wrong .babelrc somehow
           babelrc: false,
           presets: ['accurapp'],
