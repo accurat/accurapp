@@ -217,7 +217,7 @@ function extractLatestCommitTimestamp() {
 
 function extractLatestTag() {
   try {
-    return cp.execSync('git describe --abbrev=0 --tags')
+    return cp.execSync('git describe --abbrev=0 --tags --always')
   } catch (e) {
     // Probably git is not available, return an empty string instead
     return ''
