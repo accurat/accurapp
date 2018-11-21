@@ -132,11 +132,6 @@ function buildWebpackConfig(config = []) {
         chunks: 'all',
         name: 'vendors',
       },
-      // TODO uncomment this when this issue will be resolved
-      // https://github.com/facebook/create-react-app/issues/5856
-      // Keep the runtime chunk seperated to enable long term caching
-      // https://twitter.com/wSokra/status/969679223278505985
-      // runtimeChunk: true,
     }),
 
     addPlugins([
@@ -154,11 +149,6 @@ function buildWebpackConfig(config = []) {
         inject: true,
         template: './src/index.html',
       }),
-      // TODO uncomment this when this issue will be resolved
-      // https://github.com/facebook/create-react-app/issues/5856
-      // Inlines the webpack runtime script. This script is
-      // too small to warrant a network request.
-      // new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
       // Makes some environment variables available in index.html. Example: %PUBLIC_URL%
       new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
         'NODE_ENV': process.env.NODE_ENV,
