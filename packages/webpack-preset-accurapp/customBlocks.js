@@ -181,6 +181,7 @@ function reactSvgLoader() {
                 { removeViewBox: false },
                 { removeDimensions: true },
                 { convertColors: { currentColor: true } },
+                { cleanupIDs: { minify: false } },
               ],
             },
           },
