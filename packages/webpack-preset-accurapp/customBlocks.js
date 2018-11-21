@@ -18,7 +18,7 @@ const babelLoaderOptions = {
  */
 function babel(options = {}) {
   return (context, { addLoader }) => addLoader(
-    Object.assign({
+    {
       // setting `test` defaults here, in case there is no `context.match` data
       test: /\.(js|jsx)$/,
       use: [
@@ -34,7 +34,8 @@ function babel(options = {}) {
           options: Object.assign(babelLoaderOptions, options),
         },
       ],
-    }, context.match)
+      ...context.match,
+    }
   )
 }
 
@@ -43,14 +44,15 @@ function babel(options = {}) {
  */
 function extractCss() {
   return (context, { addLoader }) => addLoader(
-    Object.assign({
+    {
       test: /\.css$/,
       use: [
         {
           loader: MiniCssExtractPlugin.loader,
         },
       ],
-    }, context.match)
+      ...context.match,
+    }
   )
 }
 
@@ -61,7 +63,7 @@ function extractCss() {
  */
 function postcss(options = {}) {
   return (context, { addLoader }) => addLoader(
-    Object.assign({
+    {
       test: /\.css$/,
       use: [
         {
@@ -69,7 +71,8 @@ function postcss(options = {}) {
           options,
         },
       ],
-    }, context.match)
+      ...context.match,
+    }
   )
 }
 
