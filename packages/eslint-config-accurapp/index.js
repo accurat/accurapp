@@ -63,7 +63,9 @@ module.exports = {
     window: false,
   },
 
-  rules: Object.assign(standardJSRulesWarn, {
+  rules: {
+    ...standardJSRulesWarn,
+
     // WARNINGS
     indent: ['warn', 2, {
       SwitchCase: 1,
@@ -138,5 +140,5 @@ module.exports = {
     // disable eslint-plugin-node rules because they error
     'node/no-deprecated-api': 'off',
     'node/process-exit-as-throw': 'off',
-  }),
+  },
 }

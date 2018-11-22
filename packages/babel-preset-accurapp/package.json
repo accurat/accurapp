@@ -11,7 +11,7 @@
     "accurat"
   ],
   "engines": {
-    "node": ">=7",
+    "node": ">=8.6",
     "yarn": ">=1.2.1"
   },
   "files": [
