@@ -22,7 +22,7 @@
   "dependencies": {
     "@babel/core": "7.1.6",
     "@babel/plugin-transform-react-constant-elements": "7.0.0",
-    "@svgr/webpack": "3.1.0",
+    "@svgr/webpack": "4.0.3",
     "@webpack-blocks/assets": "2.0.0-alpha",
     "@webpack-blocks/core": "2.0.0-alpha",
     "@webpack-blocks/dev-server": "2.0.0-alpha",
