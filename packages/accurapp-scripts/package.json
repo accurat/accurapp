@@ -40,7 +40,7 @@
     "pretty-ms": "4.0.0",
     "react-dev-utils": "6.0.5",
     "semver": "5.6.0",
-    "webpack": "4.21.0",
-    "webpack-dev-server": "3.1.9"
+    "webpack": "4.26.0",
+    "webpack-dev-server": "3.1.10"
   }
 }
