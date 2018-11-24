@@ -461,7 +461,7 @@ TypesScript is not enabled by default in accurapp for now, this is what you have
 
 1. Do `yarn add --dev webpack-blocks-ts`
 
-2. In `webpack.config.js` replace all content with:
+1. In `webpack.config.js` replace all content with:
 
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
@@ -470,7 +470,7 @@ const typescript = require('webpack-blocks-ts')
 module.exports = buildWebpackConfig([typescript({ silent: true })])
 ```
 
-3. Add a `tsconfig.json` in the project root, a default tsconfig looks like this:
+1. Add a `tsconfig.json` in the project root, a default tsconfig looks like this:
 
 ```json
 {
@@ -500,26 +500,26 @@ module.exports = buildWebpackConfig([typescript({ silent: true })])
 
 If you really need it, you can also add the `allowSyntheticDefaultImports` flag and set it to `true`, and remove `ESNext` from the `lib` compiler option.
 
-4. Add as devDependencies typescript and the types of the libraries you're using, for example:
+1. Add as devDependencies typescript and the types of the libraries you're using, for example:
 
 ```js
 yarn add --dev typescript @types/react @types/react-dom
 ```
 
-5. Rename `index.js` to `main.tsx` and edit the first two imports like this
+1. Rename `index.js` to `main.tsx` and edit the first two imports like this
 
 ```js
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 ```
 
-6. Add a new `index.js` file and simply add
+1. Add a new `index.js` file and simply add
 
 ```js
 import 'main'
 ```
 
-7. Rensame `src/components/App.js` to `src/components/App.tsx` and inside it, edit the `React` import like this
+1. Rename `src/components/App.js` to `src/components/App.tsx` and inside it, edit the `React` import like this
 
 ```js
 import * as React from 'react'
@@ -529,7 +529,7 @@ Ready to go!
 
 Please remember that the first two input parameters for class components are its props and local state. So to annotate it correctly you would need something along the lines of
 
-```js
+```ts
 type Props = {}
 type LocalState = {}
 
