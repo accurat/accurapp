@@ -527,11 +527,15 @@ import * as React from 'react'
 
 Ready to go!
 
-Please remember that the first two input parameters for class components are its props and local state. So to annotate it correctly you would need something along the lines of
+Please remember that the first two items to annonate for class components are its props and local state. So to do it correctly you would need something along the lines of
 
 ```ts
 type Props = {}
 type LocalState = {}
+
+// or
+// interface Props {}
+// interface LocalState {}
 
 export default class App extends React.Component<Props, LocalState> {
   render() {
