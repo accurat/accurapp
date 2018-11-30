@@ -37,7 +37,7 @@
     "eslint": "5.9.0",
     "eslint-loader": "2.1.1",
     "file-loader": "2.0.0",
-    "glslify-loader": "pqml/glslify-loader",
+    "glslify-loader": "2.0.0",
     "html-webpack-plugin": "4.0.0-alpha.2",
     "json5-loader": "1.0.1",
     "mini-css-extract-plugin": "0.4.5",

@@ -5239,9 +5239,10 @@ glslify-deps@^1.3.0:
     map-limit "0.0.1"
     resolve "^1.0.0"
 
-glslify-loader@pqml/glslify-loader:
-  version "1.0.2"
-  resolved "https://codeload.github.com/pqml/glslify-loader/tar.gz/75bff2aeb2ee6fb6e60b19775595c1512544bfef"
+glslify-loader@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/glslify-loader/-/glslify-loader-2.0.0.tgz#f864adc2baea195054532a5aebfba6f898ac31eb"
+  integrity sha512-oOdmTX1BSPG75o3gNZToemfbbuN5dgi4Pco/aRfjbwGxPIfflYLuok6JCf2kDBPHjP+tV+imNsj6YRJg9gKJ1A==
   dependencies:
     glslify-bundle "^5.0.0"
     glslify-deps "^1.3.0"
