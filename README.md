@@ -16,6 +16,7 @@ but significant amounts of code were rewritten and simplified. Here are some shi
 - **JSON5 webpack loader** to import .json5 files. [Read more about JSON5 here](https://json5.org/).
 
 ## Table of contents
+
 - [Creating a new project](#creating-a-new-project)
 - [Customization](#customization)
   - [Customizing Webpack](#customizing-webpack)
@@ -38,28 +39,36 @@ but significant amounts of code were rewritten and simplified. Here are some shi
   - [I need to support IE11. What do I do?](#faq)
   - [How do I use a web worker?](#faq)
   - [How do I use a service worker?](#faq)
+  - [I need title and meta tags for each route for SEO. How do I do it?](#faq)
 - [Contributing](#contributing)
 
 ## Creating a new project
+
 Having installed node (`brew install node`), run this command in the directory where you want to create the `project-name` folder. This command will also handle the project scaffolding, the dependencies installation, and the git initialization with a first commit.
+
 ```sh
 npx --ignore-existing create-accurapp project-name
 ```
+
 _(**Note**: if it says `npx: command not found` update your node version by running `brew upgrade node`)_
 
 Then you just `cd project-name`, run `yarn start` and start creating awesome stuff! 🎉
 
 #### Setting up bitbucket
+
 1. Create a new repo - [link](https://bitbucket.org/repo/create)
 1. Be sure to choose `accurat` as Owner, not yourself.
 1. Choose `Get your local Git repository on Bitbucket` and follow the instructions
 
 #### Setting up the automatic deploy
+
 If you're using bitbucket pipelines:
+
 1. Go into `Settings > Pipelines - Settings` and enable Bitbucket Pipelines
 1. Go into `Settings > Pipelines - Environment Variables` and add the environment variables `DEPLOY_CUSTOMER`, `DEPLOY_PROJECT`, `SLACK_CHANNEL`
 
 Otherwise if you're using netlify:
+
 1. Login into [netlify.com](https://app.netlify.com/)
 1. Click `New site from Git`
 1. Click `Bitbucket` and select the repo you created from the list
@@ -68,20 +77,25 @@ Otherwise if you're using netlify:
 1. Go into `Site settings` and click `Change site name` to update the generated url with a more appropriate one
 1. Go into `Build & deploy` > `Edit Settings` and select `Branch deploys: All`
 1. To enable **slack notifications**
-  1. First you have to get the incoming webhook url in slack by going to `Customize Slack` > `Configure apps` > `Custom integrations` > `Incoming WebHooks` and click `Add configuration`
-  1. Then you have to paste it in `Build & deploy` > `Deploy notifications` > `Slack` > `Deploy succeeded`
+1. First you have to get the incoming webhook url in slack by going to `Customize Slack` > `Configure apps` > `Custom integrations` > `Incoming WebHooks` and click `Add configuration`
+1. Then you have to paste it in `Build & deploy` > `Deploy notifications` > `Slack` > `Deploy succeeded`
 1. Deploy site!
 1. Enable the slack notifications to the desired channel
 
 #### Commands
+
 These are the available commands once you created a project:
+
 - `yarn start` starts a server locally, accessible both from your browser and from another machine using your same wi-fi
 - `yarn build` builds the project for production, ready to be deployed from the `build/` folder
 - `yarn lint` lints with eslint the `src/` folder. You can pass any [eslint options](https://eslint.org/docs/user-guide/command-line-interface#options) to the lint command, for example if you want to use eslint's fix option, you do it like this:
+
 ```json
 "lint-fix": "accurapp-scripts lint --fix",
 ```
+
 - `yarn prettier` prettifies all the code in the `src/` folder, overwriting the files. You can pass options also to this command, for example if you want to print only the files which would be prettified but don't overwrite them:
+
 ```json
 "prettier-check": "accurapp-scripts prettier --list-different",
 ```
@@ -89,8 +103,11 @@ These are the available commands once you created a project:
 **NOTE**: you need to have at least Node v6.x and yarn v1.2.1, make sure you have the correct versions if you run into some problems running these commands. You can check their version by running `node -v` and `yarn -v`.
 
 ## Customization
+
 #### Customizing Webpack
+
 You can pass a custom webpack config to the `buildWebpackConfig` function in the project's `webpack.config.js`.
+
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 
@@ -100,16 +117,16 @@ module.exports = buildWebpackConfig({
 ```
 
 Or to make your life easier, you could also use [webpack-blocks](https://github.com/andywer/webpack-blocks/tree/release/release-2.0), it's a nice level of abstraction over the webpack configuration, you can add loaders, plugins, configuration with just one line.
+
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 const { sass } = require('webpack-blocks')
 
-module.exports = buildWebpackConfig([
-  sass(),
-])
+module.exports = buildWebpackConfig([sass()])
 ```
 
 For example, this is the way to customize the webpack-dev-server options.
+
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 const { env, devServer } = require('webpack-blocks')
@@ -124,35 +141,33 @@ module.exports = buildWebpackConfig([
 ```
 
 Or this is a way to add a custom loader.
+
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 
 function workerLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.worker\.js$/,
-    loader: 'worker-loader',
-  })
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.worker\.js$/,
+      loader: 'worker-loader',
+    })
 }
 
-module.exports = buildWebpackConfig([
-  workerLoader(),
-])
+module.exports = buildWebpackConfig([workerLoader()])
 ```
 
 And this is a way to add a custom plugin.
+
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 const { addPlugins } = require('webpack-blocks')
 const NpmInstallPlugin = require('npm-install-webpack-plugin')
 
-module.exports = buildWebpackConfig([
-  addPlugins([
-    new NpmInstallPlugin(),
-  ]),
-])
+module.exports = buildWebpackConfig([addPlugins([new NpmInstallPlugin()])])
 ```
 
 Also you can still pass a custom webpack config using webpack-blocks.
+
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 const { customConfig } = require('webpack-blocks')
@@ -166,7 +181,9 @@ module.exports = buildWebpackConfig([
 ```
 
 #### Customizing Eslint
+
 Add your custom rules to the `.eslintrc`
+
 ```js
 {
   "extends": "eslint-config-accurapp",
@@ -177,7 +194,9 @@ Add your custom rules to the `.eslintrc`
 ```
 
 #### Customizing Babel
+
 Add your custom presets/plugins to the `.babelrc`
+
 ```js
 {
   "presets": ["accurapp"],
@@ -188,20 +207,26 @@ Add your custom presets/plugins to the `.babelrc`
 ```
 
 #### Setting Env Variables
+
 All the Env Variables are automatically injected into the application (if used), no need to use webpack's `DefinePlugin`.
 
 You can define your variables in those different places, **in order of importance** (1 will override 2 and 2 will override 3):
 
 1. in the `package.json`'s scripts section:
+
 ```json
   "start": "HTTPS=true accurapp-scripts start",
 ```
+
 1. in the CI config script:
+
 ```yml
-  script:
-    - GENERATE_SOURCEMAP=true yarn build
+script:
+  - GENERATE_SOURCEMAP=true yarn build
 ```
+
 1. in the `.env` file:
+
 ```
 SECRET=djah7s9ihdias7hdsaodhoas8hd
 ```
@@ -209,17 +234,22 @@ SECRET=djah7s9ihdias7hdsaodhoas8hd
 **NOTE**: if you don't wish to have too many variables in the scripts section, you could also use a combo of the `.env.example` during CI and the `.env` file in local. If the `process.env.CI` is true, `.env.example` is used instead of `.env`.
 
 #### Customizing Env Variables
+
 Here are the available Env Variables for the **yarn start** script:
+
 - **HOST** - The host of the web server (default `localhost`)
 - **PORT** - The port of the web server (default `8000`)
 - **HTTPS** - Set this to `true` if you wish to use HTTPS in development (default `false`)
 
 Here are instead the available Env Variables for the **yarn build** script:
+
 - **PUBLIC_URL** - Use this if the application is hosted on a subpath, it will be used to resolve assets (default `/`).
-Here are some examples of its usage:
+  Here are some examples of its usage:
+
 ```html
-<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
 ```
+
 ```js
 render() {
   return <img src={`${process.env.PUBLIC_URL}/img/logo.png`} />;
@@ -231,7 +261,9 @@ render() {
 - **TRANSPILE_NODE_MODULES** - Set this to false if you want to disable the babel transpilation of the `node_modules` (default `true`)
 
 ## Available Env Variables
+
 These are the Env Variables that Accurapp provides you, you cannot modify them directly:
+
 - **LATEST_TAG** - The latest git tag you made, useful if you want to display a build version in your application
 - **LATEST_COMMIT** - The latest commit hash, useful if you want to display a more specific build version
 - **LATEST_COMMIT_TIMESTAMP** - The UTC timestamp of the latest commit, you can use it like this:
@@ -250,8 +282,8 @@ if (!isBrowserSupported(navigator.userAgent, process.env.BROWSERSLIST)) {
 }
 ```
 
-
 ## Project Scaffolding
+
 ```
 ├── build             # created when you run yarn build
 ├── public            # put the static stuff here
@@ -281,13 +313,14 @@ if (!isBrowserSupported(navigator.userAgent, process.env.BROWSERSLIST)) {
 <summary>How do I enable hot reloading for the state?</summary>
 
 By default, hot reloading is enabled for the react components tree in accurapp, but if you want to hot-reload also the [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree) files, your `index.js` should look like this:
+
 ```js
 let state = State.create()
 
 function renderApp() {
   ReactDOM.render(
     <MobxProvider state={state}>
-      <App/>
+      <App />
     </MobxProvider>,
     document.getElementById('root'),
   )
@@ -313,13 +346,16 @@ if (module.hot) {
   })
 }
 ```
+
 The first argument to `module.hot.accept` must be the root component of the app, often the `Routes` component is used.
+
 </details>
 
 <details>
 <summary>Where do I put the images?</summary>
 
 You can put them in the `src/images` folder and require them from the js like this:
+
 ```js
 import logo from 'images/logo.png'
 
@@ -332,14 +368,17 @@ function Header() {
 ```
 
 or from the CSS (see [css-loader](https://github.com/webpack-contrib/css-loader) for more info):
+
 ```css
 .Logo {
   background-image: url(~images/logo.png);
 }
 ```
+
 The advantage is that it creates a hash in the filename to invalidate eventual caching. Another thing is that images that are less than 10,000 bytes are imported as a [data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) instead of a path, to reduce the number of requests to the server.
 
 Also you could tell webpack to automatically optimize the images you import with the [imagemin-webpack-plugin](https://github.com/Klathmon/imagemin-webpack-plugin).
+
 </details>
 
 <details>
@@ -354,6 +393,7 @@ You can put them in the `src/fonts` folder and require them from the CSS like th
   font-weight: 200;
 }
 ```
+
 </details>
 
 <details>
@@ -364,12 +404,14 @@ You usually put the assets you require from the `index.html` here. Like for exam
 You should try as much as possible to require the .css and .js file from the `src` folder, so they are bundled and optimized. For example if you need a service worker file just for making the app work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin). An alternative is the [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin).
 
 You should also try as much as possible to avoid putting images in the `public` folder, because missing images would cause 404 errors for the users instead of compilation errors.
+
 </details>
 
 <details>
 <summary>How do I handle svg files?</summary>
 
 By default you can import svgs as files, like you would do for images:
+
 ```js
 import logo from 'images/logo.svg'
 
@@ -382,6 +424,7 @@ function Header() {
 ```
 
 But if the svg is an icon, and you need to apply some styles to it, you can also import it as a react component, and pass it some `className` or `style` props:
+
 ```js
 import { ReactComponent as PencilIcon } from 'icons/pencil.svg'
 
@@ -405,9 +448,11 @@ function Edit() {
   return <PencilIcon className="db w1 black" />
 }
 ```
+
 Under the hood, the loader basically wraps the svg file inside a react component, so you can treat it as such.
 
 Furthermore it optimizes and minifies the svg using [svgo](https://github.com/svg/svgo), so it cleans up automatically the ugly and noisy svg that Illustrator exports 🙌.
+
 </details>
 
 <details>
@@ -416,16 +461,16 @@ Furthermore it optimizes and minifies the svg using [svgo](https://github.com/sv
 TypesScript is not enabled by default in accurapp for now, this is what you have to do.
 
 After having done `yarn add --dev webpack-blocks-ts`, use it in the webpack config:
+
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 const typescript = require('webpack-blocks-ts')
 
-module.exports = buildWebpackConfig([
-  typescript({ silent: true }),
-])
+module.exports = buildWebpackConfig([typescript({ silent: true })])
 ```
 
 Then add a `tsconfig.json` in the project root, a default tsconfig looks like this:
+
 ```json
 {
   "compilerOptions": {
@@ -448,18 +493,16 @@ Then add a `tsconfig.json` in the project root, a default tsconfig looks like th
     "noUnusedLocals": false,
     "experimentalDecorators": true
   },
-  "exclude": [
-    "node_modules",
-    "build",
-    "webpack.config.js"
-  ]
+  "exclude": ["node_modules", "build", "webpack.config.js"]
 }
 ```
 
 Then what is left to do is to add as devDependencies typescript and the types of the libraries you're using, for example:
+
 ```js
 yarn add --dev typescript @types/react @types/react-dom
 ```
+
 </details>
 
 <details>
@@ -472,11 +515,13 @@ For example:
 ```js
 import csvString from '!raw-loader!data/some_data.csv'
 ```
+
 This will override the default `csv-loader` for that file.
 
 [See the related docs](https://webpack.js.org/concepts/loaders/#inline).
 
 Make sure to disable the related eslint rule like this:
+
 ```js
 {
   "extends": "eslint-config-accurapp",
@@ -485,6 +530,7 @@ Make sure to disable the related eslint rule like this:
   }
 }
 ```
+
 </details>
 
 <details>
@@ -501,14 +547,21 @@ For example, this is what you write in your `style.css`:
 And this is what the generated css looks like:
 
 ```css
-.tomato { color: #ff6347 }
-.bg-tomato { background-color: #ff6347 }
-.b--tomato { border-color: #ff6347 }
+.tomato {
+  color: #ff6347;
+}
+.bg-tomato {
+  background-color: #ff6347;
+}
+.b--tomato {
+  border-color: #ff6347;
+}
 ```
 
 There are other preset functions, like `color-variants()` which outputs both a lighter and darker version of the color, `color-states()` which outputs the classes in the hover active and focus pseudo-classes. You can even create your own custom modifier function!
 
 [More info in the postcss-fuss readme.](https://github.com/marcofugaro/postcss-fuss/tree/function-updates)
+
 </details>
 
 <details>
@@ -517,6 +570,7 @@ There are other preset functions, like `color-variants()` which outputs both a l
 Prettier is already configured in the projects scaffolded by accurapp, you just need to install the prettier plugin in your editor of choice and tell it to read the project's configuration.
 
 You should also configure prettier to run on save, it is really useful especially when you paste code from stackoverflow.
+
 </details>
 
 <details>
@@ -531,6 +585,7 @@ You will now have to provide polyfills for the newer apis you're using, for exam
 Now hopefully you will not have any js errors in IE11 (if not, call Dr. Fugaro).
 
 You still have some css fixes to do, for example flexbox behaves weirdly, [here are some tips on how to handle this issue](https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/).
+
 </details>
 
 <details>
@@ -542,16 +597,16 @@ You can use the [worker-loader](https://github.com/webpack-contrib/worker-loader
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 
 function workerLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.worker\.js$/,
-    loader: 'worker-loader',
-  })
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.worker\.js$/,
+      loader: 'worker-loader',
+    })
 }
 
-module.exports = buildWebpackConfig([
-  workerLoader(),
-])
+module.exports = buildWebpackConfig([workerLoader()])
 ```
+
 </details>
 
 <details>
@@ -560,9 +615,147 @@ module.exports = buildWebpackConfig([
 If you just need the app to work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin).
 
 Otherwise, put the `service-worker.js` file in the `public/` folder, and register it normally.
+
+</details>
+
+<details>
+<summary>I need title and meta tags for each route for SEO. How do I do it?</summary>
+
+You can use [`react-helmet`](https://github.com/nfl/react-helmet) to dynamically add html tags to the `<head>` of a document and [`react-snap`](https://github.com/stereobooster/react-snap) to prerender them statically after the build process is complete. Here's how to configure them.
+
+## Install `react-helmet` and `react-snap`
+
+`yarn add react-helmet react-snap`
+
+## Add meta tags for each route in the `render` function
+
+As specified in the [`react-helmet` documentation](https://github.com/nfl/react-helmet). E.g.
+
+```
+export default class Home extends React.Component {
+  render() {
+    return (
+      <Helmet>
+        <title>Home title</title>
+        <meta name="robots" content="index,follow" />
+
+        {/* Google */}
+        <meta name="description" content="Home description" />
+        <meta name="copyright" content="Client name" />
+
+        {/* Facebook */}
+        <meta property="og:title" content="Home title" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="Home description" />
+        <meta property="og:url" content="Home url" />
+        <meta property="og:image" content="Home img url" />
+
+        {/* Twitter */}
+        <meta name="twitter:image" content="Home img url" />
+        <meta name="twitter:title" content="Home title" />
+        <meta name="twitter:description" content="Home description" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="Client Twitter handle" />
+
+        {/* Chrome for Android */}
+        <meta name="theme-color" content="Hex value" />
+      </Helmet>
+
+      <main className="homePage">
+        {/* Homepage content */}
+      </main>
+    )
+  }
+}
+
+```
+
+Please note that some of these meta can be put directly in `src/index.html`, as they are probably the same for all pages. Specifically, `robots`, `copyright`, `og:type`, `twitter:card`, `twitter:site`.
+
+## Add `react-snap` in `src/index.js`
+
+```
+import {render, hydrate} from 'react-dom'
+
+renderApp()
+
+function renderApp() {
+  if (rootElement.hasChildNodes()) {
+    hydrate(<App />, rootElement)
+  } else {
+    render(<App />, rootElement)
+  }
+}
+```
+
+## Add `react-snap` to `package.json`
+
+```
+"scripts": {
+	...
+  "postbuild": "react-snap"
+},
+"reactSnap": {
+  "puppeteerArgs": [
+    "--no-sandbox"
+  ]
+}
+```
+
+Note: the puppeteerArgs avoid the build to break on the Bitbucket pipelines.
+
+## Add the `react-snap` config in `bitbucket-pipelines.yml`
+
+Add it in `script`, right before `git clone --branch="master"` ...
+
+```
+- apt-get update; apt-get install -y gettext-base;
+- echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/chrome.list
+- wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+- set -x && apt-get update && apt-get install -y xvfb google-chrome-stable
+- wget -q -O /usr/bin/xvfb-chrome https://bitbucket.org/atlassian/docker-node-chrome-firefox/raw/ff180e2f16ea8639d4ca4a3abb0017ee23c2836c/scripts/xvfb-chrome
+- ln -sf /usr/bin/xvfb-chrome /usr/bin/google-chrome
+- chmod 755 /usr/bin/google-chrome
+```
+
+## OK, setup done! Now, how do I check if it is working?
+
+Run `yarn build`. After the build is complete, you will see some folders with an `index.html` file in them. Also `react-snap` shows its progress in the terminal right after `yarn build` task is complete.
+
+## Basic troubleshooting: `react-snap` works properly, but no links are found
+
+You probably forgot to add `<a href="{dynamicLink}">` to the page. React-snap renders all pages looking for `<a>` tags. It then follows the `href` to render the subsequent pages. If no `<a>` tags are found, then no links are crawled.
+
+This is particularly important, as some routers hide their logic in an `onClick` event handler, and don't compile your links to actual `<a>` tags by default (e.g. `mobx-state-router`).
+
+## Basic troubleshooting: I get a weird error for 404 pages
+
+On 404 pages, `react-snap` requires you to have the string `404` to be part of the `<title>`, such as
+
+```
+<title>404 - Page not found</title>
+```
+
+or the following meta to be added to the `<Helmet>` component:
+
+```
+<meta name="prerender-status-code" content="404" />
+```
+
+For more info, please see [this issue](https://github.com/stereobooster/react-snap/issues/91)
+
+## Further troubleshooting
+
+Please, refer to the documentations for [`react-helmet`](https://github.com/nfl/react-helmet) and [`react-snap`](https://github.com/stereobooster/react-snap).
+
+## What goes in the `<head>`?
+
+Please, see [`@joshbuchea`'s head repo](https://gethead.info/).
+
 </details>
 
 ## Contributing
+
 If you make some edits and wish to test them locally you can run `yarn create-test-app` which creates a test app using the local packages.
 
 To publish the updated packages, run `yarn run publish`, lerna will detect the packages you changed and ask you for the new version number.
