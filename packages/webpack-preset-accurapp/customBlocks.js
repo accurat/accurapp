@@ -17,8 +17,8 @@ const babelLoaderOptions = {
  * it transpiles both application javascript and node_modules javascript
  */
 function babel(options = {}) {
-  return (context, { addLoader }) => addLoader(
-    {
+  return (context, { addLoader }) =>
+    addLoader({
       // setting `test` defaults here, in case there is no `context.match` data
       test: /\.(js|jsx)$/,
       use: [
@@ -35,16 +35,15 @@ function babel(options = {}) {
         },
       ],
       ...context.match,
-    }
-  )
+    })
 }
 
 /**
  * Extracts the css and puts it in the <head>
  */
 function extractCss() {
-  return (context, { addLoader }) => addLoader(
-    {
+  return (context, { addLoader }) =>
+    addLoader({
       test: /\.css$/,
       use: [
         {
@@ -52,8 +51,7 @@ function extractCss() {
         },
       ],
       ...context.match,
-    }
-  )
+    })
 }
 
 /**
@@ -62,8 +60,8 @@ function extractCss() {
  * https://github.com/andywer/webpack-blocks/pull/293
  */
 function postcss(options = {}) {
-  return (context, { addLoader }) => addLoader(
-    {
+  return (context, { addLoader }) =>
+    addLoader({
       test: /\.css$/,
       use: [
         {
@@ -72,62 +70,65 @@ function postcss(options = {}) {
         },
       ],
       ...context.match,
-    }
-  )
+    })
 }
 
 /**
  * Images smaller than 10kb are loaded as a base64 encoded url instead of file url
  */
 function imageLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.(gif|ico|jpg|jpeg|png|webp)$/,
-    loader: 'url-loader',
-    options: {
-      limit: 10000,
-      name: fileNameTemplate,
-    },
-  })
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.(gif|ico|jpg|jpeg|png|webp)$/,
+      loader: 'url-loader',
+      options: {
+        limit: 10000,
+        name: fileNameTemplate,
+      },
+    })
 }
 
 /**
  * Videos smaller than 10kb are loaded as a base64 encoded url instead of file url
  */
 function videoLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.(mp4|webm)$/,
-    loader: 'url-loader',
-    options: {
-      limit: 10000,
-      name: fileNameTemplate,
-    },
-  })
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.(mp4|webm)$/,
+      loader: 'url-loader',
+      options: {
+        limit: 10000,
+        name: fileNameTemplate,
+      },
+    })
 }
 
 /**
  * Fonts are loaded as file urls
  */
 function fontLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.(eot|ttf|otf|woff|woff2)(\?.*)?$/,
-    loader: 'file-loader',
-    options: {
-      name: fileNameTemplate,
-    },
-  })
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.(eot|ttf|otf|woff|woff2)(\?.*)?$/,
+      loader: 'file-loader',
+      options: {
+        name: fileNameTemplate,
+      },
+    })
 }
 
 /**
  * Pdfs are loaded as file urls
  */
 function pdfLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.pdf$/,
-    loader: 'file-loader',
-    options: {
-      name: fileNameTemplate,
-    },
-  })
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.pdf$/,
+      loader: 'file-loader',
+      options: {
+        name: fileNameTemplate,
+      },
+    })
 }
 
 /**
@@ -135,25 +136,27 @@ function pdfLoader() {
  * allowing you to install GLSL modules from npm and use them in your shaders
  */
 function glslifyLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.(glsl|frag|vert)$/,
-    use: ['raw-loader', 'glslify-loader'],
-  })
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.(glsl|frag|vert)$/,
+      use: ['raw-loader', 'glslify-loader'],
+    })
 }
 
 /**
  * Parse .csv files with PapaParse and return it in a JSON format
  */
 function csvLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.csv$/,
-    loader: 'csv-loader',
-    options: {
-      dynamicTyping: true,
-      header: true,
-      skipEmptyLines: true,
-    },
-  })
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.csv$/,
+      loader: 'csv-loader',
+      options: {
+        dynamicTyping: true,
+        header: true,
+        skipEmptyLines: true,
+      },
+    })
 }
 
 // Allows you to use two kinds of imports for SVG:
@@ -204,21 +207,23 @@ function reactSvgLoader() {
  * Suppot .json5 files https://json5.org/
  */
 function json5Loader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.json5$/,
-    loader: 'json5-loader',
-  })
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.json5$/,
+      loader: 'json5-loader',
+    })
 }
 
 /**
  * You will be able to import starting from the src folder so you don't have to ../../../
  */
 function resolveSrc() {
-  return (context, { merge }) => merge({
-    resolve: {
-      modules: ['node_modules', 'src'],
-    },
-  })
+  return (context, { merge }) =>
+    merge({
+      resolve: {
+        modules: ['node_modules', 'src'],
+      },
+    })
 }
 
 /**
@@ -226,11 +231,12 @@ function resolveSrc() {
  * https://twitter.com/devongovett/status/1013127516943314944
  */
 function terser(options) {
-  return (context, { merge }) => merge({
-    optimization: {
-      minimizer: [new TerserPlugin(options)],
-    },
-  })
+  return (context, { merge }) =>
+    merge({
+      optimization: {
+        minimizer: [new TerserPlugin(options)],
+      },
+    })
 }
 
 /**
@@ -247,10 +253,17 @@ function prependEntry(entry) {
   })
 }
 function prependEntryPostHook(context, util) {
-  return (config) => {
+  return config => {
     config.entry.main.unshift(...context.entriesToPrepend)
     return config
   }
+}
+
+/**
+ * Adds one or multiple entry points.
+ */
+function entryPoint(entry) {
+  return (context, util) => util.merge({ entry })
 }
 
 module.exports = {
@@ -269,4 +282,5 @@ module.exports = {
   resolveSrc,
   terser,
   prependEntry,
+  entryPoint,
 }

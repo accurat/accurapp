@@ -3,7 +3,6 @@ const {
   createConfig,
   addPlugins,
   customConfig,
-  entryPoint,
   setOutput,
   env,
   performance,
@@ -48,6 +47,7 @@ const {
   resolveSrc,
   terser,
   prependEntry,
+  entryPoint,
 } = require('./customBlocks')
 
 function buildWebpackConfig(config = []) {
@@ -77,23 +77,20 @@ function buildWebpackConfig(config = []) {
     entryPoint('./src/index.js'),
 
     // Loaders
-    match(['*.css', '!*.module.css'], [
-      when(process.env.NODE_ENV === 'production', [
-        extractCss(),
-      ]),
-      css(cssOptions),
-      postcss(postcssOptions),
-    ]),
+    match(
+      ['*.css', '!*.module.css'],
+      [
+        when(process.env.NODE_ENV === 'production', [extractCss()]),
+        css(cssOptions),
+        postcss(postcssOptions),
+      ],
+    ),
     match('*.module.css', [
-      when(process.env.NODE_ENV === 'production', [
-        extractCss(),
-      ]),
+      when(process.env.NODE_ENV === 'production', [extractCss()]),
       css.modules(cssOptions),
       postcss(postcssOptions),
     ]),
-    match(['*.{js,jsx}', '!*node_modules*'], [
-      babel(),
-    ]),
+    match(['*.{js,jsx}', '!*node_modules*'], [babel()]),
     // Only transpile the latest stable ECMAScript features from node_modules.
     // This is because some node_modules may be written in a newer ECMAScript
     // version than the browsers you're actially supporting
@@ -151,8 +148,8 @@ function buildWebpackConfig(config = []) {
       }),
       // Makes some environment variables available in index.html. Example: %PUBLIC_URL%
       new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
-        'NODE_ENV': process.env.NODE_ENV,
-        'PUBLIC_URL': process.env.PUBLIC_URL,
+        NODE_ENV: process.env.NODE_ENV,
+        PUBLIC_URL: process.env.PUBLIC_URL,
       }),
       // Check case of paths, so case-sensitive filesystems won't complain:
       new CaseSensitivePathsPlugin(),
@@ -231,9 +228,7 @@ function buildWebpackConfig(config = []) {
 
       // Use sourcemaps only if specified, like in staging,
       // don't use them by default when building
-      when(process.env.GENERATE_SOURCEMAP === 'true', [
-        sourceMaps('source-map'),
-      ]),
+      when(process.env.GENERATE_SOURCEMAP === 'true', [sourceMaps('source-map')]),
 
       terser({
         terserOptions: {
