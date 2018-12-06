@@ -11,6 +11,7 @@ const {
   when,
   setMode,
   optimization,
+  entryPoint,
 } = require('@webpack-blocks/webpack')
 const { css } = require('@webpack-blocks/assets')
 const devServer = require('@webpack-blocks/dev-server')
@@ -47,7 +48,6 @@ const {
   resolveSrc,
   terser,
   prependEntry,
-  entryPoint,
 } = require('./customBlocks')
 
 function buildWebpackConfig(config = []) {

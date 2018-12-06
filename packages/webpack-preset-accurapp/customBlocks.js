@@ -259,13 +259,6 @@ function prependEntryPostHook(context, util) {
   }
 }
 
-/**
- * Adds one or multiple entry points.
- */
-function entryPoint(entry) {
-  return (context, util) => util.merge({ entry })
-}
-
 module.exports = {
   fileNameTemplate,
   babel,
@@ -282,5 +275,4 @@ module.exports = {
   resolveSrc,
   terser,
   prependEntry,
-  entryPoint,
 }
