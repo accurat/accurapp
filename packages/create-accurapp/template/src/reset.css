@@ -1,0 +1,36 @@
+/**
+ * Improve font rendering.
+ */
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+/**
+ * Enable momentum scrolling on touch devices.
+ */
+.overflow-auto,
+.overflow-x-auto,
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/**
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+  resize: vertical;
+}
+
+/**
+ * Remove the gap between these elements and the bottom of their containers.
+ * See: https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+svg,
+img,
+canvas,
+video,
+audio,
+iframe {
+  vertical-align: middle;
+}

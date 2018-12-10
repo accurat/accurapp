@@ -4,6 +4,7 @@ import App from 'components/App'
 import 'modern-normalize'
 import '@accurat/tachyons-lite'
 import 'tachyons-extra'
+import 'reset.css'
 import 'style.css'
 
 function renderApp() {
