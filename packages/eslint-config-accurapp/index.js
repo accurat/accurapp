@@ -12,7 +12,7 @@ function errorToWarn(ruleValue) {
 }
 
 const standardJSRules = require('eslint-config-standard').rules
-const standardJSRulesWarn = Object.keys(standardJSRules).reduce(function (acc, ruleName) {
+const standardJSRulesWarn = Object.keys(standardJSRules).reduce((acc, ruleName) => {
   if (ruleName.indexOf('standard') === 0) return acc
 
   const ruleValue = standardJSRules[ruleName]
@@ -36,13 +36,7 @@ module.exports = {
     },
   },
 
-  plugins: [
-    'import',
-    'flowtype',
-    'promise',
-    'react',
-    'no-copy-paste-default-export',
-  ],
+  plugins: ['import', 'flowtype', 'promise', 'react', 'no-copy-paste-default-export'],
 
   settings: {
     react: {
@@ -67,10 +61,14 @@ module.exports = {
     ...standardJSRulesWarn,
 
     // WARNINGS
-    indent: ['warn', 2, {
-      SwitchCase: 1,
-      flatTernaryExpressions: true,
-    }],
+    indent: [
+      'warn',
+      2,
+      {
+        SwitchCase: 1,
+        flatTernaryExpressions: true,
+      },
+    ],
     'comma-dangle': ['warn', 'always-multiline'], // No risks, beacuse it will be transpiled
     'space-before-function-paren': ['warn', { anonymous: 'always', named: 'never' }],
     'key-spacing': ['warn', { beforeColon: false, afterColon: true, mode: 'minimum' }],
@@ -98,6 +96,7 @@ module.exports = {
     'react/jsx-uses-react': 'warn',
     'react/jsx-uses-vars': 'warn',
     'react/jsx-curly-spacing': ['warn', 'never'],
+    'react/no-deprecated': 'warn',
     'react/no-danger-with-children': 'warn',
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
@@ -105,7 +104,7 @@ module.exports = {
     'react/style-prop-object': 'warn',
     'react/jsx-max-depth': ['warn', { max: 8 }],
     'react/jsx-max-props-per-line': ['warn', { maximum: 6 }],
-    'react/self-closing-comp': ['warn', { 'component': true, 'html': true }],
+    'react/self-closing-comp': ['warn', { component: true, html: true }],
     'react/jsx-first-prop-new-line': ['warn', 'multiline'],
     'react/jsx-no-bind': ['warn', { ignoreRefs: true }],
     'react/no-typos': 'warn',
@@ -124,7 +123,6 @@ module.exports = {
     'react/jsx-key': 'error',
     'react/no-string-refs': 'error',
     'react/jsx-no-undef': 'error',
-    'react/no-deprecated': 'error',
     'react/no-unescaped-entities': 'error',
     'react/jsx-no-target-blank': 'error',
     'react/no-unknown-property': 'error',
