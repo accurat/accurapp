@@ -28,7 +28,7 @@ export default class App extends React.Component {
     const message = 'Hello world' |> exclaim
 
     return (
-      <div>
+      <div {...props}>
         {/* test svgs */}
         <Logo className="w5" />
 
