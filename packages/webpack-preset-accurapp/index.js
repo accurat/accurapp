@@ -22,6 +22,7 @@ const nested = require('postcss-nested')
 const fuss = require('postcss-fuss')
 const fussFunctions = require('postcss-fuss/fuss-functions')
 const colorModFunction = require('postcss-color-mod-function')
+const cssnano = require('cssnano')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
@@ -31,7 +32,6 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Dotenv = require('dotenv-webpack')
-const cssnano = require('cssnano')
 
 const {
   babel,
