@@ -574,7 +574,7 @@ You can use [`react-helmet`](https://github.com/nfl/react-helmet) to dynamically
 ## Add meta tags for each route in the `render` function
 As specified in the [`react-helmet` documentation](https://github.com/nfl/react-helmet). E.g.
 
-```
+```js
 export default class Home extends React.Component {
   render() {
     return (
@@ -614,10 +614,12 @@ export default class Home extends React.Component {
 Please note that some of these meta can be put directly in `src/index.html`, as they are probably the same for all pages. Specifically, `copyright`, `og:type`, `twitter:card`, `twitter:site`.
 
 ## Add `react-snap` in `src/index.js`
-```
+```js
 import {render, hydrate} from 'react-dom'
- renderApp()
- function renderApp() {
+
+renderApp()
+
+function renderApp() {
   if (rootElement.hasChildNodes()) {
     hydrate(<App />, rootElement)
   } else {
@@ -627,7 +629,7 @@ import {render, hydrate} from 'react-dom'
 ```
 
 ## Add `react-snap` to `package.json`
-```
+```json
 "scripts": {
 	...
   "postbuild": "react-snap"
@@ -644,7 +646,7 @@ Note: the puppeteerArgs avoid the build to break on the Bitbucket pipelines.
 ## Add the `react-snap` config in `bitbucket-pipelines.yml`
 Add it in `script`, right before `git clone --branch="master"` ...
 
-```
+```yml
 - apt-get update; apt-get install -y gettext-base;
 - echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/chrome.list
 - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -663,7 +665,7 @@ This is particularly important, as some routers hide their logic in an `onClick`
 
 ## Basic troubleshooting: I get a weird error for 404 pages
 On 404 pages, `react-snap` requires you to have the string `404` to be part of the `<title>`, such as
-```
+```html
 <title>404 - Page not found</title>
 ```
 
@@ -674,7 +676,7 @@ Most likely, it is one of the third party scripts you included in the bundle. Fo
 
 If this is not what you wish, you can avoid `react-snap` executing that function like this:
 
-```
+```js
 const isSnap = navigator.userAgent === 'ReactSnap'
 if(!isSnap) {
   // Google Tag Manager IIFE goes here
