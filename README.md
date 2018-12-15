@@ -38,6 +38,7 @@ but significant amounts of code were rewritten and simplified. Here are some shi
   - [I need to support IE11. What do I do?](#faq)
   - [How do I use a web worker?](#faq)
   - [How do I use a service worker?](#faq)
+  - [I need title and meta tags for each route for SEO. How do I do it?](#faq)
 - [Contributing](#contributing)
 
 ## Creating a new project
@@ -560,6 +561,133 @@ module.exports = buildWebpackConfig([
 If you just need the app to work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin).
 
 Otherwise, put the `service-worker.js` file in the `public/` folder, and register it normally.
+</details>
+
+<details>
+<summary>I need title and meta tags for each route for SEO. How do I do it?</summary>
+
+You can use [`react-helmet`](https://github.com/nfl/react-helmet) to dynamically add html tags to the `<head>` of a document and [`react-snap`](https://github.com/stereobooster/react-snap) to prerender them statically after the build process is complete. Here's how to configure them.
+
+## Install `react-helmet` and `react-snap`
+`yarn add react-helmet react-snap`
+
+## Add meta tags for each route in the `render` function
+As specified in the [`react-helmet` documentation](https://github.com/nfl/react-helmet). E.g.
+
+```
+export default class Home extends React.Component {
+  render() {
+    return (
+      <Helmet>
+        <title>Home title</title>
+
+        {/* Google */}
+        <meta name="description" content="Home description" />
+        <meta name="copyright" content="Client name" />
+        
+        {/* Facebook */}
+        <meta property="og:title" content="Home title" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="Home description" />
+        <meta property="og:url" content="Home url" />
+        <meta property="og:image" content="Home img url" />
+        
+        {/* Twitter */}
+        <meta name="twitter:image" content="Home img url" />
+        <meta name="twitter:title" content="Home title" />
+        <meta name="twitter:description" content="Home description" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="Client Twitter handle" />
+        
+        {/* Chrome for Android */}
+        <meta name="theme-color" content="Hex value" />
+      </Helmet>
+      
+      <main className="homePage">
+        {/* Homepage content */}
+      </main>
+    )
+  }
+}
+```
+
+Please note that some of these meta can be put directly in `src/index.html`, as they are probably the same for all pages. Specifically, `copyright`, `og:type`, `twitter:card`, `twitter:site`.
+
+## Add `react-snap` in `src/index.js`
+```
+import {render, hydrate} from 'react-dom'
+ renderApp()
+ function renderApp() {
+  if (rootElement.hasChildNodes()) {
+    hydrate(<App />, rootElement)
+  } else {
+    render(<App />, rootElement)
+  }
+}
+```
+
+## Add `react-snap` to `package.json`
+```
+"scripts": {
+	...
+  "postbuild": "react-snap"
+},
+"reactSnap": {
+  "puppeteerArgs": [
+    "--no-sandbox"
+  ]
+}
+```
+
+Note: the puppeteerArgs avoid the build to break on the Bitbucket pipelines.
+
+## Add the `react-snap` config in `bitbucket-pipelines.yml`
+Add it in `script`, right before `git clone --branch="master"` ...
+
+```
+- apt-get update; apt-get install -y gettext-base;
+- echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/chrome.list
+- wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+- set -x && apt-get update && apt-get install -y xvfb google-chrome-stable
+- wget -q -O /usr/bin/xvfb-chrome https://bitbucket.org/atlassian/docker-node-chrome-firefox/raw/ff180e2f16ea8639d4ca4a3abb0017ee23c2836c/scripts/xvfb-chrome
+- ln -sf /usr/bin/xvfb-chrome /usr/bin/google-chrome
+- chmod 755 /usr/bin/google-chrome
+```
+
+## OK, setup done! Now, how do I check if it is working?
+Run `yarn build`. After the build is complete, you will see some folders with an `index.html` file in them. Also `react-snap` shows its progress in the terminal right after `yarn build` task is complete.
+
+## Basic troubleshooting: `react-snap` works properly, but no links are found
+You probably forgot to add `<a href="{dynamicLink}">` to the page. React-snap renders all pages looking for `<a>` tags. It then follows the `href` to render the subsequent pages. If no `<a>` tags are found, then no links are crawled.
+This is particularly important, as some routers hide their logic in an `onClick` event handler, and don't compile your links to actual `<a>` tags by default (e.g. `mobx-state-router`).
+
+## Basic troubleshooting: I get a weird error for 404 pages
+On 404 pages, `react-snap` requires you to have the string `404` to be part of the `<title>`, such as
+```
+<title>404 - Page not found</title>
+```
+
+In the future, it might be possible to overcome this limitation (for this, follow [#91](https://github.com/stereobooster/react-snap/issues/91))
+
+## Basic troubleshooting: There is unknown code in my built index.html. Is it malicious? How do I remove it?
+Most likely, it is one of the third party scripts you included in the bundle. For example, when one includes Google Tag Manager, `react-snap` executes the script and the result is put into the `index.html`.
+
+If this is not what you wish, you can avoid `react-snap` executing that function like this:
+
+```
+const isSnap = navigator.userAgent === 'ReactSnap'
+if(!isSnap) {
+  // Google Tag Manager IIFE goes here
+}
+```
+
+For more info on this, please see [userAgent](https://github.com/stereobooster/react-snap#useragent) on the `react-snap` documentation
+
+## Further troubleshooting
+Please, refer to the documentations for [`react-helmet`](https://github.com/nfl/react-helmet) and [`react-snap`](https://github.com/stereobooster/react-snap).
+
+## What goes in the `<head>`?
+Please, see [`@joshbuchea`'s head repo](https://gethead.info/).
 </details>
 
 ## Contributing
