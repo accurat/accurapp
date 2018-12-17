@@ -669,7 +669,7 @@ function renderApp() {
 ## Add `react-snap` to `package.json`
 ```js
 "scripts": {
-	// ...
+  // ...
   "postbuild": "react-snap"
 },
 "reactSnap": {
