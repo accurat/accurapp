@@ -437,7 +437,7 @@ Then add a `tsconfig.json` in the project root, a default tsconfig looks like th
     "outDir": "build",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "es7", "es2017", "ESNext", "dom"],
+    "lib": ["es6", "es7", "es2017", "esnext", "dom"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
@@ -622,25 +622,25 @@ export default class Home extends React.Component {
         {/* Google */}
         <meta name="description" content="Home description" />
         <meta name="copyright" content="Client name" />
-        
+
         {/* Facebook */}
         <meta property="og:title" content="Home title" />
         <meta property="og:type" content="website" />
         <meta property="og:description" content="Home description" />
         <meta property="og:url" content="Home url" />
         <meta property="og:image" content="Home img url" />
-        
+
         {/* Twitter */}
         <meta name="twitter:image" content="Home img url" />
         <meta name="twitter:title" content="Home title" />
         <meta name="twitter:description" content="Home description" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="Client Twitter handle" />
-        
+
         {/* Chrome for Android */}
         <meta name="theme-color" content="Hex value" />
       </Helmet>
-      
+
       <main className="homePage">
         {/* Homepage content */}
       </main>
@@ -653,7 +653,7 @@ Please note that some of these meta can be put directly in `src/index.html`, as 
 
 ## Add `react-snap` in `src/index.js`
 ```js
-import {render, hydrate} from 'react-dom'
+import { render, hydrate } from 'react-dom'
 
 renderApp()
 
@@ -667,9 +667,9 @@ function renderApp() {
 ```
 
 ## Add `react-snap` to `package.json`
-```json
+```js
 "scripts": {
-	...
+	// ...
   "postbuild": "react-snap"
 },
 "reactSnap": {
