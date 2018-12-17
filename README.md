@@ -416,7 +416,9 @@ Furthermore it optimizes and minifies the svg using [svgo](https://github.com/sv
 
 TypesScript is not enabled by default in accurapp for now, this is what you have to do.
 
-After having done `yarn add --dev webpack-blocks-ts`, use it in the webpack config:
+Do `yarn add --dev webpack-blocks-ts`.
+
+Then, in `webpack.config.js` replace all content with:
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 const typescript = require('webpack-blocks-ts')
@@ -457,10 +459,46 @@ Then add a `tsconfig.json` in the project root, a default tsconfig looks like th
 }
 ```
 
-Then what is left to do is to add as devDependencies typescript and the types of the libraries you're using, for example:
+If you really need it, you can also add the `allowSyntheticDefaultImports` flag and set it to `true`, and remove `ESNext` from the `lib` compiler option. See the [TypeScript compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html) for more on this.
+
+Add as devDependencies typescript and the types of the libraries you're using, for example `yarn add --dev typescript @types/react @types/react-dom`
+
+Rename `index.js` to `main.tsx` and edit the first two imports like this:
 ```js
-yarn add --dev typescript @types/react @types/react-dom
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 ```
+
+Add a new `index.js` file and simply add
+```js
+import 'main'
+```
+
+Rename `src/components/App.js` to `src/components/App.tsx` and inside it, edit the `React` import like this:
+
+```js
+import * as React from 'react'
+```
+
+Ready to go!
+
+Please remember that the first two items to annonate for class components are its props and local state. So to do it correctly you would need something along the lines of
+
+```ts
+type Props = {}
+type LocalState = {}
+// or
+// interface Props {}
+// interface LocalState {}
+
+export default class App extends React.Component<Props, LocalState> {
+  render() {
+    return <div>...</div>
+  }
+}
+```
+
+See the [Typescript JSX guide](https://www.typescriptlang.org/docs/handbook/jsx.html) for more info.
 </details>
 
 <details>
