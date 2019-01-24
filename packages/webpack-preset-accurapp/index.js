@@ -16,7 +16,7 @@ const {
 const { css } = require('@webpack-blocks/assets')
 const devServer = require('@webpack-blocks/dev-server')
 const eslint = require('@webpack-blocks/eslint')
-// const postcss = require('@webpack-blocks/postcss')
+const postcss = require('@webpack-blocks/postcss')
 const postcssPresetEnv = require('postcss-preset-env')
 const nested = require('postcss-nested')
 const fuss = require('postcss-fuss')
@@ -35,7 +35,6 @@ const Dotenv = require('dotenv-webpack')
 
 const {
   babel,
-  postcss,
   extractCss,
   imageLoader,
   videoLoader,

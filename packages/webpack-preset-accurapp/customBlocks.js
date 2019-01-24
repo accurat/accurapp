@@ -1,9 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
-// TODO use contenthash when this issue will be resolved
-// https://github.com/webpack/loader-utils/issues/112
-const fileNameTemplate = '[name].[hash:8].[ext]'
+const fileNameTemplate = '[name].[contenthash:8].[ext]'
 
 const babelLoaderOptions = {
   compact: process.env.NODE_ENV === 'production',
@@ -48,25 +46,6 @@ function extractCss() {
       use: [
         {
           loader: MiniCssExtractPlugin.loader,
-        },
-      ],
-      ...context.match,
-    })
-}
-
-/**
- * Applies postcss plugins transformations to the css
- * TODO remove this block when this PR will be resolved
- * https://github.com/andywer/webpack-blocks/pull/293
- */
-function postcss(options = {}) {
-  return (context, { addLoader }) =>
-    addLoader({
-      test: /\.css$/,
-      use: [
-        {
-          loader: 'postcss-loader',
-          options,
         },
       ],
       ...context.match,
@@ -262,7 +241,6 @@ function prependEntryPostHook(context, util) {
 module.exports = {
   fileNameTemplate,
   babel,
-  postcss,
   extractCss,
   imageLoader,
   videoLoader,
