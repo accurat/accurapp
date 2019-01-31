@@ -86,6 +86,7 @@ module.exports = {
     'lines-between-class-members': ['warn', 'always', { exceptAfterSingleLine: true }],
     'array-element-newline': ['warn', 'consistent'],
     'prefer-object-spread': 'warn',
+    'id-blacklist': ['warn', 'data'], // disallow naming things "data"
     'react/jsx-indent': ['warn', 2],
     'react/jsx-indent-props': ['warn', 2],
     'react/jsx-wrap-multilines': ['warn', { return: 'parens-new-line', arrow: 'parens-new-line' }],
