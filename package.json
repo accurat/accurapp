@@ -7,7 +7,7 @@
     "create-test-app": "rm -rf test-app; node packages/create-accurapp test-app --testing --no-install; cp -r .fixtures/test-app .; (cd test-app/; yarn)",
     "create-test-app-build": "(yarn create-test-app; cd test-app/; yarn build)",
     "create-test-app-start": "(yarn create-test-app; cd test-app/; yarn start)",
-    "publish": "is-git-status-clean && lerna publish --npm-client yarn"
+    "publish": "is-git-status-clean && lerna publish"
   },
   "workspaces": [
     "packages/*"

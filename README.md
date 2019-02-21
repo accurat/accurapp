@@ -39,6 +39,7 @@ but significant amounts of code were rewritten and simplified. Here are some shi
   - [How do I use a web worker?](#faq)
   - [How do I use a service worker?](#faq)
   - [I need title and meta tags for each route for SEO. How do I do it?](#faq)
+  - [I need to build for Electron. How do I do it?](#faq)
 - [Contributing](#contributing)
 
 ## Creating a new project
@@ -728,6 +729,13 @@ Please, refer to the documentations for [`react-helmet`](https://github.com/nfl/
 
 ## What goes in the `<head>`?
 Please, see [`@joshbuchea`'s head repo](https://gethead.info/).
+</details>
+
+
+<details>
+<summary>I need to build for Electron. How do I do it?</summary>
+
+[This guide](https://gist.github.com/matthewjberger/6f42452cb1a2253667942d333ff53404) is a good one to follow, and [here is a working example](https://github.com/nkint/accurapp-electron) of accurapp with electron. Good luck!
 </details>
 
 ## Contributing
