@@ -41,8 +41,7 @@ module.exports = {
   settings: {
     react: {
       // Force the react version, otherwise it will log an error to the console
-      // https://github.com/yannickcr/eslint-plugin-react/issues/1955
-      version: '999.999.999',
+      version: 'detect',
     },
   },
 

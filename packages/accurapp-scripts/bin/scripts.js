@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const semver = require('semver')
 if (semver.lt(process.versions.node, '8.6.0')) {
-  throw new Error('Sorry, Node 8.6+ is required! Tip: use `nvm` for painless upgrades.')
+  throw new Error('Sorry, Node 8.6+ is required!')
 }
 
 // Makes the script crash on unhandled rejections instead of silently ignoring them
