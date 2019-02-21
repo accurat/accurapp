@@ -110,13 +110,14 @@ function buildWebpackConfig(config = []) {
         }),
       ]),
     ]),
+    // Order is important!! Especially for svgs
+    reactSvgLoader(),
     fontLoader(),
     imageLoader(),
     videoLoader(),
     glslifyLoader(),
     pdfLoader(),
     csvLoader(),
-    reactSvgLoader(),
     json5Loader(),
 
     // Import components without doing the ../../../

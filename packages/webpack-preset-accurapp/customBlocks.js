@@ -58,7 +58,7 @@ function extractCss() {
 function imageLoader() {
   return (context, { addLoader }) =>
     addLoader({
-      test: /\.(gif|ico|jpg|jpeg|png|webp)$/,
+      test: /\.(gif|ico|jpg|jpeg|png|webp|svg)$/,
       loader: 'url-loader',
       options: {
         limit: 10000,
@@ -145,6 +145,9 @@ function reactSvgLoader() {
   return (context, { addLoader }) =>
     addLoader({
       test: /\.svg$/,
+      issuer: {
+        test: /\.(js|jsx|ts|tsx)$/,
+      },
       use: [
         {
           loader: 'babel-loader',
