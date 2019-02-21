@@ -263,12 +263,15 @@ if (!isBrowserSupported(navigator.userAgent, process.env.BROWSERSLIST)) {
 │   │   └── App.js
 │   ├── lib           # put here the stuff you will most likely reuse
 │   │   └── README
-│   ├── index.css
+│   ├── reset.css
+│   ├── style.css
 │   ├── index.html
 │   └── index.js
 ├── .babelrc
 ├── .env.example
 ├── .eslintrc
+├── .prettierignore
+├── .prettierrc
 ├── .gitignore
 ├── bitbucket-pipelines.yml
 ├── README.md
