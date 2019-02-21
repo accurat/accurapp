@@ -1,24 +1,30 @@
-module.exports = function (context, opts = {}) {
+module.exports = (context, opts = {}) => {
   const env = process.env.BABEL_ENV || process.env.NODE_ENV
   const isDevelopment = env === 'development'
 
   return {
     presets: [
       // Browsers are taken from the browserslist field in package.json
-      [require('@babel/preset-env').default, {
-        modules: false,
-        useBuiltIns: 'usage',
-        // Enable stage 4 proposals, like object rest/spread
-        shippedProposals: true,
-      }],
-      [require('@babel/preset-react').default, {
-        // Adds component stack to warning messages
-        // Adds __self attribute to JSX which React will use for some warnings
-        development: isDevelopment,
-        // Will use the native built-in instead of trying to polyfill
-        // behavior for any plugins that require one.
-        useBuiltIns: true,
-      }],
+      [
+        require('@babel/preset-env').default,
+        {
+          modules: false,
+          useBuiltIns: 'usage',
+          // Enable stage 4 proposals, like object rest/spread
+          shippedProposals: true,
+        },
+      ],
+      [
+        require('@babel/preset-react').default,
+        {
+          // Adds component stack to warning messages
+          // Adds __self attribute to JSX which React will use for some warnings
+          development: isDevelopment,
+          // Will use the native built-in instead of trying to polyfill
+          // behavior for any plugins that require one.
+          useBuiltIns: true,
+        },
+      ],
     ],
     plugins: [
       require('babel-plugin-lodash'),
@@ -33,7 +39,7 @@ module.exports = function (context, opts = {}) {
       require('@babel/plugin-proposal-optional-chaining').default,
       // The minimal proposal doesn't support await
       // Switch to the newer proposal when it will be supported
-      [require('@babel/plugin-proposal-pipeline-operator').default, { proposal: 'minimal' }],
+      [require('@babel/plugin-proposal-pipeline-operator').default, { proposal: 'smart' }],
       require('@babel/plugin-proposal-nullish-coalescing-operator').default,
       require('@babel/plugin-proposal-do-expressions').default,
 
