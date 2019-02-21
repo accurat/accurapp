@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 const {
   createConfig,
@@ -49,8 +50,11 @@ const {
   prependEntry,
 } = require('./customBlocks')
 
+const babelrc = JSON.parse(fs.readFileSync(`${process.cwd()}/.babelrc`))
+
 function buildWebpackConfig(config = []) {
   const cssOptions = {
+    // BUG
     // Disabled during development because otherwise it would FOUC
     sourceMap: process.env.GENERATE_SOURCEMAP === 'true' && process.env.NODE_ENV !== 'development',
     ...(process.env.NODE_ENV === 'production' && { styleLoader: false }),
@@ -82,17 +86,14 @@ function buildWebpackConfig(config = []) {
         when(process.env.NODE_ENV === 'production', [extractCss()]),
         css(cssOptions),
         postcss(postcssOptions),
-      ],
+      ]
     ),
     match('*.module.css', [
       when(process.env.NODE_ENV === 'production', [extractCss()]),
       css.modules(cssOptions),
       postcss(postcssOptions),
     ]),
-    match(['*.{js,jsx}', '!*node_modules*'], [babel()]),
-    // Only transpile the latest stable ECMAScript features from node_modules.
-    // This is because some node_modules may be written in a newer ECMAScript
-    // version than the browsers you're actially supporting
+    match('*.{js,jsx}', { exclude: /node_modules/ }, [babel()]),
     when(process.env.TRANSPILE_NODE_MODULES === 'true', [
       // mapbox-gl ecluded because of
       // https://github.com/mapbox/mapbox-gl-js/issues/4359
@@ -105,7 +106,7 @@ function buildWebpackConfig(config = []) {
           sourceType: 'unambiguous',
           // Fix because it's reading the wrong .babelrc somehow
           babelrc: false,
-          presets: ['accurapp'],
+          ...babelrc,
         }),
       ]),
     ]),
