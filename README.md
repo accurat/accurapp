@@ -1,6 +1,6 @@
-## ![AccurApp](logo.png)
+## ![Accurapp](logo.png)
 
-**AccurApp** is a project kickstarter customized for the specific needs of [Accurat](http://accurat.it/).
+**Accurapp** is a project kickstarter customized for the specific needs of [Accurat](http://accurat.it/).
 
 It was originally forked from [create-react-app](https://github.com/facebookincubator/create-react-app/),
 but significant amounts of code were rewritten and simplified. Here are some shiny features:
@@ -569,7 +569,9 @@ First of all, we're sorry for you, IE is an asshole.
 
 You first need to edit the `package.json`'s `"browserslist"` field, and change `not ie 11` to `ie 11`. If you need to test in local you can also add `ie 11` to the development browsers.
 
-You will now have to provide polyfills for the newer apis you're using, for example [the fetch polyfill](https://github.com/github/fetch), or the [css variables ponyfill](https://github.com/jhildenbiddle/css-vars-ponyfill). Also make sure the tools you're using support IE11, for example MobX v5 has no support for IE11.
+You will now have to provide polyfills for the newer apis you're using, for example [the fetch polyfill](https://github.com/github/fetch), or the [css variables ponyfill](https://github.com/jhildenbiddle/css-vars-ponyfill). Or you can use [react-app-polyfill](https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill) which is a collection of the most common polyfills.
+
+Also make sure the tools you're using support IE11, for example MobX v5 has no support for IE11.
 
 Now hopefully you will not have any js errors in IE11 (if not, call Dr. Fugaro).
 

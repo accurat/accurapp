@@ -7,11 +7,19 @@ process.env.GENERATE_SOURCEMAP = process.env.GENERATE_SOURCEMAP === 'true' ? 'tr
 const path = require('path')
 const fs = require('fs-extra')
 const chalk = require('chalk')
-const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, printFileSizes, extractBrowserslistString, extractLatestCommitHash, extractLatestCommitTimestamp } = require('./_utils')
+const { log, coloredBanner, printFileSizes } = require('../utils/logging')
+const { createWebpackCompiler, readWebpackConfig } = require('../utils/webpack')
+const {
+  extractBrowserslistString,
+  extractLatestCommitHash,
+  extractLatestCommitTimestamp,
+  extractLatestTag,
+} = require('../utils/git')
 
 process.env.BROWSERSLIST = extractBrowserslistString()
 process.env.LATEST_COMMIT = extractLatestCommitHash()
 process.env.LATEST_COMMIT_TIMESTAMP = extractLatestCommitTimestamp()
+process.env.LATEST_TAG = extractLatestTag()
 if (process.env.PUBLIC_URL.endsWith('/')) {
   process.env.PUBLIC_URL = process.env.PUBLIC_URL.slice(0, -1)
 }
@@ -43,12 +51,15 @@ function copyPublicFolder() {
 // Create the production build and print the deployment instructions.
 function build() {
   log.info(`Creating an optimized production build...`)
-  const compiler = createWebpackCompiler(() => {
-    log.ok(`The ${chalk.cyan(relativeAppBuildPath)} folder is ready to be deployed.`)
-  }, () => {
-    log.err(`Aborting`)
-    process.exit(2)
-  })
+  const compiler = createWebpackCompiler(
+    () => {
+      log.ok(`The ${chalk.cyan(relativeAppBuildPath)} folder is ready to be deployed.`)
+    },
+    () => {
+      log.err(`Aborting`)
+      process.exit(2)
+    }
+  )
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
@@ -65,10 +76,9 @@ console.log(coloredBanner('/||||/| accurapp', ['cyan', 'magenta']))
 
 clearBuildFolder()
 copyPublicFolder()
-build()
-  .then((stats) => {
-    log.info('File sizes:')
-    console.log()
-    printFileSizes(stats, appBuild)
-    console.log()
-  })
+build().then(stats => {
+  log.info('File sizes:')
+  console.log()
+  printFileSizes(stats, appBuild)
+  console.log()
+})
