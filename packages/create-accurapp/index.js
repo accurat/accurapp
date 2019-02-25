@@ -3,10 +3,10 @@ const path = require('path')
 const semver = require('semver')
 const chalk = require('chalk')
 const fs = require('fs-extra')
-const spawn = require('cross-spawn')
 const meow = require('meow')
 const indentString = require('indent-string')
-const { coloredBanner, log } = require('accurapp-scripts/utils/logging')
+const { coloredBanner, log, exec, abort } = require('accurapp-scripts/utils/logging')
+const { verifyTypeScriptSetup } = require('accurapp-scripts/utils/verifyTypeScriptSetup')
 
 if (semver.lt(process.versions.node, '8.6.0')) {
   console.log()
@@ -15,29 +15,6 @@ if (semver.lt(process.versions.node, '8.6.0')) {
   log.err(`Please upgrade your Node version.`)
   log.err(`Aborting.`)
   process.exit(1)
-}
-
-function abort(message, errno = 1) {
-  console.log()
-  log.err(message)
-  log.err(`Aborting.`)
-  process.exit(1)
-}
-
-function exec(command, dir) {
-  if (!dir) throw new Error(`Function exec called without directory.`)
-
-  const [executable, ...args] = Array.isArray(command) ? command : command.split(' ')
-  const proc = spawn.sync(executable, args, {
-    stdio: 'inherit',
-    cwd: dir,
-  })
-  if (proc.status !== 0) {
-    abort(`Command '${chalk.cyan(command)}' failed with error: "${proc.error}"`)
-  }
-  if (proc.signal !== null) {
-    abort(`Command '${chalk.cyan(command)}' exited with signal: "${proc.signal}"`)
-  }
 }
 
 const cli = meow(
@@ -127,14 +104,6 @@ const substitutions = [[/\{\{APP_NAME\}\}/g, appName], [/\{\{APP_TITLE\}\}/g, ap
 templateOverwriting(path.resolve(appDir, 'src/index.html'), substitutions)
 templateOverwriting(path.resolve(appDir, 'README.md'), substitutions)
 
-if (useTypescript) {
-  fs.renameSync(path.resolve(appDir, 'src/index.js'), path.resolve(appDir, 'src/index.tsx'))
-  fs.renameSync(
-    path.resolve(appDir, 'src/components/App.js'),
-    path.resolve(appDir, 'src/components/App.tsx')
-  )
-}
-
 if (isYesInstall) {
   const dependencies = [
     'react',
@@ -146,19 +115,31 @@ if (isYesInstall) {
     'tachyons-extra',
   ]
 
-  const devDependencies = [
+  let devDependencies = [
     'accurapp-scripts',
     'webpack-preset-accurapp',
     'eslint-config-accurapp',
     'babel-preset-accurapp',
-    ...(useTypescript
-      ? ['typescript', '@types/react', '@types/react-dom', '@types/d3', '@types/lodash']
-      : []),
   ]
 
-  const devDependenciesToInstall = isTesting
-    ? devDependencies.map(dep => path.resolve(__dirname, `../${dep}`)) // Local package
-    : devDependencies
+  const typescriptDevDependencies = [
+    'typescript',
+    '@types/react',
+    '@types/react-dom',
+    '@types/d3',
+    '@types/lodash',
+  ]
+
+  // Require local package if we're testing
+  if (isTesting) {
+    devDependencies = devDependencies.map(dep => path.resolve(__dirname, `../${dep}`))
+  }
+
+  const devDependenciesToInstall = [
+    ...devDependencies,
+    ...(useTypescript ? typescriptDevDependencies : []),
+  ]
+
   log.ok(
     `Installing dev dependencies: ${devDependenciesToInstall.map(d => chalk.cyan(d)).join(', ')}`
   )
@@ -168,6 +149,15 @@ if (isYesInstall) {
   exec(`yarn add ${dependencies.join(' ')}`, appDir)
 } else {
   log.info(`Not running 'yarn add/install' because you chose so.`)
+}
+
+if (useTypescript) {
+  fs.renameSync(path.resolve(appDir, 'src/index.js'), path.resolve(appDir, 'src/index.tsx'))
+  fs.renameSync(
+    path.resolve(appDir, 'src/components/App.js'),
+    path.resolve(appDir, 'src/components/App.tsx')
+  )
+  verifyTypeScriptSetup(appDir)
 }
 
 const isReadyGit = fs.existsSync(path.resolve(appDir, '.gitignore'))

@@ -26,7 +26,7 @@ if (process.env.PUBLIC_URL.endsWith('/')) {
 
 const appDir = process.cwd()
 const config = readWebpackConfig()
-const appPublic = path.join(appDir, 'public')
+const appPublic = path.resolve(appDir, 'public')
 const appBuild = config.output.path
 const relativeAppBuildPath = `${path.relative(appDir, appBuild)}/`
 

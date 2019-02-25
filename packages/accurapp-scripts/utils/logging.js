@@ -1,4 +1,5 @@
 const path = require('path')
+const spawn = require('cross-spawn')
 const fs = require('fs-extra')
 const chalk = require('chalk')
 const figlet = require('figlet')
@@ -22,6 +23,29 @@ const log = {
   info(...a) {
     console.log(`--- ${chalk.blue(...a)}`)
   },
+}
+
+function abort(message, errno = 1) {
+  console.log()
+  log.err(message)
+  log.err(`Aborting.`)
+  process.exit(1)
+}
+
+function exec(command, dir) {
+  if (!dir) throw new Error(`Function exec called without directory.`)
+
+  const [executable, ...args] = Array.isArray(command) ? command : command.split(' ')
+  const proc = spawn.sync(executable, args, {
+    stdio: 'inherit',
+    cwd: dir,
+  })
+  if (proc.status !== 0) {
+    abort(`Command '${chalk.cyan(command)}' failed with error: "${proc.error}"`)
+  }
+  if (proc.signal !== null) {
+    abort(`Command '${chalk.cyan(command)}' exited with signal: "${proc.signal}"`)
+  }
 }
 
 function coloredBanner(text, colors = ['blue', 'red']) {
@@ -63,8 +87,8 @@ function createOutdatedMessage(outdatedDeps, latestDeps) {
     ${chalk.yellow('Hey, an update for accurapp is available!')}
     ${outdatedMessages.join('\n')}
     ${chalk.yellow('Run')} ${chalk.cyan('yarn upgrade-interactive --latest')} ${chalk.yellow(
-  'to update'
-)}
+    'to update'
+  )}
   `
 }
 
@@ -139,6 +163,8 @@ function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 512 * 1024) 
 
 module.exports = {
   log,
+  abort,
+  exec,
   coloredBanner,
   yellowBox,
   createOutdatedMessage,
