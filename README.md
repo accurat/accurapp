@@ -366,9 +366,16 @@ You can put them in the `src/fonts` folder and require them from the CSS like th
 
 You usually put the assets you require from the `index.html` here. Like for example the favicon.
 
-You should try as much as possible to require the .css and .js file from the `src` folder, so they are bundled and optimized. For example if you need a service worker file just for making the app work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin). An alternative is the [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin).
+If you need a service worker file just for making the app work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin). An alternative is the [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin).
 
-You should also try as much as possible to avoid putting images in the `public` folder, because missing images would cause 404 errors for the users instead of compilation errors.
+You should normally import stylesheets, images and fonts in JavaScript files using the Module System because this mechanism provides a number of benefits.
+
+The `public` folder is a useful workaround that gives you access from browsers to a file, outside the Module System. If you put a file into the public folder, it will not be processed by Webpack. Instead it will be copied into the build folder untouched.
+
+Be careful because with this approach files are not post-processed or minified and first of all, if lost, they will cause 404 errors.
+
+For technical in-depth analysis read the create-react-app [documentation].(https://facebook.github.io/create-react-app/docs/using-the-public-folder)
+
 </details>
 
 <details>
