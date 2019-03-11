@@ -111,6 +111,8 @@ module.exports = {
     'react/jsx-props-no-multi-spaces': 'warn',
     'promise/no-callback-in-promise': 'warn',
     'promise/no-return-wrap': 'warn',
+    // aligned to prettier, see https://github.com/accurat/accurapp/issues/51
+    'generator-star-spacing': ['warn', 'after'],
 
     // ERRORS
     'no-redeclare': 'error',
