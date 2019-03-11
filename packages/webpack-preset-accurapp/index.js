@@ -52,30 +52,31 @@ const {
 
 const babelrc = JSON.parse(fs.readFileSync(`${process.cwd()}/.babelrc`))
 
-function buildWebpackConfig(config = []) {
-  const cssOptions = {
-    // BUG
-    // Disabled during development because otherwise it would FOUC
-    sourceMap: process.env.GENERATE_SOURCEMAP === 'true' && process.env.NODE_ENV !== 'development',
-    ...(process.env.NODE_ENV === 'production' && { styleLoader: false }),
-  }
-  const postcssOptions = {
-    plugins: [
-      postcssPresetEnv({
-        autoprefixer: { flexbox: 'no-2009' },
-        stage: 0,
-        features: {
-          // postcss-nested is better than postcss-nesting
-          'nesting-rules': false,
-        },
-      }),
-      nested,
-      fuss({ functions: fussFunctions }),
-      colorModFunction(),
-      ...(process.env.NODE_ENV === 'production' ? [cssnano()] : []),
-    ],
-  }
+export const cssOptions = {
+  // BUG
+  // Disabled during development because otherwise it would FOUC
+  sourceMap: process.env.GENERATE_SOURCEMAP === 'true' && process.env.NODE_ENV !== 'development',
+  ...(process.env.NODE_ENV === 'production' && { styleLoader: false }),
+}
 
+export const postcssOptions = {
+  plugins: [
+    postcssPresetEnv({
+      autoprefixer: { flexbox: 'no-2009' },
+      stage: 0,
+      features: {
+        // postcss-nested is better than postcss-nesting
+        'nesting-rules': false,
+      },
+    }),
+    nested,
+    fuss({ functions: fussFunctions }),
+    colorModFunction(),
+    ...(process.env.NODE_ENV === 'production' ? [cssnano()] : []),
+  ],
+}
+
+function buildWebpackConfig(config = []) {
   return createConfig([
     entryPoint('./src/index.js'),
 
