@@ -139,7 +139,7 @@ module.exports = {
     'node/no-deprecated-api': 'off',
     'node/process-exit-as-throw': 'off',
 
-    // disable generator-star-spacing due to conflict with prettier, see https://github.com/accurat/accurapp/issues/51
-    'generator-star-spacing': 'off',
+    // aligned to prettier, see https://github.com/accurat/accurapp/issues/51
+    'generator-star-spacing': ['warn', 'after'],
   },
 }
