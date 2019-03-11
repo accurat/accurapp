@@ -101,19 +101,16 @@ module.exports = buildWebpackConfig({
 })
 ```
 
-Or to make your life easier, you could also use [webpack-blocks](https://github.com/andywer/webpack-blocks/tree/release/release-2.0), it's a nice level of abstraction over the webpack configuration, you can add loaders, plugins, configuration with few lines.
+Or to make your life easier, you could also use [webpack-blocks](https://github.com/andywer/webpack-blocks/tree/release/release-2.0), it's a nice level of abstraction over the webpack configuration, you can add loaders, plugins, configuration with few lines. For example, this is the way to add sass.
 ```js
-const { buildWebpackConfig } = require('webpack-preset-accurapp')
+const { buildWebpackConfig, cssOptions, postcssOptions } = require('webpack-preset-accurapp')
 const { match } = require('@webpack-blocks/webpack')
 const { css } = require('@webpack-blocks/assets')
 const postcss = require('@webpack-blocks/postcss')
 const sass = require('@webpack-blocks/sass')
 
 module.exports = buildWebpackConfig([
-  match(['*.scss'], [
-    css( /* options */ ), 
-    postcss( /* options */ ), 
-    sass( /* options */ )]),
+  match(['*.scss'], [css(cssOptions), postcss(postcssOptions), sass()]),
 ])
 ```
 
