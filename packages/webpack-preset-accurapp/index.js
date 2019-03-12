@@ -52,14 +52,14 @@ const {
 
 const babelrc = JSON.parse(fs.readFileSync(`${process.cwd()}/.babelrc`))
 
-export const cssOptions = {
+const cssOptions = {
   // BUG
   // Disabled during development because otherwise it would FOUC
   sourceMap: process.env.GENERATE_SOURCEMAP === 'true' && process.env.NODE_ENV !== 'development',
   ...(process.env.NODE_ENV === 'production' && { styleLoader: false }),
 }
 
-export const postcssOptions = {
+const postcssOptions = {
   plugins: [
     postcssPresetEnv({
       autoprefixer: { flexbox: 'no-2009' },
@@ -276,4 +276,6 @@ function buildWebpackConfig(config = []) {
 
 module.exports = {
   buildWebpackConfig,
+  cssOptions,
+  postcssOptions,
 }
