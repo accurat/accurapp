@@ -6,7 +6,7 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter')
 const prettyMs = require('pretty-ms')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const { log, listLine } = require('./logging')
+const { log, listLine } = require('./logging-utils')
 
 const appDir = process.cwd()
 

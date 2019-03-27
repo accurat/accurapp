@@ -5,7 +5,7 @@ const chalk = require('chalk')
 const fs = require('fs-extra')
 const meow = require('meow')
 const indentString = require('indent-string')
-const { coloredBanner, log, exec, abort } = require('accurapp-scripts/utils/logging')
+const { coloredBanner, log, exec, abort } = require('accurapp-scripts/utils/logging-utils')
 const { verifyTypeScriptSetup } = require('accurapp-scripts/utils/verifyTypeScriptSetup')
 
 if (semver.lt(process.versions.node, '8.6.0')) {

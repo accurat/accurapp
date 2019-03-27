@@ -7,14 +7,14 @@ process.env.GENERATE_SOURCEMAP = process.env.GENERATE_SOURCEMAP === 'true' ? 'tr
 const path = require('path')
 const fs = require('fs-extra')
 const chalk = require('chalk')
-const { log, coloredBanner, printFileSizes } = require('../utils/logging')
-const { createWebpackCompiler, readWebpackConfig } = require('../utils/webpack')
+const { log, coloredBanner, printFileSizes } = require('../utils/logging-utils')
+const { createWebpackCompiler, readWebpackConfig } = require('../utils/webpack-utils')
 const {
   extractBrowserslistString,
   extractLatestCommitHash,
   extractLatestCommitTimestamp,
   extractLatestTag,
-} = require('../utils/git')
+} = require('../utils/git-utils')
 
 process.env.BROWSERSLIST = extractBrowserslistString()
 process.env.LATEST_COMMIT = extractLatestCommitHash()

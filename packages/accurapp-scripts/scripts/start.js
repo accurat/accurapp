@@ -9,15 +9,15 @@ const detect = require('detect-port')
 const WebpackDevServer = require('webpack-dev-server')
 const openOrRefreshBrowser = require('react-dev-utils/openBrowser')
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils')
-const { log, coloredBanner } = require('../utils/logging')
-const { createWebpackCompiler, readWebpackConfig } = require('../utils/webpack')
+const { log, coloredBanner } = require('../utils/logging-utils')
+const { createWebpackCompiler, readWebpackConfig } = require('../utils/webpack-utils')
 const { verifyTypeScriptSetup } = require('../utils/verifyTypeScriptSetup')
 const {
   extractBrowserslistString,
   extractLatestCommitHash,
   extractLatestCommitTimestamp,
   extractLatestTag,
-} = require('../utils/git')
+} = require('../utils/git-utils')
 
 process.env.BROWSERSLIST = extractBrowserslistString()
 process.env.LATEST_COMMIT = extractLatestCommitHash()

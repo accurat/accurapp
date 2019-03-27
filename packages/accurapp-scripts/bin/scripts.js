@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const semver = require('semver')
-const { log } = require('../utils/logging')
+const { log } = require('../utils/logging-utils')
 if (semver.lt(process.versions.node, '8.6.0')) {
   console.log()
   log.err(`You are running Node ${process.versions.node}.`)
@@ -18,7 +18,7 @@ process.on('unhandledRejection', err => {
 // Warn if any accurapp package is outdated
 if (!process.env.CI) {
   const latestVersion = require('latest-version')
-  const { createOutdatedMessage, yellowBox } = require('../utils/logging')
+  const { createOutdatedMessage, yellowBox } = require('../utils/logging-utils')
 
   const currentDeps = [
     require('../package.json'),

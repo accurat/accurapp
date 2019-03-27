@@ -10,7 +10,7 @@ import styles from './App.module.css'
 
 // test decorators
 @observer
-export default class App extends React.Component {
+export class App extends React.Component {
   // test class properties
   state = {}
 

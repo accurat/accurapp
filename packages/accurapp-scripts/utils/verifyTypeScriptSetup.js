@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs-extra')
 const resolve = require('resolve')
 const globby = require('globby').sync
-const { log, exec } = require('./logging')
+const { log, exec } = require('./logging-utils')
 
 const defaultTsConfig = {
   compilerOptions: {

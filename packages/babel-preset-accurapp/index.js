@@ -13,6 +13,8 @@ module.exports = (context, opts = {}) => {
           useBuiltIns: 'usage',
           // Enable stage 4 proposals, like object rest/spread
           shippedProposals: true,
+          // Use new corejs version
+          corejs: 3,
         },
       ],
       [
