@@ -10,32 +10,24 @@ const defaultTsConfig = {
     lib: ['esnext', 'dom', 'dom.iterable'],
     module: 'esnext',
     moduleResolution: 'node',
-    allowJs: true,
-
-    // Accurat old ts config
-    // baseUrl: '.',
-    // rootDir: '.',
-    // outDir: 'build',
-    // sourceMap: true,
-    // jsx: 'react',
-    // forceConsistentCasingInFileNames: true,
-    // noImplicitReturns: true,
-    // noImplicitThis: true,
-    // noImplicitAny: true,
-    // strictNullChecks: false,
-    // suppressImplicitAnyIndexErrors: true,
-    // noUnusedLocals: false,
-    // experimentalDecorators: true,
-
-    // React ts config
-    skipLibCheck: true,
     esModuleInterop: true,
+    allowJs: true,
     allowSyntheticDefaultImports: true,
-    strict: true,
     resolveJsonModule: true,
     isolatedModules: true,
-    noEmit: true,
-    jsx: 'preserve',
+    skipLibCheck: true,
+    sourceMap: true,
+    jsx: 'react',
+    strict: true,
+    // already enabled by strict: true
+    // noImplicitThis: true,
+    // noImplicitAny: true,
+    strictNullChecks: false,
+    noImplicitReturns: true,
+    suppressImplicitAnyIndexErrors: true,
+    noUnusedLocals: false,
+    forceConsistentCasingInFileNames: true,
+    experimentalDecorators: true,
   },
   include: ['src'],
 }
@@ -48,8 +40,13 @@ function areThereTypescriptFiles(dir) {
   return typescriptFiles.length > 0
 }
 
-function verifyTypeScriptSetup(appDir) {
+function verifyTypeScriptSetup(appDir, { shouldInstall = true } = {}) {
+  if (!appDir) {
+    throw new Error('Missing path argument to verifyTypeScriptSetup')
+  }
+
   const appTsConfig = path.resolve(appDir, 'tsconfig.json')
+  const appTypes = path.resolve(appDir, 'src/types.d.ts')
   const appNodeModules = path.resolve(appDir, 'node_modules')
   const appSrc = path.resolve(appDir, 'src')
 
@@ -62,17 +59,19 @@ function verifyTypeScriptSetup(appDir) {
     fs.writeFileSync(appTsConfig, `${JSON.stringify(defaultTsConfig, null, 2)}\n`)
   }
 
-  try {
-    resolve.sync('typescript', { basedir: appNodeModules })
-  } catch (e) {
-    log.ok(`Installing latest version of typescript`)
-    exec('yarn add --dev typescript')
+  if (!fs.existsSync(appTypes)) {
+    log.ok(`Creating types.d.ts`)
+    fs.writeFileSync(appTypes, '/// <reference types="accurapp-scripts" />\n')
   }
 
-  // Reference `react-scripts` types
-  // if (!fs.existsSync(paths.appTypeDeclarations)) {
-  //   fs.writeFileSync(paths.appTypeDeclarations, `/// <reference types="react-scripts" />${os.EOL}`)
-  // }
+  if (shouldInstall) {
+    try {
+      resolve.sync('typescript', { basedir: appNodeModules })
+    } catch (e) {
+      log.ok(`Installing latest version of typescript`)
+      exec('yarn add --dev typescript', appDir)
+    }
+  }
 }
 
 module.exports = { verifyTypeScriptSetup }

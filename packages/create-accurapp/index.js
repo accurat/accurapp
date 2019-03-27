@@ -17,10 +17,9 @@ if (semver.lt(process.versions.node, '8.6.0')) {
   process.exit(1)
 }
 
-const cli = meow(
-  {
-    description: false,
-    help: `
+const cli = meow({
+  description: false,
+  help: `
     ${indentString(coloredBanner('/||||/| accurapp', ['red', 'magenta']), 4)}
     Usage
       ${chalk.green('$')} ${chalk.cyan('create-accurapp')} ${chalk.yellow('<app-name>')}
@@ -28,25 +27,38 @@ const cli = meow(
     Creates a folder named ${chalk.yellow('<app-name>')}, with a flexible JS build configuration.
 
     Options
-      -v | --version  = to print current version
-      --no-git        = do not run git init && git commit
-      --no-install    = do not run yarn install
-      --typescript    = to use typescript
-      --testing       = [internal] create a version for testing
+      --version     = to print current version
+      --no-git      = do not run git init && git commit
+      --no-install  = do not run yarn install
+      --typescript  = to use typescript
+      --testing     = [internal] create a version for testing
 
     Example
       ${chalk.green('$')} ${chalk.cyan('create-accurapp mega-viz --no-install')}
   `,
-  },
-  {
-    alias: {
-      v: 'version',
+  flags: {
+    version: {
+      alias: 'v',
     },
-  }
-)
+    git: {
+      type: 'boolean',
+      default: true,
+    },
+    install: {
+      type: 'boolean',
+      default: true,
+    },
+    typescript: {
+      type: 'boolean',
+    },
+    testing: {
+      type: 'boolean',
+    },
+  },
+})
 
-const isYesGit = !cli.flags.noGit
-const isYesInstall = !cli.flags.noInstall
+const shouldInitGit = cli.flags.git
+const shouldInstall = cli.flags.install
 const isTesting = cli.flags.testing
 const useTypescript = cli.flags.typescript
 
@@ -83,7 +95,7 @@ const packageJson = {
   },
   browserslist: {
     production: ['>0.25%', 'not ie 11', 'not op_mini all'],
-    development: ['last 1 Chrome version'],
+    development: ['last 1 Chrome version', 'last 1 Firefox version', 'last 1 Safari version'],
   },
 }
 fs.writeFileSync(path.resolve(appDir, 'package.json'), JSON.stringify(packageJson, null, 2))
@@ -104,7 +116,7 @@ const substitutions = [[/\{\{APP_NAME\}\}/g, appName], [/\{\{APP_TITLE\}\}/g, ap
 templateOverwriting(path.resolve(appDir, 'src/index.html'), substitutions)
 templateOverwriting(path.resolve(appDir, 'README.md'), substitutions)
 
-if (isYesInstall) {
+if (shouldInstall) {
   const dependencies = [
     'react',
     'react-dom',
@@ -126,6 +138,8 @@ if (isYesInstall) {
     'typescript',
     '@types/react',
     '@types/react-dom',
+    '@types/node',
+    '@types/webpack-env',
     '@types/d3',
     '@types/lodash',
   ]
@@ -157,11 +171,11 @@ if (useTypescript) {
     path.resolve(appDir, 'src/components/App.js'),
     path.resolve(appDir, 'src/components/App.tsx')
   )
-  verifyTypeScriptSetup(appDir)
+  verifyTypeScriptSetup(appDir, { shouldInstall })
 }
 
 const isReadyGit = fs.existsSync(path.resolve(appDir, '.gitignore'))
-if (isYesGit && isReadyGit) {
+if (shouldInitGit && isReadyGit) {
   log.ok(`Initializing git repo`)
   exec(`git init`, appDir)
 
@@ -172,7 +186,7 @@ if (isYesGit && isReadyGit) {
     appDir
   )
 } else {
-  if (!isYesGit) log.info(`Not running 'git init/add/commit' because you chose so.`)
+  if (!shouldInitGit) log.info(`Not running 'git init/add/commit' because you chose so.`)
   if (!isReadyGit) {
     log.info(`Not running 'git init/add/commit' because there is no '.gitignore' file.`)
   }

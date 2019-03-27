@@ -19,13 +19,13 @@ export default class App extends React.Component {
     const { ...props } = this.props
 
     // test optionsl chaining
-    const foo = props?.foo
+    const foo = props //?.foo
 
     console.log(foo, mapboxgl, ky)
 
     // test pipeline operator
-    const exclaim = string => `${string}!`
-    const message = 'Hello world' |> exclaim
+    const exclaim = (string: string) => `${string}!`
+    const message = 'Hello world' //|> exclaim
 
     return (
       <div {...props}>

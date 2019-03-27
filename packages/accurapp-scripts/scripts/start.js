@@ -11,6 +11,7 @@ const openOrRefreshBrowser = require('react-dev-utils/openBrowser')
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils')
 const { log, coloredBanner } = require('../utils/logging')
 const { createWebpackCompiler, readWebpackConfig } = require('../utils/webpack')
+const { verifyTypeScriptSetup } = require('../utils/verifyTypeScriptSetup')
 const {
   extractBrowserslistString,
   extractLatestCommitHash,
@@ -26,6 +27,9 @@ process.env.LATEST_TAG = extractLatestTag()
 const HOST = process.env.HOST || '0.0.0.0'
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8000
 const PROTOCOL = process.env.HTTPS === 'true' ? 'https' : 'http'
+
+const appDir = process.cwd()
+verifyTypeScriptSetup(appDir)
 
 function runDevServer(port) {
   const urls = prepareUrls(PROTOCOL, HOST, port)

@@ -209,6 +209,18 @@ function resolveSrc() {
 }
 
 /**
+ * Import also typescript without specifying the extension
+ */
+function resolveTs() {
+  return (context, { merge }) =>
+    merge({
+      resolve: {
+        extensions: ['.ts', '.tsx'],
+      },
+    })
+}
+
+/**
  * Terser is a mantained fork of uglify-js
  * https://twitter.com/devongovett/status/1013127516943314944
  */
@@ -254,6 +266,7 @@ module.exports = {
   reactSvgLoader,
   json5Loader,
   resolveSrc,
+  resolveTs,
   terser,
   prependEntry,
 }

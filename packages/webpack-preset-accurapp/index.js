@@ -27,10 +27,11 @@ const cssnano = require('cssnano')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
-// const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const typescriptFormatter = require('react-dev-utils/typescriptFormatter')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Dotenv = require('dotenv-webpack')
 
@@ -46,11 +47,22 @@ const {
   reactSvgLoader,
   json5Loader,
   resolveSrc,
+  resolveTs,
   terser,
   prependEntry,
 } = require('./customBlocks')
 
-const babelrc = JSON.parse(fs.readFileSync(`${process.cwd()}/.babelrc`))
+const appDir = process.cwd()
+const useTypescript = fs.existsSync(`${appDir}/tsconfig.json`)
+const babelrc = JSON.parse(fs.readFileSync(`${appDir}/.babelrc`))
+
+// Inject the typescript option
+if (useTypescript) {
+  babelrc.presets = [
+    ...babelrc.presets.filter(p => p !== 'accurapp'),
+    ['accurapp', { typescript: true }],
+  ]
+}
 
 function buildWebpackConfig(config = []) {
   const cssOptions = {
@@ -77,7 +89,7 @@ function buildWebpackConfig(config = []) {
   }
 
   return createConfig([
-    entryPoint('./src/index.js'),
+    entryPoint(useTypescript ? './src/index.tsx' : './src/index.js'),
 
     // Loaders
     match(
@@ -93,7 +105,12 @@ function buildWebpackConfig(config = []) {
       css.modules(cssOptions),
       postcss(postcssOptions),
     ]),
-    match('*.{js,jsx}', { exclude: /node_modules/ }, [babel()]),
+    match('*.{js,jsx,ts,tsx}', { exclude: /node_modules/ }, [
+      babel({
+        babelrc: false,
+        ...babelrc,
+      }),
+    ]),
     when(process.env.TRANSPILE_NODE_MODULES === 'true', [
       // mapbox-gl ecluded because of
       // https://github.com/mapbox/mapbox-gl-js/issues/4359
@@ -157,6 +174,25 @@ function buildWebpackConfig(config = []) {
       // This gives some necessary context to module not found errors, such as
       // the requesting resource.
       new ModuleNotFoundPlugin(process.cwd()),
+    ]),
+
+    when(useTypescript, [
+      // Import typescript components without specifying .ts or .tsx
+      resolveTs(),
+
+      // Typescript fast typechecker
+      addPlugins([
+        new ForkTsCheckerWebpackPlugin({
+          async: process.env.NODE_ENV === 'development',
+          useTypescriptIncrementalApi: true,
+          checkSyntacticErrors: true,
+          watch: './src',
+          reportFiles: ['**', '!**/*.json'],
+          silent: true,
+          // The formatter is invoked directly in WebpackDevServerUtils during development
+          formatter: process.env.NODE_ENV === 'production' ? typescriptFormatter : undefined,
+        }),
+      ]),
     ]),
 
     //
@@ -276,3 +312,8 @@ function buildWebpackConfig(config = []) {
 module.exports = {
   buildWebpackConfig,
 }
+
+// RegExp.prototype.toJSON = RegExp.prototype.toString
+// console.log('----------------------------------------------------------------------------------')
+// console.log(JSON.stringify(buildWebpackConfig(), null, 2))
+// console.log('----------------------------------------------------------------------------------')
