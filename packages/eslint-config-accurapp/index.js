@@ -34,6 +34,9 @@ module.exports = {
       generators: true,
       legacyDecorators: true,
     },
+
+    // FIX of the warning with mobx-react
+    requireConfigFile: false,
   },
 
   plugins: ['import', 'flowtype', 'promise', 'react', 'no-copy-paste-default-export'],
