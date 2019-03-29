@@ -21,7 +21,7 @@ but significant amounts of code were rewritten and simplified. Here are some shi
   - [Customizing Webpack](#customizing-webpack)
   - [Customizing Eslint](#customizing-eslint)
   - [Customizing Babel](#customizing-babel)
-  - [Setting Env Variables](#cetting-env-variables)
+  - [Setting Env Variables](#setting-env-variables)
   - [Customizing Env Variables](#customizing-env-variables)
 - [Available Env Variables](#available-env-variables)
 - [Project Scaffolding](#project-scaffolding)
@@ -212,9 +212,11 @@ SECRET=djah7s9ihdias7hdsaodhoas8hd
 
 #### Customizing Env Variables
 Here are the available Env Variables for the **yarn start** script:
+- **BROWSER** - If it should open local url in the browser in `yarn start` (default `true`)
 - **HOST** - The host of the web server (default `localhost`)
 - **PORT** - The port of the web server (default `8000`)
 - **HTTPS** - Set this to `true` if you wish to use HTTPS in development (default `false`)
+- **CI** - Set this to true to skip the check for newer accurapp versions (default `false`)
 
 Here are instead the available Env Variables for the **yarn build** script:
 - **PUBLIC_URL** - Use this if the application is hosted on a subpath, it will be used to resolve assets (default `/`).
@@ -234,6 +236,7 @@ render() {
 
 ## Available Env Variables
 These are the Env Variables that Accurapp provides you, you cannot modify them directly:
+- **NODE_ENV** - It is equal to `'development'` in the `yarn start` command and `'production'` in the `yarn build` command
 - **LATEST_TAG** - The latest git tag you made, useful if you want to display a build version in your application
 - **LATEST_COMMIT** - The latest commit hash, useful if you want to display a more specific build version
 - **LATEST_COMMIT_TIMESTAMP** - The UTC timestamp of the latest commit, you can use it like this:
@@ -420,89 +423,20 @@ Furthermore it optimizes and minifies the svg using [svgo](https://github.com/sv
 
 TypesScript is not enabled by default in accurapp for now, this is what you have to do.
 
-Do `yarn add --dev webpack-blocks-ts`.
-
-Then, in `webpack.config.js` replace all content with:
-```js
-const { buildWebpackConfig } = require('webpack-preset-accurapp')
-const typescript = require('webpack-blocks-ts')
-
-module.exports = buildWebpackConfig([
-  typescript({ silent: true }),
-])
-```
-
-Then add a `tsconfig.json` in the project root, a default tsconfig looks like this:
-```json
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "rootDir": ".",
-    "outDir": "build",
-    "module": "esnext",
-    "target": "es5",
-    "lib": ["es6", "es7", "es2017", "esnext", "dom"],
-    "sourceMap": true,
-    "allowJs": true,
-    "jsx": "react",
-    "moduleResolution": "node",
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": false,
-    "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": false,
-    "experimentalDecorators": true
-  },
-  "exclude": [
-    "node_modules",
-    "build",
-    "webpack.config.js"
-  ]
-}
-```
-
-If you really need it, you can also add the `allowSyntheticDefaultImports` flag and set it to `true`, and remove `ESNext` from the `lib` compiler option. See the [TypeScript compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html) for more on this.
-
-Add as devDependencies typescript and the types of the libraries you're using, for example `yarn add --dev typescript @types/react @types/react-dom`
-
-Rename `index.js` to `main.tsx` and edit the first two imports like this:
-```js
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-```
-
-Add a new `index.js` file and simply add
-```js
-import 'main'
-```
-
-Rename `src/components/App.js` to `src/components/App.tsx` and inside it, edit the `React` import like this:
-
-```js
-import * as React from 'react'
-```
-
-Ready to go!
 
 Please remember that the first two items to annonate for class components are its props and local state. So to do it correctly you would need something along the lines of
 
 ```ts
-type Props = {}
-type LocalState = {}
-// or
-// interface Props {}
-// interface LocalState {}
+interface Props {}
+interface State {}
 
-export default class App extends React.Component<Props, LocalState> {
+export class App extends React.Component<Props, State> {
   render() {
     return <div>...</div>
   }
 }
 ```
 
-See the [Typescript JSX guide](https://www.typescriptlang.org/docs/handbook/jsx.html) for more info.
 </details>
 
 <details>
