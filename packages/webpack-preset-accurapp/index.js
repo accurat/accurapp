@@ -187,7 +187,7 @@ function buildWebpackConfig(config = []) {
           useTypescriptIncrementalApi: true,
           checkSyntacticErrors: true,
           watch: './src',
-          reportFiles: ['**', '!**/*.json'],
+          reportFiles: ['**'],
           silent: true,
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: process.env.NODE_ENV === 'production' ? typescriptFormatter : undefined,
