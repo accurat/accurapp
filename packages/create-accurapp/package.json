@@ -21,7 +21,7 @@
     "create-accurapp": "./index.js"
   },
   "dependencies": {
-    "accurapp-scripts": "^4.1.0",
+    "accurapp-scripts": "^4.x.x",
     "chalk": "2.4.2",
     "figlet": "1.2.1",
     "fs-extra": "7.0.1",
