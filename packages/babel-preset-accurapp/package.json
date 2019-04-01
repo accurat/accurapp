@@ -18,9 +18,9 @@
     "index.js"
   ],
   "dependencies": {
-    "@babel/core": "7.3.3",
-    "@babel/plugin-proposal-class-properties": "7.3.3",
-    "@babel/plugin-proposal-decorators": "7.3.0",
+    "@babel/core": "7.4.0",
+    "@babel/plugin-proposal-class-properties": "7.4.0",
+    "@babel/plugin-proposal-decorators": "7.4.0",
     "@babel/plugin-proposal-do-expressions": "7.2.0",
     "@babel/plugin-proposal-export-default-from": "7.2.0",
     "@babel/plugin-proposal-export-namespace-from": "7.2.0",
@@ -35,11 +35,12 @@
     "@babel/plugin-proposal-throw-expressions": "7.2.0",
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-syntax-import-meta": "7.2.0",
-    "@babel/polyfill": "7.2.5",
-    "@babel/preset-env": "7.3.1",
+    "@babel/polyfill": "7.4.0",
+    "@babel/preset-env": "7.4.2",
     "@babel/preset-react": "7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
     "babel-plugin-lodash": "3.3.4",
-    "babel-plugin-macros": "2.5.0",
-    "core-js": "2.6.5"
+    "babel-plugin-macros": "2.5.1",
+    "core-js": "3.0.0"
   }
 }

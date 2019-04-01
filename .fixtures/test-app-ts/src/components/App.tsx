@@ -18,14 +18,8 @@ export class App extends React.Component {
     // test object spread
     const { ...props } = this.props
 
-    // test optionsl chaining
-    const foo = props?.foo
-
-    console.log(foo, mapboxgl, ky)
-
-    // test pipeline operator
-    const exclaim = string => `${string}!`
-    const message = 'Hello world' |> exclaim
+    // Test delicate modules
+    console.log(mapboxgl, ky)
 
     return (
       <div {...props}>
@@ -36,7 +30,7 @@ export class App extends React.Component {
         <img src={mmm} className="fixed top-0 right-0" />
 
         {/* test css modules */}
-        <div className={styles.text}>{message}</div>
+        <div className={styles.text}>Hello world</div>
       </div>
     )
   }

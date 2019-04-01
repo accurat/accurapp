@@ -9,7 +9,15 @@ const detect = require('detect-port')
 const WebpackDevServer = require('webpack-dev-server')
 const openOrRefreshBrowser = require('react-dev-utils/openBrowser')
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils')
-const { log, createWebpackCompiler, readWebpackConfig, coloredBanner, extractBrowserslistString, extractLatestCommitHash, extractLatestCommitTimestamp, extractLatestTag } = require('./_utils')
+const { log, coloredBanner } = require('../utils/logging-utils')
+const { createWebpackCompiler, readWebpackConfig } = require('../utils/webpack-utils')
+const { verifyTypeScriptSetup } = require('../utils/verifyTypeScriptSetup')
+const {
+  extractBrowserslistString,
+  extractLatestCommitHash,
+  extractLatestCommitTimestamp,
+  extractLatestTag,
+} = require('../utils/git-utils')
 
 process.env.BROWSERSLIST = extractBrowserslistString()
 process.env.LATEST_COMMIT = extractLatestCommitHash()
@@ -19,6 +27,9 @@ process.env.LATEST_TAG = extractLatestTag()
 const HOST = process.env.HOST || '0.0.0.0'
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8000
 const PROTOCOL = process.env.HTTPS === 'true' ? 'https' : 'http'
+
+const appDir = process.cwd()
+verifyTypeScriptSetup(appDir)
 
 function runDevServer(port) {
   const urls = prepareUrls(PROTOCOL, HOST, port)
@@ -50,12 +61,18 @@ function runDevServer(port) {
 
 console.log(coloredBanner('/||||/| accurapp'))
 
-detect(DEFAULT_PORT).then(port => {
-  if (port === DEFAULT_PORT) {
-    runDevServer(port)
-  } else {
-    log.ok(`Something is already running on port ${DEFAULT_PORT}, switching to ${chalk.blue(port)}...`)
-    runDevServer(port)
-  }
-  return port
-}).catch(err => { throw err })
+detect(DEFAULT_PORT)
+  .then(port => {
+    if (port === DEFAULT_PORT) {
+      runDevServer(port)
+    } else {
+      log.ok(
+        `Something is already running on port ${DEFAULT_PORT}, switching to ${chalk.blue(port)}...`
+      )
+      runDevServer(port)
+    }
+    return port
+  })
+  .catch(err => {
+    throw err
+  })

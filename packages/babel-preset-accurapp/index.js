@@ -1,6 +1,7 @@
 module.exports = (context, opts = {}) => {
   const env = process.env.BABEL_ENV || process.env.NODE_ENV
   const isDevelopment = env === 'development'
+  const useTypescript = opts.typescript
 
   return {
     presets: [
@@ -12,6 +13,8 @@ module.exports = (context, opts = {}) => {
           useBuiltIns: 'usage',
           // Enable stage 4 proposals, like object rest/spread
           shippedProposals: true,
+          // Use new corejs version
+          corejs: 3,
         },
       ],
       [
@@ -25,6 +28,7 @@ module.exports = (context, opts = {}) => {
           useBuiltIns: true,
         },
       ],
+      ...(useTypescript ? [require('@babel/preset-typescript').default] : []),
     ],
     plugins: [
       require('babel-plugin-lodash'),
@@ -37,8 +41,6 @@ module.exports = (context, opts = {}) => {
       require('@babel/plugin-proposal-export-default-from').default,
       require('@babel/plugin-proposal-logical-assignment-operators').default,
       require('@babel/plugin-proposal-optional-chaining').default,
-      // The minimal proposal doesn't support await
-      // Switch to the newer proposal when it will be supported
       [require('@babel/plugin-proposal-pipeline-operator').default, { proposal: 'smart' }],
       require('@babel/plugin-proposal-nullish-coalescing-operator').default,
       require('@babel/plugin-proposal-do-expressions').default,

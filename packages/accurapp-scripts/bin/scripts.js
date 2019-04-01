@@ -1,7 +1,13 @@
 #!/usr/bin/env node
 const semver = require('semver')
+const { log } = require('../utils/logging-utils')
 if (semver.lt(process.versions.node, '8.6.0')) {
-  throw new Error('Sorry, Node 8.6+ is required!')
+  console.log()
+  log.err(`You are running Node ${process.versions.node}.`)
+  log.err(`Accurapp requires Node 8.6.0 or higher.`)
+  log.err(`Please upgrade your Node version.`)
+  log.err(`Aborting.`)
+  process.exit(1)
 }
 
 // Makes the script crash on unhandled rejections instead of silently ignoring them
@@ -12,7 +18,7 @@ process.on('unhandledRejection', err => {
 // Warn if any accurapp package is outdated
 if (!process.env.CI) {
   const latestVersion = require('latest-version')
-  const { createOutdatedMessage, yellowBox } = require('../scripts/_utils')
+  const { createOutdatedMessage, yellowBox } = require('../utils/logging-utils')
 
   const currentDeps = [
     require('../package.json'),
@@ -25,7 +31,7 @@ if (!process.env.CI) {
     .then(npmVersions => {
       const latestDeps = npmVersions.map((version, i) => ({ ...currentDeps[i], version }))
       const outdatedDeps = currentDeps.filter((dep, i) =>
-        semver.lt(dep.version, latestDeps[i].version),
+        semver.lt(dep.version, latestDeps[i].version)
       )
 
       if (outdatedDeps.length > 0) {

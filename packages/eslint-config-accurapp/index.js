@@ -34,9 +34,19 @@ module.exports = {
       generators: true,
       legacyDecorators: true,
     },
+
+    // FIX of the warning with mobx-react
+    requireConfigFile: false,
   },
 
-  plugins: ['import', 'flowtype', 'promise', 'react', 'no-copy-paste-default-export'],
+  plugins: [
+    'import',
+    'flowtype',
+    'promise',
+    'react',
+    'react-hooks',
+    'no-copy-paste-default-export',
+  ],
 
   settings: {
     react: {
@@ -109,6 +119,8 @@ module.exports = {
     'react/jsx-no-bind': ['warn', { ignoreRefs: true }],
     'react/no-typos': 'warn',
     'react/jsx-props-no-multi-spaces': 'warn',
+    'react-hooks/rules-of-hooks': 'warn',
+    'react-hooks/exhaustive-deps': 'warn',
     'promise/no-callback-in-promise': 'warn',
     'promise/no-return-wrap': 'warn',
     // aligned to prettier, see https://github.com/accurat/accurapp/issues/51

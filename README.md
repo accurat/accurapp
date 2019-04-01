@@ -1,6 +1,6 @@
-## ![AccurApp](logo.png)
+## ![Accurapp](logo.png)
 
-**AccurApp** is a project kickstarter customized for the specific needs of [Accurat](http://accurat.it/).
+**Accurapp** is a project kickstarter customized for the specific needs of [Accurat](http://accurat.it/).
 
 It was originally forked from [create-react-app](https://github.com/facebookincubator/create-react-app/),
 but significant amounts of code were rewritten and simplified. Here are some shiny features:
@@ -21,7 +21,7 @@ but significant amounts of code were rewritten and simplified. Here are some shi
   - [Customizing Webpack](#customizing-webpack)
   - [Customizing Eslint](#customizing-eslint)
   - [Customizing Babel](#customizing-babel)
-  - [Setting Env Variables](#cetting-env-variables)
+  - [Setting Env Variables](#setting-env-variables)
   - [Customizing Env Variables](#customizing-env-variables)
 - [Available Env Variables](#available-env-variables)
 - [Project Scaffolding](#project-scaffolding)
@@ -45,9 +45,13 @@ but significant amounts of code were rewritten and simplified. Here are some shi
 ## Creating a new project
 Having installed node (`brew install node`), run this command in the directory where you want to create the `project-name` folder. This command will also handle the project scaffolding, the dependencies installation, and the git initialization with a first commit.
 ```sh
-npx --ignore-existing create-accurapp project-name
+npx create-accurapp project-name
 ```
-_(**Note**: if it says `npx: command not found` update your node version by running `brew upgrade node`)_
+
+> **Note**: if it says `npx: command not found` update your node version by running `brew upgrade node`
+
+> **Note:** If your project fails to start right after installing, npx may be using a cached version of `create-accurapp`.
+> Remove previously installed versions with `npm uninstall -g create-accurapp`
 
 Then you just `cd project-name`, run `yarn start` and start creating awesome stuff! 🎉
 
@@ -215,9 +219,11 @@ SECRET=djah7s9ihdias7hdsaodhoas8hd
 
 #### Customizing Env Variables
 Here are the available Env Variables for the **yarn start** script:
+- **BROWSER** - If it should open local url in the browser in `yarn start` (default `true`)
 - **HOST** - The host of the web server (default `localhost`)
 - **PORT** - The port of the web server (default `8000`)
 - **HTTPS** - Set this to `true` if you wish to use HTTPS in development (default `false`)
+- **CI** - Set this to true to skip the check for newer accurapp versions (default `false`)
 
 Here are instead the available Env Variables for the **yarn build** script:
 - **PUBLIC_URL** - Use this if the application is hosted on a subpath, it will be used to resolve assets (default `/`).
@@ -237,6 +243,7 @@ render() {
 
 ## Available Env Variables
 These are the Env Variables that Accurapp provides you, you cannot modify them directly:
+- **NODE_ENV** - It is equal to `'development'` in the `yarn start` command and `'production'` in the `yarn build` command
 - **LATEST_TAG** - The latest git tag you made, useful if you want to display a build version in your application
 - **LATEST_COMMIT** - The latest commit hash, useful if you want to display a more specific build version
 - **LATEST_COMMIT_TIMESTAMP** - The UTC timestamp of the latest commit, you can use it like this:
@@ -428,84 +435,27 @@ Furthermore it optimizes and minifies the svg using [svgo](https://github.com/sv
 <details>
 <summary>How do I enable TypeScript?</summary>
 
-TypesScript is not enabled by default in accurapp for now, this is what you have to do.
+TypesScript is not enabled by default in accurapp, to bootstrap a project with typescript you will have to run:
 
-Do `yarn add --dev webpack-blocks-ts`.
 
-Then, in `webpack.config.js` replace all content with:
-```js
-const { buildWebpackConfig } = require('webpack-preset-accurapp')
-const typescript = require('webpack-blocks-ts')
-
-module.exports = buildWebpackConfig([
-  typescript({ silent: true }),
-])
+```sh
+npx create-accurapp project-name --typescript
 ```
 
-Then add a `tsconfig.json` in the project root, a default tsconfig looks like this:
-```json
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "rootDir": ".",
-    "outDir": "build",
-    "module": "esnext",
-    "target": "es5",
-    "lib": ["es6", "es7", "es2017", "esnext", "dom"],
-    "sourceMap": true,
-    "allowJs": true,
-    "jsx": "react",
-    "moduleResolution": "node",
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": false,
-    "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": false,
-    "experimentalDecorators": true
-  },
-  "exclude": [
-    "node_modules",
-    "build",
-    "webpack.config.js"
-  ]
-}
-```
+> **Note:** If your project fails to start right after installing, npx may be using a cached version of `create-accurapp`.
+> Remove previously installed versions with `npm uninstall -g create-accurapp`
 
-If you really need it, you can also add the `allowSyntheticDefaultImports` flag and set it to `true`, and remove `ESNext` from the `lib` compiler option. See the [TypeScript compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html) for more on this.
+Otherwise, if you have an existing javascript project and want to switch to typescript, you will just have to rename the `index.js` to `index.tsx`. On the next `yarn start`, typescript will be installed as a dependency, a `tsconfig.json` and a `types.d.ts` will be created, and you will be able to do your magic in typescript! 🧙‍♂️
 
-Add as devDependencies typescript and the types of the libraries you're using, for example `yarn add --dev typescript @types/react @types/react-dom`
-
-Rename `index.js` to `main.tsx` and edit the first two imports like this:
-```js
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-```
-
-Add a new `index.js` file and simply add
-```js
-import 'main'
-```
-
-Rename `src/components/App.js` to `src/components/App.tsx` and inside it, edit the `React` import like this:
-
-```js
-import * as React from 'react'
-```
-
-Ready to go!
-
-Please remember that the first two items to annonate for class components are its props and local state. So to do it correctly you would need something along the lines of
+Here is how a basic typescript component should look like:
 
 ```ts
-type Props = {}
-type LocalState = {}
-// or
-// interface Props {}
-// interface LocalState {}
+interface Props {}
+interface State {}
 
-export default class App extends React.Component<Props, LocalState> {
+export class App extends React.Component<Props, State> {
+  state = {}
+
   render() {
     return <div>...</div>
   }
@@ -513,6 +463,9 @@ export default class App extends React.Component<Props, LocalState> {
 ```
 
 See the [Typescript JSX guide](https://www.typescriptlang.org/docs/handbook/jsx.html) for more info.
+
+> **Note**: Constant enums and namespaces are not supported.
+
 </details>
 
 <details>
@@ -579,7 +532,9 @@ First of all, we're sorry for you, IE is an asshole.
 
 You first need to edit the `package.json`'s `"browserslist"` field, and change `not ie 11` to `ie 11`. If you need to test in local you can also add `ie 11` to the development browsers.
 
-You will now have to provide polyfills for the newer apis you're using, for example [the fetch polyfill](https://github.com/github/fetch), or the [css variables ponyfill](https://github.com/jhildenbiddle/css-vars-ponyfill). Also make sure the tools you're using support IE11, for example MobX v5 has no support for IE11.
+You will now have to provide polyfills for the newer apis you're using, for example [the fetch polyfill](https://github.com/github/fetch), or the [css variables ponyfill](https://github.com/jhildenbiddle/css-vars-ponyfill). Or you can use [react-app-polyfill](https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill) which is a collection of the most common polyfills.
+
+Also make sure the tools you're using support IE11, for example MobX v5 has no support for IE11.
 
 Now hopefully you will not have any js errors in IE11 (if not, call Dr. Fugaro).
 
@@ -752,6 +707,6 @@ Please, see [`@joshbuchea`'s head repo](https://gethead.info/).
 </details>
 
 ## Contributing
-If you make some edits and wish to test them locally you can run `yarn create-test-app` which creates a test app using the local packages.
+If you make some edits and wish to test them locally you can run `yarn test` for an end-to-end test, or `yarn create-test-app` which creates a test app using the local packages.
 
 To publish the updated packages, run `yarn run publish`, lerna will detect the packages you changed and ask you for the new version number.

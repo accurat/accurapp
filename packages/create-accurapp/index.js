@@ -1,56 +1,24 @@
 #!/usr/bin/env node
-
 const path = require('path')
-const fs = require('fs-extra')
-const spawn = require('cross-spawn')
+const semver = require('semver')
 const chalk = require('chalk')
+const fs = require('fs-extra')
 const meow = require('meow')
 const indentString = require('indent-string')
-const { coloredBanner, log } = require('accurapp-scripts/scripts/_utils')
+const { coloredBanner, log, exec, abort } = require('accurapp-scripts/utils/logging-utils')
+const { verifyTypeScriptSetup } = require('accurapp-scripts/utils/verifyTypeScriptSetup')
 
-const dependencies = [
-  'react',
-  'react-dom',
-  'd3',
-  'lodash',
-  'modern-normalize',
-  '@accurat/tachyons-lite',
-  'tachyons-extra',
-]
-
-const devDependencies = [
-  'accurapp-scripts',
-  'webpack-preset-accurapp',
-  'eslint-config-accurapp',
-  'babel-preset-accurapp',
-]
-
-function abort(message, errno = 1) {
-  console.error(`\n`)
-  log.err(message)
+if (semver.lt(process.versions.node, '8.6.0')) {
+  console.log()
+  log.err(`You are running Node ${process.versions.node}.`)
+  log.err(`Accurapp requires Node 8.6.0 or higher.`)
+  log.err(`Please upgrade your Node version.`)
   log.err(`Aborting.`)
   process.exit(1)
 }
 
-function writePackageJson(dir, contentJson) {
-  fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify(contentJson, null, 2))
-}
-
-function exec(command, dir) {
-  if (!dir) throw new Error(`Function exec called without directory.`)
-
-  const [executable, ...args] = Array.isArray(command) ? command : command.split(' ')
-  const proc = spawn.sync(executable, args, {
-    stdio: 'inherit',
-    cwd: dir,
-  })
-  if (proc.status !== 0) abort(`Command '${chalk.cyan(command)}' failed with error: "${proc.error}"`)
-  if (proc.signal !== null) abort(`Command '${chalk.cyan(command)}' exited with signal: "${proc.signal}"`)
-}
-
 const cli = meow({
   description: false,
-  inferType: true,
   help: `
     ${indentString(coloredBanner('/||||/| accurapp', ['red', 'magenta']), 4)}
     Usage
@@ -59,30 +27,40 @@ const cli = meow({
     Creates a folder named ${chalk.yellow('<app-name>')}, with a flexible JS build configuration.
 
     Options
-      -v | --version    = to print current version
-      -g | --no-git     = do not run git init && git commit
-      -i | --no-install = do not run yarn install
-      -d | --dry-run    = to fake it all
-      -t | --testing    = [internal] create a version for testing
+      --version     = to print current version
+      --no-git      = do not run git init && git commit
+      --no-install  = do not run yarn install
+      --typescript  = to use typescript
+      --testing     = [internal] create a version for testing
 
     Example
       ${chalk.green('$')} ${chalk.cyan('create-accurapp mega-viz --no-install')}
   `,
-}, {
-  alias: {
-    v: 'version',
-    h: 'help',
-    g: 'no-git',
-    i: 'no-install',
-    d: 'dry-run',
-    t: 'testing',
+  flags: {
+    version: {
+      alias: 'v',
+    },
+    git: {
+      type: 'boolean',
+      default: true,
+    },
+    install: {
+      type: 'boolean',
+      default: true,
+    },
+    typescript: {
+      type: 'boolean',
+    },
+    testing: {
+      type: 'boolean',
+    },
   },
 })
 
-const isRealRun = !cli.flags.dryRun
-const isYesGit = !cli.flags.noGit
-const isYesInstall = !cli.flags.noInstall
+const shouldInitGit = cli.flags.git
+const shouldInstall = cli.flags.install
 const isTesting = cli.flags.testing
+const useTypescript = cli.flags.typescript
 
 if (cli.input.length === 0 && !cli.flags.help) {
   log.err(`No <app-name> specified! Displaying help.`)
@@ -91,14 +69,17 @@ if (cli.input.length === 0 && !cli.flags.help) {
 
 const appDir = path.resolve(cli.input[0])
 const appName = path.basename(appDir)
-const appTitle = appName.split('-').map(i => i.charAt(0).toUpperCase() + i.substr(1)).join(' ')
+const appTitle = appName
+  .split('-')
+  .map(i => i.charAt(0).toUpperCase() + i.slice(1))
+  .join(' ')
 
 console.log(coloredBanner('/||||/| accurapp', ['yellow', 'green']))
 
 if (fs.existsSync(appDir)) abort(`The directory '${appName}' is already existing!`)
 
 log.ok(`Creating a new app in ${chalk.magenta(appName)}`)
-if (isRealRun) fs.mkdirSync(appDir)
+fs.mkdirSync(appDir)
 
 log.ok(`Creating package.json`)
 const packageJson = {
@@ -113,11 +94,11 @@ const packageJson = {
     prettier: 'accurapp-scripts prettier',
   },
   browserslist: {
-    production: [ '>0.25%', 'not ie 11', 'not op_mini all' ],
-    development: ['last 1 Chrome version'],
+    production: ['>0.25%', 'not ie 11', 'not op_mini all'],
+    development: ['last 1 Chrome version', 'last 1 Firefox version', 'last 1 Safari version'],
   },
 }
-if (isRealRun) writePackageJson(appDir, packageJson)
+fs.writeFileSync(path.resolve(appDir, 'package.json'), JSON.stringify(packageJson, null, 2))
 
 function templateOverwriting(filePath, substitutions) {
   let content = fs.readFileSync(filePath, { encoding: 'utf-8' })
@@ -128,56 +109,100 @@ function templateOverwriting(filePath, substitutions) {
 }
 
 log.ok(`Creating dir structure`)
-if (isRealRun) {
-  fs.copySync(path.join(__dirname, 'template'), appDir)
-  fs.renameSync(path.join(appDir, 'gitignore'), path.join(appDir, '.gitignore'))
+fs.copySync(path.resolve(__dirname, 'template'), appDir)
+fs.renameSync(path.resolve(appDir, 'gitignore'), path.resolve(appDir, '.gitignore'))
 
-  const substitutions = [
-    [/\{\{APP_NAME\}\}/g, appName],
-    [/\{\{APP_TITLE\}\}/g, appTitle],
+const substitutions = [[/\{\{APP_NAME\}\}/g, appName], [/\{\{APP_TITLE\}\}/g, appTitle]]
+templateOverwriting(path.resolve(appDir, 'src/index.html'), substitutions)
+templateOverwriting(path.resolve(appDir, 'README.md'), substitutions)
+
+if (shouldInstall) {
+  const dependencies = [
+    'react',
+    'react-dom',
+    'lodash',
+    'modern-normalize',
+    '@accurat/tachyons-lite',
+    'tachyons-extra',
   ]
-  templateOverwriting(path.join(appDir, 'src/index.html'), substitutions)
-  templateOverwriting(path.join(appDir, 'README.md'), substitutions)
-}
 
-if (isYesInstall) {
-  const devDependenciesToInstall = isTesting
-    ? devDependencies.map(dep => path.join(__dirname, `../${dep}`)) // Local package
-    : devDependencies
-  log.ok(`Installing dev packages: ${devDependenciesToInstall.map(d => chalk.cyan(d)).join(', ')}`)
-  if (isRealRun) exec(`yarn add --dev ${devDependenciesToInstall.join(' ')}`, appDir)
+  let devDependencies = [
+    'accurapp-scripts',
+    'webpack-preset-accurapp',
+    'eslint-config-accurapp',
+    'babel-preset-accurapp',
+  ]
 
-  log.ok(`Installing packages: ${chalk.cyan(dependencies.join(', '))}`)
-  if (isRealRun) exec(`yarn add ${dependencies.join(' ')}`, appDir)
+  const typescriptDevDependencies = [
+    'typescript',
+    '@types/react',
+    '@types/react-dom',
+    '@types/node',
+    '@types/webpack-env',
+    '@types/lodash',
+  ]
+
+  // Require local package if we're testing
+  if (isTesting) {
+    devDependencies = devDependencies.map(dep => path.resolve(__dirname, `../${dep}`))
+  }
+
+  const devDependenciesToInstall = [
+    ...devDependencies,
+    ...(useTypescript ? typescriptDevDependencies : []),
+  ]
+
+  log.ok(
+    `Installing dev dependencies: ${devDependenciesToInstall.map(d => chalk.cyan(d)).join(', ')}`
+  )
+  exec(`yarn add --dev ${devDependenciesToInstall.join(' ')}`, appDir)
+
+  log.ok(`Installing dependencies: ${dependencies.map(d => chalk.cyan(d)).join(', ')}`)
+  exec(`yarn add ${dependencies.join(' ')}`, appDir)
 } else {
   log.info(`Not running 'yarn add/install' because you chose so.`)
 }
 
-const isReadyGit = fs.existsSync(path.join(appDir, '.gitignore'))
-if (isYesGit && isReadyGit) {
-  log.ok(`Initializing git repo`)
-  if (isRealRun) exec(`git init`, appDir)
-
-  log.ok(`Creating first commit`)
-  if (isRealRun) exec(`git add .`, appDir)
-  if (isRealRun) exec(['git', 'commit', '-a', '-m', `💥 Bang! First commit\n\nApp bootstrapped with create-accurapp`], appDir)
-} else {
-  if (!isYesGit) log.info(`Not running 'git init/add/commit' because you chose so.`)
-  if (!isReadyGit) log.info(`Not running 'git init/add/commit' because there is no '.gitignore' file.`)
+if (useTypescript) {
+  fs.renameSync(path.resolve(appDir, 'src/index.js'), path.resolve(appDir, 'src/index.tsx'))
+  fs.renameSync(
+    path.resolve(appDir, 'src/components/App.js'),
+    path.resolve(appDir, 'src/components/App.tsx')
+  )
+  verifyTypeScriptSetup(appDir, { shouldInstall })
 }
 
-log.ok(`Creating your local .env file`)
-if (isRealRun) {
-  const envPath = path.resolve(appDir, '.env')
-  const envExamplePath = path.resolve(appDir, '.env.example')
+const isReadyGit = fs.existsSync(path.resolve(appDir, '.gitignore'))
+if (shouldInitGit && isReadyGit) {
+  log.ok(`Initializing git repo`)
+  exec(`git init`, appDir)
 
-  if (!fs.existsSync(envPath)) {
-    fs.copySync(envExamplePath, envPath)
+  log.ok(`Creating first commit`)
+  exec(`git add -A`, appDir)
+  exec(
+    ['git', 'commit', '-m', `💥 Bang! First commit\n\nApp bootstrapped with create-accurapp`],
+    appDir
+  )
+} else {
+  if (!shouldInitGit) log.info(`Not running 'git init/add/commit' because you chose so.`)
+  if (!isReadyGit) {
+    log.info(`Not running 'git init/add/commit' because there is no '.gitignore' file.`)
   }
 }
 
+log.ok(`Creating your local .env file`)
+
+const envPath = path.resolve(appDir, '.env')
+const envExamplePath = path.resolve(appDir, '.env.example')
+
+if (!fs.existsSync(envPath)) {
+  fs.copySync(envExamplePath, envPath)
+}
+
+console.log()
 log.ok(`Done! Have fun with your new app.`)
-log.info(`Quick tip:\n
-    ${chalk.cyan(`cd ${appName}`)}
+log.info(`Quick tip:
+
+    ${chalk.cyan(`cd ${appName}/`)}
     ${chalk.cyan(`yarn start`)}
 `)

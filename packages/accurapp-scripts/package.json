@@ -1,7 +1,7 @@
 {
   "name": "accurapp-scripts",
   "version": "4.0.11",
-  "description": "Scripts for AccurApp",
+  "description": "Scripts for Accurapp",
   "repository": "accurat/accurapp",
   "license": "MIT",
   "keywords": [
@@ -15,32 +15,37 @@
   },
   "files": [
     "bin",
-    "scripts"
+    "scripts",
+    "utils",
+    "index.d.ts"
   ],
+  "types": "./index.d.ts",
   "bin": {
     "accurapp-scripts": "./bin/scripts.js"
   },
   "dependencies": {
     "boxen": "3.0.0",
-    "browserslist": "4.4.1",
+    "browserslist": "4.5.3",
     "chalk": "2.4.2",
     "columnify": "1.5.4",
-    "cross-spawn": "6.0.5",
+    "cross-spawn": "^6.0.5",
     "detect-port": "1.3.0",
-    "dotenv": "6.2.0",
+    "dotenv": "7.0.0",
     "figlet": "1.2.1",
     "filesize": "4.1.2",
     "fs-extra": "7.0.1",
+    "globby": "^9.2.0",
     "gzip-size": "5.0.0",
     "indent-string": "3.2.0",
-    "latest-version": "4.0.0",
+    "latest-version": "5.0.0",
     "outdent": "0.7.0",
     "path": "0.12.7",
     "prettier": "1.16.4",
     "pretty-ms": "4.0.0",
-    "react-dev-utils": "7.0.1",
-    "semver": "5.6.0",
-    "webpack": "4.29.5",
-    "webpack-dev-server": "3.2.0"
+    "react-dev-utils": "8.0.0",
+    "resolve": "^1.10.0",
+    "semver": "6.0.0",
+    "webpack": "4.29.6",
+    "webpack-dev-server": "3.2.1"
   }
 }

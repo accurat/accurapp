@@ -4,7 +4,6 @@
 
 [build.environment]
   CI = "true"
-  GENERATE_SOURCEMAP = "true"
 
 # Redirect everything to index.html for client-side
 # routing in Single Page Applications.

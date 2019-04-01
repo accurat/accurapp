@@ -1,6 +1,6 @@
 # {{APP_TITLE}}
 
-This project was bootstrapped with [AccurApp](https://github.com/accurat/accurapp).
+This project was bootstrapped with [Accurapp](https://github.com/accurat/accurapp).
 
 ## Usage
 Once you installed the dependencies running `yarn`, these are the available commands:
