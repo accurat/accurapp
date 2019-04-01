@@ -697,6 +697,6 @@ Please, see [`@joshbuchea`'s head repo](https://gethead.info/).
 </details>
 
 ## Contributing
-If you make some edits and wish to test them locally you can run `yarn create-test-app` which creates a test app using the local packages.
+If you make some edits and wish to test them locally you can run `yarn test` for an end-to-end test, or `yarn create-test-app` which creates a test app using the local packages.
 
 To publish the updated packages, run `yarn run publish`, lerna will detect the packages you changed and ask you for the new version number.

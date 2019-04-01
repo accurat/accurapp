@@ -20,7 +20,9 @@ module.exports = buildWebpackConfig()
       "not op_mini all"
     ],
     "development": [
-      "last 1 Chrome version"
+      "last 1 Chrome version",
+      "last 1 Firefox version",
+      "last 1 Safari version"
     ]
   }
 ```
@@ -57,3 +59,19 @@ This is more explicit.
 ```json
 "lint": "accurapp-scripts lint",
 ```
+
+# Migrating to Typescript in v4.1.x
+
+Migrate from the old way to use typescript to the new way
+
+- `rm tslint.json`
+- `yarn remove typescript webpack-blocks-ts`
+- remove the `typescript()` block from `webpack.config.js`, a simple webpack config should look something like this
+
+```js
+const { buildWebpackConfig } = require('webpack-preset-accurapp')
+module.exports = buildWebpackConfig()
+```
+
+- `yarn upgrade-interactive --latest` and upgrade accurapp
+- run `yarn start`, a new `tsconfig.json` and `types.d.ts` should be created
