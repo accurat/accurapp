@@ -69,7 +69,10 @@ function verifyTypeScriptSetup(appDir, { shouldInstall = true } = {}) {
       resolve.sync('typescript', { basedir: appNodeModules })
     } catch (e) {
       log.ok(`Installing latest version of typescript`)
-      exec('yarn add --dev typescript', appDir)
+      exec(
+        'yarn add --dev typescript @types/react @types/react-dom @types/node @types/webpack-env @types/lodash',
+        appDir
+      )
     }
   }
 }

@@ -34,9 +34,6 @@ module.exports = (context, opts = {}) => {
       require('babel-plugin-lodash'),
       require('babel-plugin-macros'),
 
-      // These proposals don't work with typescript
-      // ...(!useTypescript
-      //   ? [
       // ----------- Stage 0 -----------
       require('@babel/plugin-proposal-function-bind').default,
 
@@ -47,8 +44,6 @@ module.exports = (context, opts = {}) => {
       [require('@babel/plugin-proposal-pipeline-operator').default, { proposal: 'smart' }],
       require('@babel/plugin-proposal-nullish-coalescing-operator').default,
       require('@babel/plugin-proposal-do-expressions').default,
-      // ]
-      // : []),
 
       // ----------- Stage 2 -----------
       // Use the default proposal when it will be finalized

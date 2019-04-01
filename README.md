@@ -50,7 +50,7 @@ npx create-accurapp project-name
 
 > **Note**: if it says `npx: command not found` update your node version by running `brew upgrade node`
 
-> **Note:** If your project fails to start right after installing, npx may be using a cached version of `create-react-app`.
+> **Note:** If your project fails to start right after installing, npx may be using a cached version of `create-accurapp`.
 > Remove previously installed versions with `npm uninstall -g create-accurapp`
 
 Then you just `cd project-name`, run `yarn start` and start creating awesome stuff! 🎉
@@ -425,21 +425,36 @@ Furthermore it optimizes and minifies the svg using [svgo](https://github.com/sv
 <details>
 <summary>How do I enable TypeScript?</summary>
 
-TypesScript is not enabled by default in accurapp for now, this is what you have to do.
+TypesScript is not enabled by default in accurapp, to bootstrap a project with typescript you will have to run:
 
 
-Please remember that the first two items to annonate for class components are its props and local state. So to do it correctly you would need something along the lines of
+```sh
+npx create-accurapp project-name --typescript
+```
+
+> **Note:** If your project fails to start right after installing, npx may be using a cached version of `create-accurapp`.
+> Remove previously installed versions with `npm uninstall -g create-accurapp`
+
+Otherwise, if you have an existing javascript project and want to switch to typescript, you will just have to rename the `index.js` to `index.tsx`. On the next `yarn start`, typescript will be installed as a dependency, a `tsconfig.json` and a `types.d.ts` will be created, and you will be able to do your magic in typescript! 🧙‍♂️
+
+Here is how a basic typescript component should look like:
 
 ```ts
 interface Props {}
 interface State {}
 
 export class App extends React.Component<Props, State> {
+  state = {}
+
   render() {
     return <div>...</div>
   }
 }
 ```
+
+See the [Typescript JSX guide](https://www.typescriptlang.org/docs/handbook/jsx.html) for more info.
+
+> **Note**: Constant enums and namespaces are not supported.
 
 </details>
 

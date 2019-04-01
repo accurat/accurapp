@@ -25,6 +25,7 @@ yarn build
 rm ./src/components/App.js
 mv ./src/index.js ./src/index.tsx
 cp -r ../.fixtures/test-app-ts/src .
+yarn add --dev @types/mapbox-gl
 
 # Test the start with typescript
 BROWSER=false yarn start &

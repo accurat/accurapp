@@ -182,16 +182,17 @@ function buildWebpackConfig(config = []) {
 
       // Typescript fast typechecker
       addPlugins([
-        new ForkTsCheckerWebpackPlugin({
-          async: process.env.NODE_ENV === 'development',
-          useTypescriptIncrementalApi: true,
-          checkSyntacticErrors: true,
-          watch: './src',
-          reportFiles: ['**'],
-          silent: true,
-          // The formatter is invoked directly in WebpackDevServerUtils during development
-          formatter: process.env.NODE_ENV === 'production' ? typescriptFormatter : undefined,
-        }),
+        useTypescript &&
+          new ForkTsCheckerWebpackPlugin({
+            async: process.env.NODE_ENV === 'development',
+            useTypescriptIncrementalApi: true,
+            checkSyntacticErrors: true,
+            watch: './src',
+            reportFiles: ['**'],
+            silent: true,
+            // The formatter is invoked directly in WebpackDevServerUtils during development
+            formatter: process.env.NODE_ENV === 'production' ? typescriptFormatter : undefined,
+          }),
       ]),
     ]),
 

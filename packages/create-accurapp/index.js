@@ -120,7 +120,6 @@ if (shouldInstall) {
   const dependencies = [
     'react',
     'react-dom',
-    'd3',
     'lodash',
     'modern-normalize',
     '@accurat/tachyons-lite',
@@ -140,7 +139,6 @@ if (shouldInstall) {
     '@types/react-dom',
     '@types/node',
     '@types/webpack-env',
-    '@types/d3',
     '@types/lodash',
   ]
 
