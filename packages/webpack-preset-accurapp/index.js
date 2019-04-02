@@ -234,6 +234,11 @@ function buildWebpackConfig(config = []) {
       sourceMaps('cheap-module-source-map'),
       // Turn off performance hints during development
       performance(false),
+      // Fix "webpackHotUpdate is not defined" issue
+      // https://github.com/webpack/webpack/issues/6693
+      optimization({
+        runtimeChunk: true,
+      }),
     ]),
 
     //
