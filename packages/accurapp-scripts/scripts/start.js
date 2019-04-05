@@ -1,8 +1,8 @@
 require('dotenv').config() // gives precedence to the env variables already present
 process.env.NODE_ENV = 'development'
 process.env.PUBLIC_URL = ''
-process.env.TRANSPILE_NODE_MODULES = process.env.TRANSPILE_NODE_MODULES || 'true'
 process.env.GENERATE_SOURCEMAP = 'true'
+process.env.TRANSPILE_NODE_MODULES = process.env.TRANSPILE_NODE_MODULES || 'true'
 
 const chalk = require('chalk')
 const detect = require('detect-port')

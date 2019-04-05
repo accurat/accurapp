@@ -221,7 +221,7 @@ function buildWebpackConfig(config = []) {
         watchContentBase: true,
         quiet: true,
         watchOptions: {
-          ignored: /node_modules/,
+          ignored: process.env.WATCH_NODE_MODULES === 'true' ? undefined : /node_modules/,
         },
         overlay: false,
       }),

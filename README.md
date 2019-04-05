@@ -241,6 +241,8 @@ render() {
 
 - **TRANSPILE_NODE_MODULES** - Set this to false if you want to disable the babel transpilation of the `node_modules` (default `true`)
 
+- **WATCH_NODE_MODULES** - Set this to true if you want to recompile when any of the used `node_modules` changes (default `false`)
+
 ## Available Env Variables
 These are the Env Variables that Accurapp provides you, you cannot modify them directly:
 - **NODE_ENV** - It is equal to `'development'` in the `yarn start` command and `'production'` in the `yarn build` command
@@ -252,15 +254,7 @@ These are the Env Variables that Accurapp provides you, you cannot modify them d
 new Date(Number(process.env.LATEST_COMMIT_TIMESTAMP))
 ```
 
-- **BROWSERSLIST** - It is built from the `browserslist` field in the `package.json`, and you can use it in your app like this:
-
-```js
-import isBrowserSupported from 'is-browser-supported'
-
-if (!isBrowserSupported(navigator.userAgent, process.env.BROWSERSLIST)) {
-  // show the "unsupported browser" overlay
-}
-```
+- **BROWSERSLIST** - It is built from the `browserslist` field in the `package.json`
 
 
 ## Project Scaffolding
@@ -336,7 +330,7 @@ The first argument to `module.hot.accept` must be the root component of the app,
 
 You can put them in the `src/images` folder and require them from the js like this:
 ```js
-import logo from 'images/logo.png'
+import logo from '../images/logo.png'
 
 console.log(logo) // /logo.84287d09.png
 
@@ -393,7 +387,7 @@ For technical in-depth analysis read the create-react-app [documentation].(https
 
 By default you can import svgs as files, like you would do for images:
 ```js
-import logo from 'images/logo.svg'
+import logo from '../images/logo.svg'
 
 console.log(logo) // /logo.84287d09.svg
 
@@ -405,7 +399,7 @@ function Header() {
 
 But if the svg is an icon, and you need to apply some styles to it, you can also import it as a react component, and pass it some `className` or `style` props:
 ```js
-import { ReactComponent as PencilIcon } from 'icons/pencil.svg'
+import { ReactComponent as PencilIcon } from '../icons/pencil.svg'
 
 // It's like doing
 // function PencilIcon(props) {
@@ -476,7 +470,7 @@ The easiest way to override a loader is to do it inline, by prefixing the import
 For example:
 
 ```js
-import csvString from '!raw-loader!data/some_data.csv'
+import csvString from '!raw-loader!../data/some_data.csv'
 ```
 This will override the default `csv-loader` for that file.
 
@@ -544,7 +538,9 @@ You still have some css fixes to do, for example flexbox behaves weirdly, [here 
 <details>
 <summary>How do I use a web worker?</summary>
 
-You can use the [worker-loader](https://github.com/webpack-contrib/worker-loader) and configure it to read files ending in `.worker.js`. Here is the code:
+For simple use-cases you can use [greenlet](https://github.com/developit/greenlet) which lets you write javascript functions in the main code and then runs them in a web worker.
+
+Otherwise, you can use the [worker-loader](https://github.com/webpack-contrib/worker-loader) and configure it to read files ending in `.worker.js`. Here is the code:
 
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
@@ -565,9 +561,22 @@ module.exports = buildWebpackConfig([
 <details>
 <summary>How do I use a service worker?</summary>
 
-If you just need the app to work offline, use the [offline-plugin](https://github.com/NekR/offline-plugin).
+Since a service worker cannot be imported as a js module, you will have to put your `service-worker.js` in the `public/` folder.
 
-Otherwise, put the `service-worker.js` file in the `public/` folder, and register it normally.
+Doing so you **will not have any babel or typescript** transpilation in the service worker file. However you can still use ES6 since [browsers that support service workers also support ES6 out of the box](https://caniuse.com/#feat=serviceworkers).
+
+After having created the file, you can register it like this:
+
+```js
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register(`${process.env.PUBLIC_URL}/service-worker.js`)
+}
+```
+
+Using a service worker is tricky, [read more about integrating a service-worker in a SPA](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app).
+
+If you want to use more advanced pattern and strategies, check out [Workbox](https://developers.google.com/web/tools/workbox/), [here is its webpack plugin that might make your life easier](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin).
+
 </details>
 
 <details>
