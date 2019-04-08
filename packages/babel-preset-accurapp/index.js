@@ -11,10 +11,10 @@ module.exports = (context, opts = {}) => {
         {
           modules: false,
           useBuiltIns: 'usage',
-          // Enable stage 4 proposals, like object rest/spread
+          // Enable stage 4 proposals, like array.flatMap
           shippedProposals: true,
           // Use new corejs version
-          corejs: 3,
+          corejs: { version: 3, proposals: true },
         },
       ],
       [

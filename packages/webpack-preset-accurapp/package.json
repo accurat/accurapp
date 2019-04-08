@@ -20,7 +20,7 @@
     "customBlocks.js"
   ],
   "dependencies": {
-    "@babel/core": "7.4.0",
+    "@babel/core": "7.4.3",
     "@babel/plugin-transform-react-constant-elements": "7.2.0",
     "@svgr/webpack": "4.1.0",
     "@webpack-blocks/assets": "2.0.0-rc",
