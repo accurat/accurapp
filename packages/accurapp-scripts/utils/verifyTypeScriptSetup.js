@@ -14,7 +14,6 @@ const defaultTsConfig = {
     allowJs: true,
     allowSyntheticDefaultImports: true,
     resolveJsonModule: true,
-    isolatedModules: true,
     skipLibCheck: true,
     sourceMap: true,
     jsx: 'react',
