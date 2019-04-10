@@ -117,7 +117,7 @@ function buildWebpackConfig(config = []) {
       // https://github.com/mapbox/mapbox-gl-js/issues/4359
       // BUG
       // somehow this config is used also for the main application code 🤔
-      match('*.js', { include: /node_modules/, exclude: /(core-js|mapbox-gl)/ }, [
+      match('*.{js,jsx,ts,tsx}', { include: /node_modules/, exclude: /(core-js|mapbox-gl)/ }, [
         babel({
           // needed to use the polyfill useBuildIns: 'usage'
           // https://stackoverflow.com/questions/52407499
