@@ -215,6 +215,11 @@ You can define your variables in those different places, **in order of importanc
 SECRET=djah7s9ihdias7hdsaodhoas8hd
 ```
 
+Use as:
+```js
+const endpoint = process.env.SERVER || www.example.com
+```
+
 **NOTE**: if you don't wish to have too many variables in the scripts section, you could also use a combo of the `.env.example` during CI and the `.env` file in local. If the `process.env.CI` is true, `.env.example` is used instead of `.env`.
 
 #### Customizing Env Variables
