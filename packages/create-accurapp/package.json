@@ -1,6 +1,6 @@
 {
   "name": "create-accurapp",
-  "version": "4.1.4",
+  "version": "4.1.5",
   "description": "Create accurat apps with minimum flexible build configuration",
   "repository": "accurat/accurapp",
   "license": "MIT",
