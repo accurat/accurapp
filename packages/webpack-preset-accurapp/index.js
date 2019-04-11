@@ -129,7 +129,7 @@ function buildWebpackConfig(config = []) {
       ]),
     ]),
     // Order is important!! Especially for svgs
-    reactSvgLoader(),
+    when(process.env.DISABLE_REACT_SVG_LOADER !== 'true', [reactSvgLoader()]),
     fontLoader(),
     imageLoader(),
     videoLoader(),

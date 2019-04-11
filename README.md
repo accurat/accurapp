@@ -248,6 +248,8 @@ render() {
 
 - **WATCH_NODE_MODULES** - Set this to true if you want to recompile when any of the used `node_modules` changes (default `false`)
 
+- **DISABLE_REACT_SVG_LOADER** - Set this to true if you want to disable the "Svg as react component" loader to previde your own with a custom svgo config (default `false`)
+
 ## Available Env Variables
 These are the Env Variables that Accurapp provides you, you cannot modify them directly:
 - **NODE_ENV** - It is equal to `'development'` in the `yarn start` command and `'production'` in the `yarn build` command
