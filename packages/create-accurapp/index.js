@@ -118,6 +118,7 @@ templateOverwriting(path.resolve(appDir, 'README.md'), substitutions)
 
 if (shouldInstall) {
   const dependencies = [
+    'd3',
     'react',
     'react-dom',
     'lodash',
@@ -135,6 +136,7 @@ if (shouldInstall) {
 
   const typescriptDevDependencies = [
     'typescript',
+    '@types/d3',
     '@types/react',
     '@types/react-dom',
     '@types/node',
