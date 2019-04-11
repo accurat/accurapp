@@ -128,8 +128,7 @@ function buildWebpackConfig(config = []) {
         }),
       ]),
     ]),
-    // Order is important!! Especially for svgs
-    when(process.env.DISABLE_REACT_SVG_LOADER !== 'true', [reactSvgLoader()]),
+    // Order is important!! Don't remember why 🤔
     fontLoader(),
     imageLoader(),
     videoLoader(),
@@ -137,6 +136,7 @@ function buildWebpackConfig(config = []) {
     pdfLoader(),
     csvLoader(),
     json5Loader(),
+    when(process.env.DISABLE_REACT_SVG_LOADER !== 'true', [reactSvgLoader()]),
 
     // Import components without doing the ../../../
     resolveSrc(),

@@ -58,7 +58,7 @@ function extractCss() {
 function imageLoader() {
   return (context, { addLoader }) =>
     addLoader({
-      test: /\.(gif|ico|jpg|jpeg|png|webp|svg)$/,
+      test: /\.(gif|ico|jpg|jpeg|png|webp)$/,
       loader: 'url-loader',
       options: {
         limit: 10000,
