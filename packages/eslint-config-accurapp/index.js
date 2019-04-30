@@ -118,7 +118,6 @@ module.exports = {
     'react/jsx-max-props-per-line': ['warn', { maximum: 6 }],
     'react/self-closing-comp': ['warn', { component: true, html: true }],
     'react/jsx-first-prop-new-line': ['warn', 'multiline'],
-    'react/jsx-no-bind': ['warn', { ignoreRefs: true }],
     'react/no-typos': 'warn',
     'react/jsx-props-no-multi-spaces': 'warn',
     'react-hooks/rules-of-hooks': 'warn',
