@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-accurapp",
-  "version": "4.2.4",
+  "version": "4.2.5",
   "description": "ESLint configuration used by Accurat",
   "repository": "accurat/accurapp",
   "license": "MIT",
