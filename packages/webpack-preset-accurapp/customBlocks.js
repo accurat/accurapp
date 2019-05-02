@@ -186,6 +186,24 @@ function reactSvgLoader() {
 }
 
 /**
+ * Url-loader for svgs in css
+ */
+function cssSvgLoader() {
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.svg$/,
+      issuer: {
+        test: /\.css$/,
+      },
+      loader: 'url-loader',
+      options: {
+        limit: 10000,
+        name: fileNameTemplate,
+      },
+    })
+}
+
+/**
  * Suppot .json5 files https://json5.org/
  */
 function json5Loader() {
@@ -264,6 +282,7 @@ module.exports = {
   glslifyLoader,
   csvLoader,
   reactSvgLoader,
+  cssSvgLoader,
   json5Loader,
   resolveSrc,
   resolveTs,

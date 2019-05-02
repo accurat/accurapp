@@ -45,6 +45,7 @@ const {
   glslifyLoader,
   csvLoader,
   reactSvgLoader,
+  cssSvgLoader,
   json5Loader,
   resolveSrc,
   resolveTs,
@@ -131,6 +132,7 @@ function buildWebpackConfig(config = []) {
     // Order is important!! Don't remember why 🤔
     fontLoader(),
     imageLoader(),
+    cssSvgLoader(),
     videoLoader(),
     glslifyLoader(),
     pdfLoader(),
