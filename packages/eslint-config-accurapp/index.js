@@ -39,14 +39,7 @@ module.exports = {
     requireConfigFile: false,
   },
 
-  plugins: [
-    'import',
-    'flowtype',
-    'promise',
-    'react',
-    'react-hooks',
-    'no-copy-paste-default-export',
-  ],
+  plugins: ['import', 'promise', 'react', 'react-hooks', 'no-copy-paste-default-export'],
 
   settings: {
     react: {
