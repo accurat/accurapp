@@ -149,10 +149,11 @@ function reactSvgLoader() {
         test: /\.(js|jsx|ts|tsx)$/,
       },
       use: [
-        {
-          loader: 'babel-loader',
-          options: babelLoaderOptions,
-        },
+        // TODO this is probably not needed
+        // {
+        //   loader: 'babel-loader',
+        //   options: babelLoaderOptions,
+        // },
         {
           loader: '@svgr/webpack',
           options: {
@@ -191,7 +192,8 @@ function reactSvgLoader() {
 function cssSvgLoader() {
   return (context, { addLoader }) =>
     addLoader({
-      test: /\.svg$/,
+      // This needs to be different form the reactSvgLoader, otherwise it will merge
+      test: /(.*)\.svg$/,
       issuer: {
         test: /\.css$/,
       },
