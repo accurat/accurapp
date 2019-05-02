@@ -30,7 +30,7 @@ function createWebpackCompiler(onFirstReadyCallback = () => {}, onError = () => 
 
   const useTypeScript = fs.existsSync(`${appDir}/tsconfig.json`)
 
-  // You have changed a file, bundle is now "invalidated", and Webpack is recompiling a bundle
+  // You have changed a file, bundle is now "invalidated", and Webpack is recompiling a bundle.
   compiler.hooks.invalid.tap('invalid', filePath => {
     const filePathRelative = path.relative(appDir, filePath)
     console.log()

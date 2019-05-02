@@ -144,7 +144,7 @@ if (shouldInstall) {
     '@types/lodash',
   ]
 
-  // Require local package if we're testing
+  // Require local package if we're testing.
   if (isTesting) {
     devDependencies = devDependencies.map(dep => path.resolve(__dirname, `../${dep}`))
   }

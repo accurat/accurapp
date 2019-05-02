@@ -140,7 +140,7 @@ module.exports = {
     'no-copy-paste-default-export/default': 'error',
 
     // DISABLED ESLINT-CONFIG-STANDARD RULES
-    // disable no-debugger because otherwise prettier removes it on save,
+    // Disable no-debugger because otherwise prettier removes it on save,
     // this is ok because debugger is stripped by uglify
     'no-debugger': 'off',
     // disable eslint-plugin-node rules because they error

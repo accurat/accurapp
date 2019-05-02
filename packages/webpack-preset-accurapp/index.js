@@ -155,7 +155,7 @@ function buildWebpackConfig(config = []) {
     addPlugins([
       // Like webpack.DefinePlugin, but also reads the .env file, giving however priority to
       // the envs already there (like variable set from the command line or CI).
-      // Also it reads the .env.example instead if executed during a CI
+      // Also it reads the .env.example instead if executed during a CI.
       new Dotenv({
         ...(process.env.CI === 'true' && { path: './.env.example' }),
         systemvars: true,
