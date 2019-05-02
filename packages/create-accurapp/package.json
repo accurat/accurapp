@@ -25,7 +25,7 @@
     "chalk": "2.4.2",
     "figlet": "1.2.1",
     "fs-extra": "7.0.1",
-    "indent-string": "3.2.0",
+    "indent-string": "4.0.0",
     "meow": "5.0.0"
   }
 }
