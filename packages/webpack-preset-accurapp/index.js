@@ -45,6 +45,7 @@ const {
   glslifyLoader,
   csvLoader,
   reactSvgLoader,
+  reactColorSvgLoader,
   cssSvgLoader,
   json5Loader,
   resolveSrc,
@@ -138,7 +139,8 @@ function buildWebpackConfig(config = []) {
     pdfLoader(),
     csvLoader(),
     json5Loader(),
-    when(process.env.DISABLE_REACT_SVG_LOADER !== 'true', [reactSvgLoader()]),
+    reactSvgLoader(),
+    reactColorSvgLoader(),
 
     // Import components without doing the ../../../
     resolveSrc(),

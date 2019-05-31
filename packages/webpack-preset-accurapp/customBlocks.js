@@ -141,10 +141,12 @@ function csvLoader() {
 // Allows you to use two kinds of imports for SVG:
 // import logoUrl from './logo.svg'; gives you the URL.
 // import { ReactComponent as Logo } from './logo.svg'; gives you a component.
+// import { ReactComponent as Logo } from './logo.colors.svg'; gives you a component keeping its colors.
 function reactSvgLoader() {
   return (context, { addLoader }) =>
     addLoader({
       test: /\.svg$/,
+      exclude: /colors\.svg$/,
       issuer: {
         test: /\.(js|jsx|ts|tsx)$/,
       },
@@ -171,6 +173,50 @@ function reactSvgLoader() {
                 { removeDimensions: true },
                 { convertColors: { currentColor: true } },
                 { cleanupIDs: { minify: false } },
+              ],
+            },
+          },
+        },
+        {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: fileNameTemplate,
+          },
+        },
+      ],
+    })
+}
+function reactColorSvgLoader() {
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /colors\.svg$/,
+      issuer: {
+        test: /\.(js|jsx|ts|tsx)$/,
+      },
+      use: [
+        // TODO this is probably not needed
+        // {
+        //   loader: 'babel-loader',
+        //   options: babelLoaderOptions,
+        // },
+        {
+          loader: '@svgr/webpack',
+          options: {
+            titleProp: true,
+            svgoConfig: {
+              multipass: true,
+              pretty: process.env.NODE_ENV === 'development',
+              indent: 2,
+              ref: true,
+              plugins: [
+                { sortAttrs: true },
+                { inlineStyles: { onlyMatchedOnce: false } },
+                { removeViewBox: false },
+                { removeDimensions: true },
+                { cleanupIDs: false },
+                { prefixIds: false },
+                { mergePaths: false },
               ],
             },
           },
@@ -284,6 +330,7 @@ module.exports = {
   glslifyLoader,
   csvLoader,
   reactSvgLoader,
+  reactColorSvgLoader,
   cssSvgLoader,
   json5Loader,
   resolveSrc,

@@ -248,8 +248,6 @@ render() {
 
 - **WATCH_NODE_MODULES** - Set this to true if you want to recompile when any of the used `node_modules` changes (default `false`)
 
-- **DISABLE_REACT_SVG_LOADER** - Set this to true if you want to disable the "Svg as react component" loader to previde your own with a custom svgo config (default `false`)
-
 ## Available Env Variables
 These are the Env Variables that Accurapp provides you, you cannot modify them directly:
 - **NODE_ENV** - It is equal to `'development'` in the `yarn start` command and `'production'` in the `yarn build` command
@@ -429,6 +427,8 @@ function Edit() {
 }
 ```
 Under the hood, the loader basically wraps the svg file inside a react component, so you can treat it as such.
+
+This strips the svg file from its original styles, because it inherits the style from the color you give it through `fill="currentColor"`. If you want to keep the colors instead, call the svg like this: `pencil.colors.svg`.
 
 Furthermore it optimizes and minifies the svg using [svgo](https://github.com/svg/svgo), so it cleans up automatically the ugly and noisy svg that Illustrator exports 🙌.
 </details>
