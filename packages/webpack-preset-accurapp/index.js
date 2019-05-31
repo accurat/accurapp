@@ -226,6 +226,7 @@ function buildWebpackConfig(config = []) {
           ignored: process.env.WATCH_NODE_MODULES === 'true' ? undefined : /node_modules/,
         },
         overlay: false,
+        disableHostCheck: true,
       }),
       eslint(),
       addPlugins([
