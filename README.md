@@ -55,29 +55,22 @@ npx create-accurapp project-name
 
 Then you just `cd project-name`, run `yarn start` and start creating awesome stuff! 🎉
 
-#### Setting up bitbucket
-1. Create a new repo - [link](https://bitbucket.org/repo/create)
-1. Be sure to choose `accurat` as Owner, not yourself.
-1. Choose `Get your local Git repository on Bitbucket` and follow the instructions
+#### Setting up github
+1. Create a new repo - [link](https://github.com/organizations/accurat/repositories/new)
+1. Leave it empty, and follow the instructions displayed
 
 #### Setting up the automatic deploy
-If you're using bitbucket pipelines:
-1. Go into `Settings > Pipelines - Settings` and enable Bitbucket Pipelines
-1. Go into `Settings > Pipelines - Environment Variables` and add the environment variables `DEPLOY_CUSTOMER`, `DEPLOY_PROJECT`, `SLACK_CHANNEL`
-
-Otherwise if you're using netlify:
 1. Login into [netlify.com](https://app.netlify.com/)
 1. Click `New site from Git`
-1. Click `Bitbucket` and select the repo you created from the list
+1. Click `Github` and select the repo you created from the list
 1. Select `accurat` from the team list
 1. Create the project
 1. Go into `Site settings` and click `Change site name` to update the generated url with a more appropriate one
-1. Go into `Build & deploy` > `Edit Settings` and select `Branch deploys: All`
+1. Go into `Build & deploy` > `Edit Settings` and select `Branch deploys: All` if you want to deploy every branch
 1. To enable **slack notifications**
-  1. First you have to get the incoming webhook url in slack by going to `Customize Slack` > `Configure apps` > `Custom integrations` > `Incoming WebHooks` and click `Add configuration`
+  1. First you have to get the incoming webhook url pinned in the #dev channel on slack
   1. Then you have to paste it in `Build & deploy` > `Deploy notifications` > `Slack` > `Deploy succeeded`
 1. Deploy site!
-1. Enable the slack notifications to the desired channel
 
 #### Commands
 These are the available commands once you created a project:
