@@ -8,12 +8,17 @@
     "create-test-app": "./test/create-test-app.sh",
     "create-test-app-build": "(yarn create-test-app && cd test-app/ && yarn build)",
     "create-test-app-start": "(yarn create-test-app && cd test-app/ && BROWSER=false yarn start)",
-    "publish": "is-git-status-clean && lerna publish --conventional-commits"
+    "publish": "is-git-status-clean && lerna publish --conventional-commits --message 'chore: 🚀 Publish'"
   },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "workspaces": [
     "packages/*"
