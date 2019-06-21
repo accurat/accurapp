@@ -90,6 +90,13 @@ const postcssOptions = {
   ],
 }
 
+const babelOptions = {
+  cacheDirectory: true,
+  compact: process.env.NODE_ENV === 'production',
+  // Don't waste time on Gzipping the cache during dev
+  cacheCompression: process.env.NODE_ENV === 'production',
+}
+
 function buildWebpackConfig(config = []) {
   return createConfig([
     entryPoint(useTypescript ? './src/index.tsx' : './src/index.js'),
@@ -110,6 +117,8 @@ function buildWebpackConfig(config = []) {
     ]),
     match('*.{js,jsx,ts,tsx}', { exclude: /node_modules/ }, [
       babel({
+        ...babelOptions,
+        // Fix because it's reading the wrong .babelrc somehow
         babelrc: false,
         ...babelrc,
       }),
@@ -121,6 +130,7 @@ function buildWebpackConfig(config = []) {
       // somehow this config is used also for the main application code 🤔
       match('*.{js,jsx,ts,tsx}', { include: /node_modules/, exclude: /(core-js|mapbox-gl)/ }, [
         babel({
+          ...babelOptions,
           // needed to use the polyfill useBuildIns: 'usage'
           // https://stackoverflow.com/questions/52407499
           sourceType: 'unambiguous',

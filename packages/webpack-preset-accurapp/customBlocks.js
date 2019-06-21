@@ -3,16 +3,8 @@ const TerserPlugin = require('terser-webpack-plugin')
 
 const fileNameTemplate = '[name].[contenthash:8].[ext]'
 
-const babelLoaderOptions = {
-  compact: process.env.NODE_ENV === 'production',
-  cacheDirectory: true,
-  // Don't waste time on Gzipping the cache during dev
-  cacheCompression: process.env.NODE_ENV === 'production',
-}
-
 /**
- * The thread-loader parallelizes code compilation, useful with babel since
- * it transpiles both application javascript and node_modules javascript
+ * Simple babel-loader. The @webpack-blocks/babel shares the babel config in the context, which was giving us problems.
  */
 function babel(options = {}) {
   return (context, { addLoader }) =>
@@ -21,15 +13,8 @@ function babel(options = {}) {
       test: /\.(js|jsx)$/,
       use: [
         {
-          loader: 'thread-loader',
-          options: {
-            // Keep workers alive for more effective watch mode
-            ...(process.env.NODE_ENV === 'development' && { poolTimeout: Infinity }),
-          },
-        },
-        {
           loader: 'babel-loader',
-          options: Object.assign(babelLoaderOptions, options),
+          options,
         },
       ],
       ...context.match,
@@ -151,11 +136,6 @@ function reactSvgLoader() {
         test: /\.(js|jsx|ts|tsx)$/,
       },
       use: [
-        // TODO this is probably not needed
-        // {
-        //   loader: 'babel-loader',
-        //   options: babelLoaderOptions,
-        // },
         {
           loader: '@svgr/webpack',
           options: {
@@ -195,11 +175,6 @@ function reactColorSvgLoader() {
         test: /\.(js|jsx|ts|tsx)$/,
       },
       use: [
-        // TODO this is probably not needed
-        // {
-        //   loader: 'babel-loader',
-        //   options: babelLoaderOptions,
-        // },
         {
           loader: '@svgr/webpack',
           options: {
