@@ -718,4 +718,6 @@ Please, see [`@joshbuchea`'s head repo](https://gethead.info/).
 ## Contributing
 If you make some edits and wish to test them locally you can run `yarn test` for an end-to-end test, or `yarn create-test-app` which creates a test app using the local packages.
 
+When making a commit, you have to follow the [Angular commit message guidelines](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular). This way, when making a new release, a CHANGELOG.md is automatically generated.
+
 To publish the updated packages, run `yarn run publish`, lerna will detect the packages you changed and ask you for the new version number.
