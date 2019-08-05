@@ -41,7 +41,7 @@ module.exports = (context, opts = {}) => {
       require('@babel/plugin-proposal-export-default-from').default,
       require('@babel/plugin-proposal-logical-assignment-operators').default,
       require('@babel/plugin-proposal-optional-chaining').default,
-      [require('@babel/plugin-proposal-pipeline-operator').default, { proposal: 'smart' }],
+      [require('@babel/plugin-proposal-pipeline-operator').default, { proposal: 'minimal' }],
       require('@babel/plugin-proposal-nullish-coalescing-operator').default,
       require('@babel/plugin-proposal-do-expressions').default,
 
