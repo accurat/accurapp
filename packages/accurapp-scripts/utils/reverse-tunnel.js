@@ -1,5 +1,5 @@
-const { Client } = require('ssh2')
 const { Socket } = require('net')
+const { Client } = require('ssh2')
 
 function noop() {}
 
@@ -7,7 +7,7 @@ function createClient(config, onReadyCb = noop, onConnectionCb = noop) {
   const conn = new Client()
   const errors = []
 
-  conn.on('ready', function() {
+  conn.on('ready', () => {
     onReadyCb()
     conn.forwardIn(config.dstHost, config.dstPort, (err, port) => {
       if (err) return errors.push(err)

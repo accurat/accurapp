@@ -1,9 +1,9 @@
-const got = require('got')
 const os = require('os')
+const got = require('got')
 const { createClient } = require('./reverse-tunnel')
 const { extractCurrentRepo, extractCurrentBranch } = require('../utils/git-utils')
 
-const { USER, SSH_AUTH_SOCK, BASE_DOMAIN = 'internal.accurat.io' } = process.env
+const { USER, SSH_AUTH_SOCK, TUNNEL_DOMAIN = 'internal.accurat.io' } = process.env
 
 function generateSubdomain() {
   const repo = extractCurrentRepo()
@@ -15,7 +15,7 @@ function generateSubdomain() {
 
 function tunnelPort(localPort, subdomain) {
   return got
-    .post(`https://${BASE_DOMAIN}?subdomain=${subdomain}`, { json: true })
+    .post(`https://${TUNNEL_DOMAIN}?subdomain=${subdomain}`, { json: true })
     .then(res => {
       const { port, error } = res.body
       if (error) throw error
@@ -25,7 +25,7 @@ function tunnelPort(localPort, subdomain) {
       return new Promise((resolve, reject) => {
         return createClient(
           {
-            host: BASE_DOMAIN,
+            host: TUNNEL_DOMAIN,
             port: 2222,
             dstHost: 'localhost',
             dstPort: dstPort,
@@ -35,7 +35,7 @@ function tunnelPort(localPort, subdomain) {
             agent: SSH_AUTH_SOCK,
             username: USER,
           },
-          () => resolve(`https://${subdomain}.${BASE_DOMAIN}`)
+          () => resolve(`https://${subdomain}.${TUNNEL_DOMAIN}`)
         )
       })
     })

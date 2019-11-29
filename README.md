@@ -17,30 +17,32 @@ but significant amounts of code were rewritten and simplified. Here are some shi
 - **JSON5 webpack loader** to import .json5 files. [Read more about JSON5 here](https://json5.org/).
 
 ## Table of contents
+- [!Accurapp](#accurapp)
+- [Table of contents](#table-of-contents)
 - [Creating a new project](#creating-a-new-project)
+    - [Setting up github](#setting-up-github)
+    - [Setting up the automatic deploy](#setting-up-the-automatic-deploy)
+    - [Commands](#commands)
 - [Customization](#customization)
-  - [Customizing Webpack](#customizing-webpack)
-  - [Customizing Eslint](#customizing-eslint)
-  - [Customizing Babel](#customizing-babel)
-  - [Setting Env Variables](#setting-env-variables)
-  - [Customizing Env Variables](#customizing-env-variables)
+    - [Customizing Webpack](#customizing-webpack)
+    - [Customizing Eslint](#customizing-eslint)
+    - [Customizing Babel](#customizing-babel)
+    - [Setting Env Variables](#setting-env-variables)
+    - [Customizing Env Variables](#customizing-env-variables)
 - [Available Env Variables](#available-env-variables)
 - [Project Scaffolding](#project-scaffolding)
 - [F.A.Q.](#faq)
-  - [How do I enable hot reloading for the state?](#faq)
-  - [Where do I put the images?](#faq)
-  - [Where do I put the custom fonts?](#faq)
-  - [What is the public folder for?](#faq)
-  - [How do I handle svg files?](#faq)
-  - [How do I enable TypeScript?](#faq)
-  - [How do I override a webpack loader?](#faq)
-  - [What's all the fuss about FUSS?](#faq)
-  - [How do I enable prettier?](#faq)
-  - [I need to support IE11. What do I do?](#faq)
-  - [How do I use a web worker?](#faq)
-  - [How do I use a service worker?](#faq)
-  - [I need title and meta tags for each route for SEO. How do I do it?](#faq)
-  - [I need to build for Electron. How do I do it?](#faq)
+- [Install `react-helmet` and `react-snap`](#install-react-helmet-and-react-snap)
+- [Add meta tags for each route in the `render` function](#add-meta-tags-for-each-route-in-the-render-function)
+- [Add `react-snap` in `src/index.js`](#add-react-snap-in-srcindexjs)
+- [Add `react-snap` to `package.json`](#add-react-snap-to-packagejson)
+- [Add the `react-snap` config in `bitbucket-pipelines.yml`](#add-the-react-snap-config-in-bitbucket-pipelinesyml)
+- [OK, setup done! Now, how do I check if it is working?](#ok-setup-done-now-how-do-i-check-if-it-is-working)
+- [Basic troubleshooting: `react-snap` works properly, but no links are found](#basic-troubleshooting-react-snap-works-properly-but-no-links-are-found)
+- [Basic troubleshooting: I get a weird error for 404 pages](#basic-troubleshooting-i-get-a-weird-error-for-404-pages)
+- [Basic troubleshooting: There is unknown code in my built index.html. Is it malicious? How do I remove it?](#basic-troubleshooting-there-is-unknown-code-in-my-built-indexhtml-is-it-malicious-how-do-i-remove-it)
+- [Further troubleshooting](#further-troubleshooting)
+- [What goes in the `<head>`?](#what-goes-in-the-head)
 - [Contributing](#contributing)
 
 ## Creating a new project
@@ -733,6 +735,22 @@ Please, see [`@joshbuchea`'s head repo](https://gethead.info/).
 <summary>I need to build for Electron. How do I do it?</summary>
 
 [This guide](https://gist.github.com/matthewjberger/6f42452cb1a2253667942d333ff53404) is a good one to follow, and [here is a working example](https://github.com/nkint/accurapp-electron) of accurapp with electron. Good luck!
+</details>
+
+<details>
+<summary>Someone else needs to see what I'm working on, how can I show it?</summary>
+
+When running `yarn start` you can add `--exposed` as a flag.
+
+The webpack server will try allocate a subdomain on a remote server and open an ssh reverse tunnel in order to receive every request that the remote will receive on that domain. As soon as the subdomain is allocated, the remote server will also generate a valid https certificate.
+
+The remote domain is set as the env variable `TUNNEL_DOMAIN` and defaults to `internal.accurat.io`, but can be set to whatever server is running an instance of the [SSH-Tuna server infrastucture](https://github.com/accurat/ssh-tuna)
+
+The allocated domain will have the following structure:
+- If the script is running from inside a git project and is on a branch different than master: `{branch}.{repo}.{TUNNEL_DOMAIN}`
+- If the script is running from inside a git project and is on master: `{repo}.{TUNNEL_DOMAIN}`
+- If the script is running from outside a git project: `{hostname}.{TUNNEL_DOMAIN}`
+
 </details>
 
 ## Contributing
