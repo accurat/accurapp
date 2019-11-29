@@ -10,6 +10,7 @@ const WebpackDevServer = require('webpack-dev-server')
 const openOrRefreshBrowser = require('react-dev-utils/openBrowser')
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils')
 const { log, coloredBanner } = require('../utils/logging-utils')
+const { tunnelPort, generateSubdomain } = require('../utils/tunnel-client')
 const { createWebpackCompiler, readWebpackConfig } = require('../utils/webpack-utils')
 const { verifyTypeScriptSetup } = require('../utils/verifyTypeScriptSetup')
 const {
@@ -27,6 +28,7 @@ process.env.LATEST_TAG = extractLatestTag()
 const HOST = process.env.HOST || '0.0.0.0'
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8000
 const PROTOCOL = process.env.HTTPS === 'true' ? 'https' : 'http'
+const EXPOSED = process.argv.includes('--exposed')
 
 const appDir = process.cwd()
 verifyTypeScriptSetup(appDir)
@@ -51,6 +53,15 @@ function runDevServer(port) {
     openOrRefreshBrowser(urls.localUrlForBrowser)
   })
 
+  EXPOSED &&
+    tunnelPort(port, generateSubdomain())
+      .then(url => {
+        log.info(`App exposed to the interwebs on: ${chalk.cyan(url)}`)
+      })
+      .catch(err => {
+        log.err(err)
+      })
+
   const shutDownServer = () => {
     devServer.close()
     process.exit()
@@ -63,14 +74,12 @@ console.log(coloredBanner('/||||/| accurapp'))
 
 detect(DEFAULT_PORT)
   .then(port => {
-    if (port === DEFAULT_PORT) {
-      runDevServer(port)
-    } else {
+    if (!port === DEFAULT_PORT) {
       log.ok(
         `Something is already running on port ${DEFAULT_PORT}, switching to ${chalk.blue(port)}...`
       )
-      runDevServer(port)
     }
+    runDevServer(port)
     return port
   })
   .catch(err => {

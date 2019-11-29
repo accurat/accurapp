@@ -36,9 +36,29 @@ function extractLatestTag() {
   }
 }
 
+function extractCurrentBranch() {
+  try {
+    return cp.execSync('git rev-parse --abbrev-ref HEAD')
+  } catch (e) {
+    // Probably git is not available, return an empty string instead
+    return ''
+  }
+}
+
+function extractCurrentRepo() {
+  try {
+    return cp.execSync('basename -s .git `git config --get remote.origin.url`')
+  } catch (e) {
+    // Probably git is not available, return an empty string instead
+    return ''
+  }
+}
+
 module.exports = {
   extractBrowserslistString,
   extractLatestCommitHash,
   extractLatestCommitTimestamp,
   extractLatestTag,
+  extractCurrentBranch,
+  extractCurrentRepo,
 }
