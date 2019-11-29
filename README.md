@@ -542,7 +542,10 @@ For simple use-cases you can use [greenlet](https://github.com/developit/greenle
 
 Otherwise, you can use the [worker-loader](https://github.com/webpack-contrib/worker-loader) and configure it to read files ending in `.worker.js`. Here is the code:
 
+If you're also using typescript, add `"webworker"` in `tsconfig.json` under `compilerOptions.lib`.
+
 ```js
+// weback.config.js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 
 function workerLoader() {
@@ -556,6 +559,48 @@ module.exports = buildWebpackConfig([
   workerLoader(),
 ])
 ```
+
+```js
+// src/workers/myawesome.worker.ts
+
+import { get } from 'lodash'
+// you can import modules in this worker
+
+const ctx: Worker = self as any
+
+// Listen to message from the parent thread
+ctx.addEventListener('message', event => {
+  console.log(event)
+  // Post data to parent thread
+  ctx.postMessage({ data: 'maronn' })
+})
+```
+
+```js
+// src/typings/custom/index.d.ts
+declare module 'worker-loader!*' {
+  class WebpackWorker extends Worker {
+    constructor()
+  }
+
+  export = WebpackWorker
+}
+```
+
+```js
+// src/index.tsx
+import Worker from 'worker-loader!./workers/myawesome.worker.ts'
+
+const worker = new Worker()
+
+worker.postMessage({ data: 1000 })
+worker.addEventListener('message', event => {
+  console.log(event)
+})
+
+React.dosomethingcool(<blink></marquee>)
+```
+
 </details>
 
 <details>
