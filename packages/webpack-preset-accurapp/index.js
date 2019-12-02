@@ -164,6 +164,9 @@ function buildWebpackConfig(config = []) {
       },
     }),
 
+    // Needed for the worker-loader.
+    setOutput({ globalObject: 'this' }),
+
     addPlugins([
       // Like webpack.DefinePlugin, but also reads the .env file, giving however priority to
       // the envs already there (like variable set from the command line or CI).

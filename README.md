@@ -540,22 +540,70 @@ You still have some css fixes to do, for example flexbox behaves weirdly, [here 
 
 For simple use-cases you can use [greenlet](https://github.com/developit/greenlet) which lets you write javascript functions in the main code and then runs them in a web worker.
 
-Otherwise, you can use the [worker-loader](https://github.com/webpack-contrib/worker-loader) and configure it to read files ending in `.worker.js`. Here is the code:
+Otherwise, you can use the [worker-loader](https://github.com/webpack-contrib/worker-loader) and configure it to read files ending in `.worker.js` or `.worker.ts` for typescript files. Here is the code:
 
 ```js
+// weback.config.js
+
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 
 function workerLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.worker\.js$/,
-    loader: 'worker-loader',
-  })
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.worker\.(js|ts)$/,
+      loader: 'worker-loader',
+      enforce: 'post',
+    })
 }
 
 module.exports = buildWebpackConfig([
   workerLoader(),
 ])
 ```
+
+```ts
+// src/workers/myawesome.worker.ts
+
+// You can import modules in this worker
+import { get } from 'lodash'
+
+const ctx: Worker = self as any
+
+// Listen to message from the parent thread
+ctx.addEventListener('message', event => {
+  console.log(event)
+  // Post data to parent thread
+  ctx.postMessage({ data: 'maronn' })
+})
+```
+
+```ts
+// src/types.d.ts
+
+/// <reference types="accurapp-scripts" />
+
+declare module '*.worker.ts' {
+  class WebpackWorker extends Worker {
+    constructor()
+  }
+
+  export = WebpackWorker
+}
+```
+
+```tsx
+// src/index.tsx
+
+import Worker from './workers/myawesome.worker.ts'
+
+const worker = new Worker()
+
+worker.postMessage({ data: 1000 })
+worker.addEventListener('message', event => {
+  console.log(event)
+})
+```
+
 </details>
 
 <details>
