@@ -164,8 +164,7 @@ function buildWebpackConfig(config = []) {
       },
     }),
 
-    // Necessary for using webworker, won't change anything important even
-    // when not used.
+    // Needed for the worker-loader.
     setOutput({ globalObject: 'this' }),
 
     addPlugins([
