@@ -1,6 +1,5 @@
 const path = require('path')
 const fs = require('fs-extra')
-const resolve = require('resolve')
 const globby = require('globby').sync
 const { log, exec } = require('./logging-utils')
 
@@ -46,7 +45,7 @@ function verifyTypeScriptSetup(appDir, { shouldInstall = true } = {}) {
 
   const appTsConfig = path.resolve(appDir, 'tsconfig.json')
   const appTypes = path.resolve(appDir, 'src/types.d.ts')
-  const appNodeModules = path.resolve(appDir, 'node_modules')
+  const appPkg = JSON.parse(fs.readFileSync(path.resolve(appDir, 'package.json'), 'utf8'))
   const appSrc = path.resolve(appDir, 'src')
 
   if (!areThereTypescriptFiles(appSrc)) {
@@ -64,14 +63,10 @@ function verifyTypeScriptSetup(appDir, { shouldInstall = true } = {}) {
   }
 
   if (shouldInstall) {
-    try {
-      resolve.sync('typescript', { basedir: appNodeModules })
-    } catch (e) {
+    if (!appPkg.devDependencies.typescript && !appPkg.dependencies.typescript) {
       log.ok(`Installing latest version of typescript`)
-      exec(
-        'yarn add --dev typescript @types/react @types/react-dom @types/node @types/webpack-env @types/lodash',
-        appDir
-      )
+      exec('yarn add --dev typescript @types/node @types/webpack-env', appDir)
+      exec('yarn add @types/react @types/react-dom @types/lodash', appDir)
     }
   }
 }

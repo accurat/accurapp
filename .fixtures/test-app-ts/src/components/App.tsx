@@ -1,10 +1,8 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-// text mapbox-gl and uglify ❤️
-import mapboxgl from 'mapbox-gl'
+import { ReactComponent as Logo } from 'images/logo.svg'
 // test packages written for newer node version
 import ky from 'ky'
-import { ReactComponent as Logo } from 'images/logo.svg'
 import mmm from 'images/mmmpiselli.jpg'
 import styles from './App.module.css'
 
@@ -18,8 +16,8 @@ export class App extends React.Component {
     // test object spread
     const { ...props } = this.props
 
-    // Test delicate modules
-    console.log(mapboxgl, ky)
+    // test delicate packages
+    console.log(ky)
 
     return (
       <div {...props}>

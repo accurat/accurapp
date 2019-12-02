@@ -125,7 +125,7 @@ function buildWebpackConfig(config = []) {
       }),
     ]),
     when(process.env.TRANSPILE_NODE_MODULES === 'true', [
-      // mapbox-gl ecluded because of
+      // mapbox-gl excluded because of
       // https://github.com/mapbox/mapbox-gl-js/issues/4359
       // BUG
       // somehow this config is used also for the main application code 🤔

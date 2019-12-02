@@ -112,7 +112,10 @@ log.ok(`Creating dir structure`)
 fs.copySync(path.resolve(__dirname, 'template'), appDir)
 fs.renameSync(path.resolve(appDir, 'gitignore'), path.resolve(appDir, '.gitignore'))
 
-const substitutions = [[/\{\{APP_NAME\}\}/g, appName], [/\{\{APP_TITLE\}\}/g, appTitle]]
+const substitutions = [
+  [/\{\{APP_NAME\}\}/g, appName],
+  [/\{\{APP_TITLE\}\}/g, appTitle],
+]
 templateOverwriting(path.resolve(appDir, 'src/index.html'), substitutions)
 templateOverwriting(path.resolve(appDir, 'README.md'), substitutions)
 
@@ -127,6 +130,8 @@ if (shouldInstall) {
     'tachyons-extra',
   ]
 
+  const typescriptDependencies = ['@types/d3', '@types/react', '@types/react-dom', '@types/lodash']
+
   let devDependencies = [
     'accurapp-scripts',
     'webpack-preset-accurapp',
@@ -134,20 +139,14 @@ if (shouldInstall) {
     'babel-preset-accurapp',
   ]
 
-  const typescriptDevDependencies = [
-    'typescript',
-    '@types/d3',
-    '@types/react',
-    '@types/react-dom',
-    '@types/node',
-    '@types/webpack-env',
-    '@types/lodash',
-  ]
+  const typescriptDevDependencies = ['typescript', '@types/node', '@types/webpack-env']
 
   // Require local package if we're testing.
   if (isTesting) {
     devDependencies = devDependencies.map(dep => path.resolve(__dirname, `../${dep}`))
   }
+
+  const dependenciesToInstall = [...dependencies, ...(useTypescript ? typescriptDependencies : [])]
 
   const devDependenciesToInstall = [
     ...devDependencies,
@@ -159,8 +158,8 @@ if (shouldInstall) {
   )
   exec(`yarn add --dev ${devDependenciesToInstall.join(' ')}`, appDir)
 
-  log.ok(`Installing dependencies: ${dependencies.map(d => chalk.cyan(d)).join(', ')}`)
-  exec(`yarn add ${dependencies.join(' ')}`, appDir)
+  log.ok(`Installing dependencies: ${dependenciesToInstall.map(d => chalk.cyan(d)).join(', ')}`)
+  exec(`yarn add ${dependenciesToInstall.join(' ')}`, appDir)
 } else {
   log.info(`Not running 'yarn add/install' because you chose so.`)
 }
