@@ -56,7 +56,7 @@ function runDevServer(port) {
   EXPOSED &&
     tunnelPort(port, generateSubdomain())
       .then(url => {
-        log.info(`App exposed to the interwebs on: ${chalk.cyan(url)}`)
+        log.info(`Even from far away at: ${chalk.cyan(url)}`)
       })
       .catch(err => {
         log.err(err)
