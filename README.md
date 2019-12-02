@@ -16,30 +16,32 @@ but significant amounts of code were rewritten and simplified. Here are some shi
 - **JSON5 webpack loader** to import .json5 files. [Read more about JSON5 here](https://json5.org/).
 
 ## Table of contents
+- [!Accurapp](#accurapp)
+- [Table of contents](#table-of-contents)
 - [Creating a new project](#creating-a-new-project)
+    - [Setting up github](#setting-up-github)
+    - [Setting up the automatic deploy](#setting-up-the-automatic-deploy)
+    - [Commands](#commands)
 - [Customization](#customization)
-  - [Customizing Webpack](#customizing-webpack)
-  - [Customizing Eslint](#customizing-eslint)
-  - [Customizing Babel](#customizing-babel)
-  - [Setting Env Variables](#setting-env-variables)
-  - [Customizing Env Variables](#customizing-env-variables)
+    - [Customizing Webpack](#customizing-webpack)
+    - [Customizing Eslint](#customizing-eslint)
+    - [Customizing Babel](#customizing-babel)
+    - [Setting Env Variables](#setting-env-variables)
+    - [Customizing Env Variables](#customizing-env-variables)
 - [Available Env Variables](#available-env-variables)
 - [Project Scaffolding](#project-scaffolding)
 - [F.A.Q.](#faq)
-  - [How do I enable hot reloading for the state?](#faq)
-  - [Where do I put the images?](#faq)
-  - [Where do I put the custom fonts?](#faq)
-  - [What is the public folder for?](#faq)
-  - [How do I handle svg files?](#faq)
-  - [How do I enable TypeScript?](#faq)
-  - [How do I override a webpack loader?](#faq)
-  - [What's all the fuss about FUSS?](#faq)
-  - [How do I enable prettier?](#faq)
-  - [I need to support IE11. What do I do?](#faq)
-  - [How do I use a web worker?](#faq)
-  - [How do I use a service worker?](#faq)
-  - [I need title and meta tags for each route for SEO. How do I do it?](#faq)
-  - [I need to build for Electron. How do I do it?](#faq)
+- [Install `react-helmet` and `react-snap`](#install-react-helmet-and-react-snap)
+- [Add meta tags for each route in the `render` function](#add-meta-tags-for-each-route-in-the-render-function)
+- [Add `react-snap` in `src/index.js`](#add-react-snap-in-srcindexjs)
+- [Add `react-snap` to `package.json`](#add-react-snap-to-packagejson)
+- [Add the `react-snap` config in `bitbucket-pipelines.yml`](#add-the-react-snap-config-in-bitbucket-pipelinesyml)
+- [OK, setup done! Now, how do I check if it is working?](#ok-setup-done-now-how-do-i-check-if-it-is-working)
+- [Basic troubleshooting: `react-snap` works properly, but no links are found](#basic-troubleshooting-react-snap-works-properly-but-no-links-are-found)
+- [Basic troubleshooting: I get a weird error for 404 pages](#basic-troubleshooting-i-get-a-weird-error-for-404-pages)
+- [Basic troubleshooting: There is unknown code in my built index.html. Is it malicious? How do I remove it?](#basic-troubleshooting-there-is-unknown-code-in-my-built-indexhtml-is-it-malicious-how-do-i-remove-it)
+- [Further troubleshooting](#further-troubleshooting)
+- [What goes in the `<head>`?](#what-goes-in-the-head)
 - [Contributing](#contributing)
 
 ## Creating a new project
@@ -540,19 +542,19 @@ You still have some css fixes to do, for example flexbox behaves weirdly, [here 
 
 For simple use-cases you can use [greenlet](https://github.com/developit/greenlet) which lets you write javascript functions in the main code and then runs them in a web worker.
 
-Otherwise, you can use the [worker-loader](https://github.com/webpack-contrib/worker-loader) and configure it to read files ending in `.worker.js`. Here is the code:
-
-If you're also using typescript, add `"webworker"` in `tsconfig.json` under `compilerOptions.lib`.
+Otherwise, you can use the [worker-loader](https://github.com/webpack-contrib/worker-loader) and configure it to read files ending in `.worker.js` or `.worker.ts` for typescript files. Here is the code:
 
 ```js
 // weback.config.js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 
 function workerLoader() {
-  return (context, { addLoader }) => addLoader({
-    test: /\.worker\.js$/,
-    loader: 'worker-loader',
-  })
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.worker\.(js|ts)$/,
+      loader: 'worker-loader',
+      enforce: 'post',
+    })
 }
 
 module.exports = buildWebpackConfig([
@@ -560,7 +562,7 @@ module.exports = buildWebpackConfig([
 ])
 ```
 
-```js
+```ts
 // src/workers/myawesome.worker.ts
 
 import { get } from 'lodash'
@@ -576,9 +578,11 @@ ctx.addEventListener('message', event => {
 })
 ```
 
-```js
-// src/typings/custom/index.d.ts
-declare module 'worker-loader!*' {
+```ts
+// src/types.d.ts
+
+/// <reference types="accurapp-scripts" />
+declare module '*.worker.ts' {
   class WebpackWorker extends Worker {
     constructor()
   }
@@ -587,9 +591,9 @@ declare module 'worker-loader!*' {
 }
 ```
 
-```js
+```tsx
 // src/index.tsx
-import Worker from 'worker-loader!./workers/myawesome.worker.ts'
+import Worker from './workers/myawesome.worker.ts'
 
 const worker = new Worker()
 
