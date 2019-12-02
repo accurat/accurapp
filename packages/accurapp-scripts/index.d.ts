@@ -87,3 +87,11 @@ declare module '*.csv' {
   const src: Array<{}>
   export default src
 }
+
+declare module '*.worker.ts' {
+  class WebpackWorker extends Worker {
+    constructor()
+  }
+
+  export = WebpackWorker
+}

@@ -48,6 +48,7 @@ const {
   reactColorSvgLoader,
   cssSvgLoader,
   json5Loader,
+  workerLoader,
   resolveSrc,
   resolveTs,
   terser,
@@ -149,8 +150,12 @@ function buildWebpackConfig(config = []) {
     pdfLoader(),
     csvLoader(),
     json5Loader(),
+    workerLoader(),
     reactSvgLoader(),
     reactColorSvgLoader(),
+
+    // Needed for the worker-loader.
+    setOutput({ globalObject: 'this' }),
 
     // Import components without doing the ../../../
     resolveSrc(),
@@ -163,9 +168,6 @@ function buildWebpackConfig(config = []) {
         name: 'vendors',
       },
     }),
-
-    // Needed for the worker-loader.
-    setOutput({ globalObject: 'this' }),
 
     addPlugins([
       // Like webpack.DefinePlugin, but also reads the .env file, giving however priority to

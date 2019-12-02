@@ -12,6 +12,7 @@ but significant amounts of code were rewritten and simplified. Here are some shi
 - **CSV webpack loader** to import .csv files as an array of JSONs.
 - **React SVG loader** to import .svg files as react components, useful for icons. Svgs get also optimized with [svgo](https://github.com/svg/svgo).
 - **CSS Modules** support in files that end with `*.module.css`. [Read more about CSS Modules here](https://github.com/css-modules/css-modules).
+- **Web Worker** bundling support in files that end with `*.worker.js` using the [worker-loader](https://github.com/webpack-contrib/worker-loader).
 - **CSS postprocessing** using postcss to enable [Autoprefixing](https://github.com/postcss/autoprefixer) and [CSS Nesting](https://github.com/postcss/postcss-nested).
 - **JSON5 webpack loader** to import .json5 files. [Read more about JSON5 here](https://json5.org/).
 
@@ -129,15 +130,15 @@ Or this is a way to add a custom loader.
 ```js
 const { buildWebpackConfig } = require('webpack-preset-accurapp')
 
-function workerLoader() {
+function customLoader() {
   return (context, { addLoader }) => addLoader({
-    test: /\.worker\.js$/,
-    loader: 'worker-loader',
+    test: /\.extension\.js$/,
+    loader: 'custom-loader',
   })
 }
 
 module.exports = buildWebpackConfig([
-  workerLoader(),
+  customLoader(),
 ])
 ```
 
@@ -540,55 +541,26 @@ You still have some css fixes to do, for example flexbox behaves weirdly, [here 
 
 For simple use-cases you can use [greenlet](https://github.com/developit/greenlet) which lets you write javascript functions in the main code and then runs them in a web worker.
 
-Otherwise, you can use the [worker-loader](https://github.com/webpack-contrib/worker-loader) and configure it to read files ending in `.worker.js` or `.worker.ts` for typescript files. Here is the code:
+Otherwise, you can name your file `*.worker.js` (or `*.worker.ts` if you use typescript) and import it normally, accurapp will take care of the rest (using [worker-loader](https://github.com/webpack-contrib/worker-loader) under the hood).
 
-```js
-// weback.config.js
-
-const { buildWebpackConfig } = require('webpack-preset-accurapp')
-
-function workerLoader() {
-  return (context, { addLoader }) =>
-    addLoader({
-      test: /\.worker\.(js|ts)$/,
-      loader: 'worker-loader',
-      enforce: 'post',
-    })
-}
-
-module.exports = buildWebpackConfig([
-  workerLoader(),
-])
-```
+For example, this is how you setup a typescript worker:
 
 ```ts
-// src/workers/myawesome.worker.ts
+// src/myawesome.worker.ts
 
 // You can import modules in this worker
 import { get } from 'lodash'
 
-const ctx: Worker = self as any
+declare global {
+  self: Worker
+}
 
 // Listen to message from the parent thread
-ctx.addEventListener('message', event => {
+self.addEventListener('message', event => {
   console.log(event)
   // Post data to parent thread
-  ctx.postMessage({ data: 'maronn' })
+  self.postMessage({ data: 'maronn' })
 })
-```
-
-```ts
-// src/types.d.ts
-
-/// <reference types="accurapp-scripts" />
-
-declare module '*.worker.ts' {
-  class WebpackWorker extends Worker {
-    constructor()
-  }
-
-  export = WebpackWorker
-}
 ```
 
 ```tsx

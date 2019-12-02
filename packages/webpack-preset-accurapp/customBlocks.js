@@ -238,6 +238,18 @@ function json5Loader() {
 }
 
 /**
+ * Import workers like any other module.
+ */
+function workerLoader() {
+  return (context, { addLoader }) =>
+    addLoader({
+      test: /\.worker\.(js|ts)$/,
+      loader: 'worker-loader',
+      enforce: 'post',
+    })
+}
+
+/**
  * You will be able to import starting from the src folder so you don't have to ../../../
  */
 function resolveSrc() {
@@ -308,6 +320,7 @@ module.exports = {
   reactColorSvgLoader,
   cssSvgLoader,
   json5Loader,
+  workerLoader,
   resolveSrc,
   resolveTs,
   terser,
