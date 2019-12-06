@@ -42,8 +42,12 @@ function runDevServer(port) {
     log.info(`The app is running at: ${chalk.cyan(urls.localUrlForTerminal)}`)
     log.info(`Or on your network at: ${chalk.cyan(urls.lanUrlForTerminal)}`)
     if (!EXPOSED) return
-    tunnelPort(port, generateSubdomain(), TUNNEL_DOMAIN, TUNNEL_SSH_PORT)
-      .then(url => log.info(`Even from far away at: ${chalk.cyan(url)}`))
+    const subdomain = generateSubdomain()
+    tunnelPort(port, subdomain, TUNNEL_DOMAIN, TUNNEL_SSH_PORT)
+      .then(client => {
+        const url = `https://${subdomain}.${TUNNEL_DOMAIN}`
+        log.info(`Even from far away at: ${chalk.cyan(url)}`)
+      })
       .catch(err => log.err(err))
   })
 
