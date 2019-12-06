@@ -47,7 +47,6 @@
     "resolve": "1.11.0",
     "semver": "6.1.1",
     "ssh-tuna": "^1.0.0",
-    "ssh2": "^0.8.6",
     "webpack": "4.34.0",
     "webpack-dev-server": "3.2.1"
   }
