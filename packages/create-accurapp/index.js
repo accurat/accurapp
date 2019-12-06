@@ -124,42 +124,33 @@ if (shouldInstall) {
     'd3',
     'react',
     'react-dom',
-    'lodash',
+    'lodash-es',
     'modern-normalize',
     '@accurat/tachyons-lite',
     'tachyons-extra',
+    ...(useTypescript ? ['@types/d3', '@types/react', '@types/react-dom', '@types/lodash-es'] : []),
   ]
-
-  const typescriptDependencies = ['@types/d3', '@types/react', '@types/react-dom', '@types/lodash']
 
   let devDependencies = [
     'accurapp-scripts',
     'webpack-preset-accurapp',
     'eslint-config-accurapp',
     'babel-preset-accurapp',
+    ...(useTypescript ? ['typescript', '@types/node', '@types/webpack-env'] : []),
   ]
-
-  const typescriptDevDependencies = ['typescript', '@types/node', '@types/webpack-env']
 
   // Require local package if we're testing.
   if (isTesting) {
-    devDependencies = devDependencies.map(dep => path.resolve(__dirname, `../${dep}`))
+    devDependencies = devDependencies.map(dep => dep.includes('accurapp') ? path.resolve(__dirname, `../${dep}`) : dep)
   }
 
-  const dependenciesToInstall = [...dependencies, ...(useTypescript ? typescriptDependencies : [])]
-
-  const devDependenciesToInstall = [
-    ...devDependencies,
-    ...(useTypescript ? typescriptDevDependencies : []),
-  ]
-
   log.ok(
-    `Installing dev dependencies: ${devDependenciesToInstall.map(d => chalk.cyan(d)).join(', ')}`
+    `Installing dev dependencies: ${devDependencies.map(d => chalk.cyan(d)).join(', ')}`
   )
-  exec(`yarn add --dev ${devDependenciesToInstall.join(' ')}`, appDir)
+  exec(`yarn add --dev ${devDependencies.join(' ')}`, appDir)
 
-  log.ok(`Installing dependencies: ${dependenciesToInstall.map(d => chalk.cyan(d)).join(', ')}`)
-  exec(`yarn add ${dependenciesToInstall.join(' ')}`, appDir)
+  log.ok(`Installing dependencies: ${dependencies.map(d => chalk.cyan(d)).join(', ')}`)
+  exec(`yarn add ${dependencies.join(' ')}`, appDir)
 } else {
   log.info(`Not running 'yarn add/install' because you chose so.`)
 }

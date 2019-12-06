@@ -13,7 +13,7 @@ rm -rf test-app || true
 # Create the test-app!
 node ./packages/create-accurapp test-app --testing
 
-# Copy fixtures and install eventual new dependencies
+# Copy fixtures and install new dependencies
 cp -r .fixtures/test-app .
 cd test-app/
-yarn
+yarn add ky mapbox-gl mobx mobx-react
