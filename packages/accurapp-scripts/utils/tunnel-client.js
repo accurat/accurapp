@@ -1,7 +1,49 @@
 const os = require('os')
+const { Socket } = require('net')
 const got = require('got')
-const { createClient } = require('./reverse-tunnel')
+const { Client } = require('ssh2')
 const { extractCurrentRepo, extractCurrentBranch } = require('../utils/git-utils')
+
+function noop() {}
+
+function createClient(config, onReadyCb = noop, onConnectionCb = noop) {
+  const conn = new Client()
+  const errors = []
+
+  conn.on('ready', () => {
+    onReadyCb()
+    conn.forwardIn(config.dstHost, config.dstPort, (err, port) => {
+      if (err) return errors.push(err)
+      conn.emit('forward-in', port)
+    })
+  })
+
+  conn.on('tcp connection', (info, accept, reject) => {
+    let remote
+    const srcSocket = new Socket()
+
+    srcSocket.on('error', err => {
+      errors.push(err)
+      if (remote === undefined) {
+        reject()
+      } else {
+        remote.end()
+      }
+    })
+
+    srcSocket.connect(config.srcPort, config.srcHost, () => {
+      remote = accept()
+      srcSocket.pipe(remote).pipe(srcSocket)
+      if (errors.length === 0) {
+        onConnectionCb(null, conn)
+      } else {
+        onConnectionCb(errors, null)
+      }
+    })
+  })
+  conn.connect(config)
+  return conn
+}
 
 const { USER, SSH_AUTH_SOCK, TUNNEL_DOMAIN = 'internal.accurat.io' } = process.env
 
