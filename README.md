@@ -264,7 +264,7 @@ new Date(Number(process.env.LATEST_COMMIT_TIMESTAMP))
 ├── src
 │   ├── components
 │   │   └── App.js
-│   ├── lib           # put here the stuff you will most likely reuse
+│   ├── lib           # put here the utils functions reusable in other projects
 │   │   └── README
 │   ├── reset.css
 │   ├── style.css
@@ -276,7 +276,7 @@ new Date(Number(process.env.LATEST_COMMIT_TIMESTAMP))
 ├── .prettierignore
 ├── .prettierrc
 ├── .gitignore
-├── bitbucket-pipelines.yml
+├── netlify.toml
 ├── README.md
 ├── package.json
 ├── webpack.config.js
