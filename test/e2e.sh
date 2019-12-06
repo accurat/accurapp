@@ -32,6 +32,12 @@ PID=$!
 sleep 20s
 kill $PID
 
+# Test the start with typescript and exposing to the internet
+BROWSER=false yarn start --exposed &
+PID=$!
+sleep 20s
+kill $PID
+
 # Test the build with typescript
 yarn build
 
