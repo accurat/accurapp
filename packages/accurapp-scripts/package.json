@@ -35,7 +35,6 @@
     "filesize": "4.1.2",
     "fs-extra": "8.0.1",
     "globby": "9.2.0",
-    "got": "^9.6.0",
     "gzip-size": "5.1.1",
     "indent-string": "4.0.0",
     "latest-version": "5.1.0",
@@ -47,6 +46,7 @@
     "react-dev-utils": "9.0.1",
     "resolve": "1.11.0",
     "semver": "6.1.1",
+    "ssh-tuna": "^1.0.0",
     "ssh2": "^0.8.6",
     "webpack": "4.34.0",
     "webpack-dev-server": "3.2.1"

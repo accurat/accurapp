@@ -38,16 +38,20 @@ function extractLatestTag() {
 
 function extractCurrentBranch() {
   try {
-    return cp.execSync('git rev-parse --abbrev-ref HEAD')
+    return cp.execSync('git rev-parse --abbrev-ref HEAD').trim()
   } catch (e) {
     // Probably git is not available, return an empty string instead
     return ''
   }
 }
 
-function extractCurrentRepo() {
+function extractRepoName() {
   try {
-    return cp.execSync('basename -s .git `git config --get remote.origin.url`')
+    return cp
+      .execSync('basename -s .git `git config --get remote.origin.url`', {
+        stdio: ['pipe', 'pipe', 'ignore'],
+      })
+      .trim()
   } catch (e) {
     // Probably git is not available, return an empty string instead
     return ''
@@ -60,5 +64,5 @@ module.exports = {
   extractLatestCommitTimestamp,
   extractLatestTag,
   extractCurrentBranch,
-  extractCurrentRepo,
+  extractRepoName,
 }
