@@ -24,7 +24,7 @@
     "packages/*"
   ],
   "engines": {
-    "node": ">=8.6",
+    "node": ">=10",
     "yarn": ">=1.2.1"
   },
   "devDependencies": {

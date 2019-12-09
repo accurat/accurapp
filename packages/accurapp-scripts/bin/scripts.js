@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 const semver = require('semver')
 const { log } = require('../utils/logging-utils')
-if (semver.lt(process.versions.node, '8.6.0')) {
+if (semver.lt(process.versions.node, '10.0.0')) {
   console.log()
   log.err(`You are running Node ${process.versions.node}.`)
-  log.err(`Accurapp requires Node 8.6.0 or higher.`)
+  log.err(`Accurapp requires Node 10 or higher.`)
   log.err(`Please upgrade your Node version.`)
   log.err(`Aborting.`)
   process.exit(1)

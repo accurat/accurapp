@@ -87,7 +87,7 @@ These are the available commands once you created a project:
 "prettier-check": "accurapp-scripts prettier --list-different",
 ```
 
-**NOTE**: you need to have at least Node v6.x and yarn v1.2.1, make sure you have the correct versions if you run into some problems running these commands. You can check their version by running `node -v` and `yarn -v`.
+**NOTE**: you need to have at least Node v10 and yarn v1.2.1, make sure you have the correct versions if you run into some problems running these commands. You can check their version by running `node -v` and `yarn -v`.
 
 ## Customization
 #### Customizing Webpack

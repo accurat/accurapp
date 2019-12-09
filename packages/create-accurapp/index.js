@@ -8,10 +8,10 @@ const indentString = require('indent-string')
 const { coloredBanner, log, exec, abort } = require('accurapp-scripts/utils/logging-utils')
 const { verifyTypeScriptSetup } = require('accurapp-scripts/utils/verifyTypeScriptSetup')
 
-if (semver.lt(process.versions.node, '8.6.0')) {
+if (semver.lt(process.versions.node, '10.0.0')) {
   console.log()
   log.err(`You are running Node ${process.versions.node}.`)
-  log.err(`Accurapp requires Node 8.6.0 or higher.`)
+  log.err(`Accurapp requires Node 10 or higher.`)
   log.err(`Please upgrade your Node version.`)
   log.err(`Aborting.`)
   process.exit(1)
