@@ -41,16 +41,25 @@ function runDevServer(port) {
   const compiler = createWebpackCompiler(() => {
     log.info(`The app is running at: ${chalk.cyan(urls.localUrlForTerminal)}`)
     log.info(`Or on your network at: ${chalk.cyan(urls.lanUrlForTerminal)}`)
-    if (!EXPOSED) return
-    const subdomain = generateSubdomain()
-    tunnelPort(port, subdomain, TUNNEL_DOMAIN, TUNNEL_SSH_PORT)
-      .then(client => {
-        if (client.state === 'error') return log.err('Could not connect')
-        client.onerror = err => log.err(err)
-        const url = `https://${subdomain}.${TUNNEL_DOMAIN}`
-        log.info(`Even from far away at: ${chalk.cyan(url)}`)
-      })
-      .catch(err => log.err(err))
+
+    if (EXPOSED) {
+      const subdomain = generateSubdomain()
+      tunnelPort(port, subdomain, TUNNEL_DOMAIN, TUNNEL_SSH_PORT)
+        .then(client => {
+          // If the connection hangs up or something else goes wrong
+          client.onerror = err => log.err(`Error occurred while tunneling to the exposed port: ${err}`)
+
+          const url = `https://${subdomain}.${TUNNEL_DOMAIN}`
+          log.info(`Even from far away at: ${chalk.cyan(url)}`)
+        })
+        .catch(err => {
+          if (err.message.includes('authentication methods failed')) {
+            err = 'Could not authenticate to the tunneling server, please make sure you can access the server via ssh.'
+          }
+
+          log.err(`Could not expose the local port: ${err}`)
+        })
+    }
   })
 
   const devServerConfig = {

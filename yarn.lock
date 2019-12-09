@@ -4728,6 +4728,21 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.2, escape-string-regexp@^1
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
+eslint-config-accurapp@./packages/eslint-config-accurapp:
+  version "4.2.8"
+  dependencies:
+    "@babel/core" "7.4.5"
+    babel-eslint "11.0.0-beta.0"
+    eslint "5.16.0"
+    eslint-config-standard "12.0.0"
+    eslint-plugin-import "2.17.3"
+    eslint-plugin-no-copy-paste-default-export "0.0.3"
+    eslint-plugin-node "9.1.0"
+    eslint-plugin-promise "4.1.1"
+    eslint-plugin-react "7.13.0"
+    eslint-plugin-react-hooks "1.6.0"
+    eslint-plugin-standard "4.0.0"
+
 eslint-config-standard@12.0.0:
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-12.0.0.tgz#638b4c65db0bd5a41319f96bba1f15ddad2107d9"
@@ -11075,10 +11090,10 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-ssh-tuna@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/ssh-tuna/-/ssh-tuna-1.0.2.tgz#0b7a9a82a2fe0f6ebe0d380b79baa93a05d87359"
-  integrity sha512-v19Fga8IjbkPzyLcRzc/wAMkuGmks9K4nTL+KSCN+gu/+NyIJS1FNSwk8SqYhrzfWZUmhPHthKjmyKSB8q1TnQ==
+ssh-tuna@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ssh-tuna/-/ssh-tuna-1.0.3.tgz#3209454698f2c4c5ae6559affea7c4b1b9f182d6"
+  integrity sha512-WjXqbL3t3AN1GpLsvf8pOrxvTiWRG6lAo59r2YJ5L8w0nON7hZWWw4aqlx1SIXMurILJs4jSqXmlK5pEDl9hqA==
   dependencies:
     dotenv "^8.2.0"
     node-fetch "^2.6.0"
