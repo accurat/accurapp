@@ -76,6 +76,7 @@ Then you just `cd project-name`, run `yarn start` and start creating awesome stu
 #### Commands
 These are the available commands once you created a project:
 - `yarn start` starts a server locally, accessible both from your browser and from another machine using your same wi-fi
+- `yarn start --exposed` starts a server locally and exposes it to the internet, accessible from everyone having the link, kinda like ngrok. The link created looks like `{branch}.{repo}.internal.accurat.io` if you're in a branch, or `{repo}.internal.accurat.io` if you're on master. It uses a server with an instance of [SSH-Tuna](https://github.com/accurat/ssh-tuna) to achieve this.
 - `yarn build` builds the project for production, ready to be deployed from the `build/` folder
 - `yarn lint` lints with eslint the `src/` folder. You can pass any [eslint options](https://eslint.org/docs/user-guide/command-line-interface#options) to the lint command, for example if you want to use eslint's fix option, you do it like this:
 ```json
@@ -241,6 +242,8 @@ render() {
 - **TRANSPILE_NODE_MODULES** - Set this to false if you want to disable the babel transpilation of the `node_modules` (default `true`)
 
 - **WATCH_NODE_MODULES** - Set this to true if you want to recompile when any of the used `node_modules` changes (default `false`)
+
+- **TUNNEL_DOMAIN** - The domain that the command `yarn start --exposed` will use as a request tunnel, it must be the domain of a server with an instance of [SSH-Tuna](https://github.com/accurat/ssh-tuna) on it (default `internal.accurat.io`)
 
 ## Available Env Variables
 These are the Env Variables that Accurapp provides you, you cannot modify them directly:
@@ -733,22 +736,6 @@ Please, see [`@joshbuchea`'s head repo](https://gethead.info/).
 <summary>I need to build for Electron. How do I do it?</summary>
 
 [This guide](https://gist.github.com/matthewjberger/6f42452cb1a2253667942d333ff53404) is a good one to follow, and [here is a working example](https://github.com/nkint/accurapp-electron) of accurapp with electron. Good luck!
-</details>
-
-<details>
-<summary>Someone else needs to see what I'm working on, how can I show it?</summary>
-
-When running `yarn start` you can add `--exposed` as a flag.
-
-The webpack server will try allocate a subdomain on a remote server and open an ssh reverse tunnel in order to receive every request that the remote will receive on that domain. As soon as the subdomain is allocated, the remote server will also generate a valid https certificate.
-
-The remote domain is set as the env variable `TUNNEL_DOMAIN` and defaults to `internal.accurat.io`, but can be set to whatever server is running an instance of the [SSH-Tuna server infrastucture](https://github.com/accurat/ssh-tuna)
-
-The allocated domain will have the following structure:
-- If the script is running from inside a git project and is on a branch different than master: `{branch}.{repo}.{TUNNEL_DOMAIN}`
-- If the script is running from inside a git project and is on master: `{repo}.{TUNNEL_DOMAIN}`
-- If the script is running from outside a git project: `{hostname}.{TUNNEL_DOMAIN}`
-
 </details>
 
 ## Contributing
