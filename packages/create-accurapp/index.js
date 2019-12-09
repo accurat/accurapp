@@ -90,6 +90,7 @@ const packageJson = {
   scripts: {
     start: 'accurapp-scripts start',
     build: 'accurapp-scripts build',
+    test: 'accurapp-scripts test',
     lint: 'accurapp-scripts lint',
     prettier: 'accurapp-scripts prettier',
   },
@@ -133,9 +134,10 @@ if (shouldInstall) {
 
   let devDependencies = [
     'accurapp-scripts',
-    'webpack-preset-accurapp',
-    'eslint-config-accurapp',
     'babel-preset-accurapp',
+    'eslint-config-accurapp',
+    'jest-config-accurapp',
+    'webpack-preset-accurapp',
     ...(useTypescript ? ['typescript', '@types/node', '@types/webpack-env'] : []),
   ]
 

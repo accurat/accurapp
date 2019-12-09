@@ -736,6 +736,18 @@ Please, see [`@joshbuchea`'s head repo](https://gethead.info/).
 [This guide](https://gist.github.com/matthewjberger/6f42452cb1a2253667942d333ff53404) is a good one to follow, and [here is a working example](https://github.com/nkint/accurapp-electron) of accurapp with electron. Good luck!
 </details>
 
+
+<details>
+<summary>How do I configure a multi-project repo?</summary>
+
+<!-- TODO -->
+
+Your best bet is to use yarn workspaces. This is an example readme.
+
+You can now normally require fiiles from other projects, it is advised not to meke a project for the shared files, but rather choose a source of thruth, instead to the scared repo for the backend
+
+</details>
+
 ## Contributing
 If you make some edits and wish to test them locally you can run `yarn test` for an end-to-end test, or `yarn create-test-app` which creates a test app using the local packages.
 
