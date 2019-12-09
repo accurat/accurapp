@@ -45,6 +45,8 @@ function runDevServer(port) {
     const subdomain = generateSubdomain()
     tunnelPort(port, subdomain, TUNNEL_DOMAIN, TUNNEL_SSH_PORT)
       .then(client => {
+        if (client.state === 'error') return log.err('Could not connect')
+        client.onerror = err => log.err(err)
         const url = `https://${subdomain}.${TUNNEL_DOMAIN}`
         log.info(`Even from far away at: ${chalk.cyan(url)}`)
       })
