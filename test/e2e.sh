@@ -18,6 +18,12 @@ PID=$!
 sleep 20s
 kill $PID
 
+# Test the start exposing to the internet
+BROWSER=false yarn start --exposed &
+PID=$!
+sleep 20s
+kill $PID
+
 # Test the build command
 yarn build
 
