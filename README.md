@@ -554,9 +554,7 @@ For example, this is how you setup a typescript worker:
 // You can import modules in this worker
 import { get } from 'lodash'
 
-declare global {
-  self: Worker
-}
+declare var self: Worker
 
 // Listen to message from the parent thread
 self.addEventListener('message', event => {
