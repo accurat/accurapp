@@ -138,7 +138,7 @@ if (shouldInstall) {
     'eslint-config-accurapp',
     'jest-config-accurapp',
     'webpack-preset-accurapp',
-    ...(useTypescript ? ['typescript', '@types/node', '@types/webpack-env'] : []),
+    ...(useTypescript ? ['typescript', '@types/node', '@types/webpack-env', '@types/jest'] : []),
   ]
 
   // Require local package if we're testing.

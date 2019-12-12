@@ -1,10 +1,14 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { ReactComponent as Logo } from 'images/logo.svg'
 // test packages written for newer node version
 import ky from 'ky'
-import mmm from 'images/mmmpiselli.jpg'
+import { ReactComponent as Logo } from '../images/logo.svg'
+import mmm from '../images/mmmpiselli.jpg'
 import styles from './App.module.css'
+
+export function firstDayOfYear(year: number): Date {
+  return new Date(Date.UTC(year, 0, 1))
+}
 
 // test decorators
 @observer

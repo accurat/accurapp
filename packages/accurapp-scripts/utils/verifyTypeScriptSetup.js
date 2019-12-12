@@ -65,7 +65,7 @@ function verifyTypeScriptSetup(appDir, { shouldInstall = true } = {}) {
   if (shouldInstall) {
     if (!appPkg.devDependencies.typescript && !appPkg.dependencies.typescript) {
       log.ok(`Installing latest version of typescript`)
-      exec('yarn add --dev typescript @types/node @types/webpack-env', appDir)
+      exec('yarn add --dev typescript @types/node @types/webpack-env @types/jest', appDir)
       exec('yarn add @types/react @types/react-dom @types/lodash', appDir)
     }
   }

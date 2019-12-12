@@ -4,9 +4,13 @@ import { observer } from 'mobx-react'
 import mapboxgl from 'mapbox-gl'
 // test packages written for newer node version
 import ky from 'ky'
-import { ReactComponent as Logo } from 'images/logo.svg'
-import mmm from 'images/mmmpiselli.jpg'
+import { ReactComponent as Logo } from '../images/logo.svg'
+import mmm from '../images/mmmpiselli.jpg'
 import styles from './App.module.css'
+
+export function firstDayOfYear(year) {
+  return new Date(Date.UTC(year, 0, 1))
+}
 
 // test decorators
 @observer

@@ -276,12 +276,13 @@ new Date(Number(process.env.LATEST_COMMIT_TIMESTAMP))
 ├── .babelrc
 ├── .env.example
 ├── .eslintrc
+├── .gitignore
 ├── .prettierignore
 ├── .prettierrc
-├── .gitignore
+├── jest.config.js
 ├── netlify.toml
-├── README.md
 ├── package.json
+├── README.md
 ├── webpack.config.js
 └── yarn.lock
 ```

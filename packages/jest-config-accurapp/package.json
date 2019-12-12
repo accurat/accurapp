@@ -18,9 +18,13 @@
     "index.js"
   ],
   "dependencies": {
+    "@babel/core": "7.4.5",
     "babel-jest": "24.9.0",
+    "identity-obj-proxy": "3.0.0",
     "jest": "24.9.0",
     "jest-environment-jsdom-fifteen": "1.0.2",
-    "jest-watch-typeahead": "0.4.2"
+    "jest-watch-typeahead": "0.4.2",
+    "react-app-polyfill": "1.0.5",
+    "react-scripts": "3.3.0"
   }
 }
