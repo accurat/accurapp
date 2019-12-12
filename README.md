@@ -78,6 +78,7 @@ These are the available commands once you created a project:
 - `yarn start` starts a server locally, accessible both from your browser and from another machine using your same wi-fi
 - `yarn start --exposed` starts a server locally and exposes it to the internet, accessible from everyone having the link, kinda like ngrok, but works only if you have an accurat ssh key. The link created looks like `{branch}.{repo}.internal.accurat.io` if you're in a branch, or `{repo}.internal.accurat.io` if you're on master. It uses a server with an instance of [SSH-Tuna](https://github.com/accurat/ssh-tuna) to achieve this.
 - `yarn build` builds the project for production, ready to be deployed from the `build/` folder
+- `yarn test` runs [jest](https://jestjs.io/en/). By default (if you're not in a CI) it runs in watch mode, but you can disable watch mode by passing `--watch=false`. You can also pass any other argument you would pass to jest, for example `yarn test --updateSnapshot` updates your snapshots.
 - `yarn lint` lints with eslint the `src/` folder. You can pass any [eslint options](https://eslint.org/docs/user-guide/command-line-interface#options) to the lint command, for example if you want to use eslint's fix option, you do it like this:
 ```json
 "lint-fix": "accurapp-scripts lint --fix",
