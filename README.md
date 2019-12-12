@@ -41,6 +41,7 @@ but significant amounts of code were rewritten and simplified. Here are some shi
   - [How do I use a service worker?](#faq)
   - [I need title and meta tags for each route for SEO. How do I do it?](#faq)
   - [I need to build for Electron. How do I do it?](#faq)
+  - [How do I configure a multi-project repo?](#faq)
 - [Contributing](#contributing)
 
 ## Creating a new project
@@ -78,6 +79,7 @@ These are the available commands once you created a project:
 - `yarn start` starts a server locally, accessible both from your browser and from another machine using your same wi-fi
 - `yarn start --exposed` starts a server locally and exposes it to the internet, accessible from everyone having the link, kinda like ngrok, but works only if you have an accurat ssh key. The link created looks like `{branch}.{repo}.internal.accurat.io` if you're in a branch, or `{repo}.internal.accurat.io` if you're on master. It uses a server with an instance of [SSH-Tuna](https://github.com/accurat/ssh-tuna) to achieve this.
 - `yarn build` builds the project for production, ready to be deployed from the `build/` folder
+- `yarn test` runs [jest](https://jestjs.io/en/). By default (if you're not in a CI) it runs in watch mode, but you can disable watch mode by passing `--watch=false`. You can also pass any other argument you would pass to jest, for example `yarn test --updateSnapshot` updates your snapshots.
 - `yarn lint` lints with eslint the `src/` folder. You can pass any [eslint options](https://eslint.org/docs/user-guide/command-line-interface#options) to the lint command, for example if you want to use eslint's fix option, you do it like this:
 ```json
 "lint-fix": "accurapp-scripts lint --fix",
@@ -276,12 +278,13 @@ new Date(Number(process.env.LATEST_COMMIT_TIMESTAMP))
 ├── .babelrc
 ├── .env.example
 ├── .eslintrc
+├── .gitignore
 ├── .prettierignore
 ├── .prettierrc
-├── .gitignore
+├── jest.config.js
 ├── netlify.toml
-├── README.md
 ├── package.json
+├── README.md
 ├── webpack.config.js
 └── yarn.lock
 ```
@@ -734,6 +737,30 @@ Please, see [`@joshbuchea`'s head repo](https://gethead.info/).
 <summary>I need to build for Electron. How do I do it?</summary>
 
 [This guide](https://gist.github.com/matthewjberger/6f42452cb1a2253667942d333ff53404) is a good one to follow, and [here is a working example](https://github.com/nkint/accurapp-electron) of accurapp with electron. Good luck!
+</details>
+
+
+<details>
+<summary>How do I configure a multi-project repo?</summary>
+
+Your best bet is to use [yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/). It will solve you a lot of headaches.
+
+This is an example `package.json`, assuming that your multiple projects are in a subfolder called `projects`.
+
+```json
+{
+  "name": "main-project-name",
+  "private": true,
+  "workspaces": [
+    "projects/*"
+  ]
+}
+```
+
+Yarn workspaces basically puts your dependencies in just one place, at the root.
+
+This approach allows you to require files across projects really easily. It is advised not to make a new project containing only the shared files, but rather choose a project to be the source of thruth, containing every image or UI components.
+
 </details>
 
 ## Contributing

@@ -1,6 +1,7 @@
 module.exports = (context, opts = {}) => {
   const env = process.env.BABEL_ENV || process.env.NODE_ENV
   const isDevelopment = env === 'development'
+  const isTest = env === 'test'
   const useTypescript = opts.typescript
 
   return {
@@ -8,7 +9,11 @@ module.exports = (context, opts = {}) => {
       // Browsers are taken from the browserslist field in package.json
       [
         require('@babel/preset-env').default,
-        {
+        isTest ? {
+          targets: {
+            node: 'current',
+          },
+        } : {
           modules: false,
           useBuiltIns: 'usage',
           // Enable stage 4 proposals, like array.flatMap
@@ -22,7 +27,7 @@ module.exports = (context, opts = {}) => {
         {
           // Adds component stack to warning messages
           // Adds __self attribute to JSX which React will use for some warnings
-          development: isDevelopment,
+          development: isDevelopment || isTest,
           // Will use the native built-in instead of trying to polyfill
           // behavior for any plugins that require one.
           useBuiltIns: true,
@@ -60,6 +65,9 @@ module.exports = (context, opts = {}) => {
       // See discussion in https://github.com/facebook/create-react-app/issues/4263
       [require('@babel/plugin-proposal-class-properties').default, { loose: true }],
       require('@babel/plugin-proposal-json-strings').default,
+
+      // Transform dynamic import to require
+      ...(isTest ? [require('babel-plugin-dynamic-import-node')] : []),
     ],
   }
 }

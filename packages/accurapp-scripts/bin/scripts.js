@@ -24,6 +24,7 @@ if (!process.env.CI) {
     require('../package.json'),
     require('../../babel-preset-accurapp/package.json'),
     require('../../eslint-config-accurapp/package.json'),
+    require('../../jest-config-accurapp/package.json'),
     require('../../webpack-preset-accurapp/package.json'),
   ]
 

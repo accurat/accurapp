@@ -62,6 +62,15 @@ function extractRepoName() {
   }
 }
 
+function isInGitRepository() {
+  try {
+    cp.execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' })
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
 module.exports = {
   extractBrowserslistString,
   extractLatestCommitHash,
@@ -69,4 +78,5 @@ module.exports = {
   extractLatestTag,
   extractCurrentBranch,
   extractRepoName,
+  isInGitRepository,
 }
