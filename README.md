@@ -41,6 +41,7 @@ but significant amounts of code were rewritten and simplified. Here are some shi
   - [How do I use a service worker?](#faq)
   - [I need title and meta tags for each route for SEO. How do I do it?](#faq)
   - [I need to build for Electron. How do I do it?](#faq)
+  - [How do I configure a multi-project repo?](#faq)
 - [Contributing](#contributing)
 
 ## Creating a new project
@@ -742,11 +743,23 @@ Please, see [`@joshbuchea`'s head repo](https://gethead.info/).
 <details>
 <summary>How do I configure a multi-project repo?</summary>
 
-<!-- TODO -->
+Your best bet is to use [yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/). It will solve you a lot of headaches.
 
-Your best bet is to use yarn workspaces. This is an example readme.
+This is an example `package.json`, assuming that your multiple projects are in a subfolder called `projects`.
 
-You can now normally require fiiles from other projects, it is advised not to meke a project for the shared files, but rather choose a source of thruth, instead to the scared repo for the backend
+```json
+{
+  "name": "main-project-name",
+  "private": true,
+  "workspaces": [
+    "projects/*"
+  ]
+}
+```
+
+Yarn workspaces basically puts your dependencies in just one place, at the root.
+
+This approach allows you to require files across projects really easily. It is advised not to make a new project containing only the shared files, but rather choose a project to be the source of thruth, containing every image or UI components.
 
 </details>
 
