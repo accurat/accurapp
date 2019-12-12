@@ -59,6 +59,7 @@ function extractRepoName() {
   } catch (e) {
     // Probably git is not available, return an empty string instead
     return ''
+  }
 }
 
 function isInGitRepository() {
@@ -75,10 +76,7 @@ module.exports = {
   extractLatestCommitHash,
   extractLatestCommitTimestamp,
   extractLatestTag,
-<<<<<<< HEAD
   extractCurrentBranch,
   extractRepoName,
-=======
   isInGitRepository,
->>>>>>> ef2affc... chore: 🚧 WIP jest implementation
 }
