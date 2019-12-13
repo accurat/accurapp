@@ -26,6 +26,7 @@ yarn test --watch=false
 
 ## Enable typescript
 rm ./src/components/App.js
+rm ./src/myawesome.worker.js
 mv ./src/index.js ./src/index.tsx
 mv ./src/components/App.test.js ./src/components/App.test.ts
 cp -r ../.fixtures/test-app-ts/src .

@@ -13,6 +13,17 @@ export function firstDayOfYear(year: number): Date {
 // test decorators
 @observer
 export class App extends React.Component {
+  async componentDidMount() {
+    // test dynamic imports and worker-loader
+    const Worker = (await import('../myawesome.worker.ts')).default
+    const worker = new Worker()
+
+    worker.postMessage('big deta')
+    worker.addEventListener('message', event => {
+      console.log(event.data)
+    })
+  }
+
   // test class properties
   state = {}
 
