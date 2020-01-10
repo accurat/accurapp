@@ -94,8 +94,9 @@ const postcssOptions = {
 const babelOptions = {
   cacheDirectory: true,
   compact: process.env.NODE_ENV === 'production',
-  // Don't waste time on Gzipping the cache during dev
-  cacheCompression: process.env.NODE_ENV === 'production',
+  // Disable cacheCompression because it's not that useful
+  // https://github.com/facebook/create-react-app/pull/7633
+  cacheCompression: false,
 }
 
 function buildWebpackConfig(config = []) {
