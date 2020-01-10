@@ -40,10 +40,16 @@ function createWebpackCompiler(onFirstReadyCallback = () => {}, onError = () => 
   let isFirstCompile = true
   let tsMessagesPromise // used to wait for the typechecking
   let tsMessagesResolver // used to trigger the messages after the typechecking
+  let beforeCompileCalled = false
 
   if (useTypeScript) {
     // reset the promise
     compiler.hooks.beforeCompile.tap('beforeCompile', () => {
+      if (beforeCompileCalled) {
+        return
+      }
+      beforeCompileCalled = true
+
       tsMessagesPromise = new Promise(resolve => {
         tsMessagesResolver = msgs => resolve(msgs)
       })
