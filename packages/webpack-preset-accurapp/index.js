@@ -208,7 +208,6 @@ function buildWebpackConfig(config = []) {
             async: process.env.NODE_ENV === 'development',
             useTypescriptIncrementalApi: true,
             checkSyntacticErrors: true,
-            watch: './src',
             reportFiles: ['**'],
             silent: true,
             // The formatter is invoked directly in WebpackDevServerUtils during development
@@ -246,7 +245,9 @@ function buildWebpackConfig(config = []) {
         overlay: false,
         disableHostCheck: true,
       }),
-      eslint(),
+      eslint({
+        cache: true,
+      }),
       addPlugins([
         // Automatic rediscover of packages after `npm install`
         new WatchMissingNodeModulesPlugin('node_modules'),
