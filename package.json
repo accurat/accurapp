@@ -29,11 +29,11 @@
     "yarn": ">=1.2.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.0.0",
-    "@commitlint/config-conventional": "^8.0.0",
+    "@commitlint/cli": "8.3.4",
+    "@commitlint/config-conventional": "8.3.4",
     "eslint-config-accurapp": "./packages/eslint-config-accurapp",
-    "husky": "^2.4.1",
+    "husky": "4.0.6",
     "is-git-status-clean": "1.0.0",
-    "lerna": "3.13.1"
+    "lerna": "3.20.2"
   }
 }

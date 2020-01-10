@@ -26,6 +26,6 @@
     "figlet": "1.2.4",
     "fs-extra": "8.1.0",
     "indent-string": "4.0.0",
-    "meow": "5.0.0"
+    "meow": "6.0.0"
   }
 }
