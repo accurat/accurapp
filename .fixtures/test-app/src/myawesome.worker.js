@@ -2,5 +2,5 @@
 self.addEventListener('message', event => {
   console.log(event.data)
   // Post data to parent thread
-  self.postMessage('a maneta', '*')
+  self.postMessage('a maneta')
 })
