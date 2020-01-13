@@ -139,6 +139,7 @@ function reactSvgLoader() {
         {
           loader: '@svgr/webpack',
           options: {
+            memo: true,
             svgProps: {
               fill: 'currentColor',
             },
