@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/accurat/accurapp/compare/create-accurapp@4.3.0...create-accurapp@5.0.0) (2020-01-20)
+
+
+### Features
+
+* ⁄ Add accurat favicon ([0898230](https://github.com/accurat/accurapp/commit/0898230b58c19b59eaf124b1cd8110127ba4c504))
+* ✅ Add accurat-test command ([b98f314](https://github.com/accurat/accurapp/commit/b98f31418ecab3d169546d8cc0a9cae348b6e3c2))
+* 👮‍♂️Require node 10 ([42433a5](https://github.com/accurat/accurapp/commit/42433a573c1bde9b152cbbb3b92f02618db30a25))
+
+
+### BREAKING CHANGES
+
+* please upgrade your node version to al least 10
+
+
+
+
+
 # [4.3.0](https://github.com/accurat/accurapp/compare/create-accurapp@4.2.0...create-accurapp@4.3.0) (2019-12-09)
 
 

@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.0.0](https://github.com/accurat/accurapp/compare/babel-preset-accurapp@4.1.5...babel-preset-accurapp@5.0.0) (2020-01-20)
+# [5.0.0](https://github.com/accurat/accurapp/compare/eslint-config-accurapp@4.2.8...eslint-config-accurapp@5.0.0) (2020-01-20)
 
 
 ### Features
@@ -14,14 +14,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 * please upgrade your node version to al least 10
-
-
-
-
-
-## [4.1.5](https://github.com/accurat/accurapp/compare/babel-preset-accurapp@4.1.4...babel-preset-accurapp@4.1.5) (2019-08-05)
-
-
-### Bug Fixes
-
-* 🔨  Use correct pipeline proposal ([99090b9](https://github.com/accurat/accurapp/commit/99090b9))

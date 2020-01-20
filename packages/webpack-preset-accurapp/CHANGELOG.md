@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@4.3.0...webpack-preset-accurapp@5.0.0) (2020-01-20)
+
+
+### Features
+
+* 👮‍♂️Require node 10 ([42433a5](https://github.com/accurat/accurapp/commit/42433a573c1bde9b152cbbb3b92f02618db30a25))
+
+
+### Performance Improvements
+
+* ⚡️ Enable cache of eslint-loader ([b9072d9](https://github.com/accurat/accurapp/commit/b9072d962c911fbf8fac3ba2b7bf53c5e5719a9d))
+* ✋🏻 Disable cacheCompression in babel ([75fec7c](https://github.com/accurat/accurapp/commit/75fec7c303ad798685ebab37d1ddd65e9e98e41b))
+
+
+### BREAKING CHANGES
+
+* please upgrade your node version to al least 10
+
+
+
+
+
 # [4.3.0](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@4.2.15...webpack-preset-accurapp@4.3.0) (2019-12-09)
 
 
