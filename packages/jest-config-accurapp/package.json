@@ -14,9 +14,6 @@
     "node": ">=8.6",
     "yarn": ">=1.2.1"
   },
-  "files": [
-    "index.js"
-  ],
   "dependencies": {
     "@babel/core": "7.8.0",
     "babel-jest": "24.9.0",
