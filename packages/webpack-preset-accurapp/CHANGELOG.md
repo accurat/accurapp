@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@5.0.0...webpack-preset-accurapp@5.0.1) (2020-04-02)
+
+
+### Bug Fixes
+
+* 🔨 Update behaviour of .env.example in CI ([e0a9d4c](https://github.com/accurat/accurapp/commit/e0a9d4c079caa3defdfbd99b435d37c4799780d5))
+
+
+
+
+
 # [5.0.0](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@4.3.0...webpack-preset-accurapp@5.0.0) (2020-01-20)
 
 
