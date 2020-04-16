@@ -48,6 +48,7 @@ module.exports = (context, opts = {}) => {
       require('@babel/plugin-proposal-export-default-from').default,
       [require('@babel/plugin-proposal-pipeline-operator').default, { proposal: 'minimal' }],
       require('@babel/plugin-proposal-do-expressions').default,
+      require('@babel/plugin-proposal-partial-application').default,
 
       // ----------- Stage 2 -----------
       // Use the default proposal when it will be finalized

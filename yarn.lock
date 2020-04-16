@@ -433,6 +433,14 @@
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-syntax-optional-chaining" "^7.8.0"
 
+"@babel/plugin-proposal-partial-application@7.8.3":
+  version "7.8.3"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-partial-application/-/plugin-proposal-partial-application-7.8.3.tgz#a195b44401fe13f44efdcc6a1491e78f8199f877"
+  integrity sha512-EmLABAoivf0AxF9xS8/GeLbF3YsPbRaybqft65OhvpliyHvBkMBNVvI8P9j5gPkqACaEXLWuXZrQM3G03c9aug==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.8.3"
+    "@babel/plugin-syntax-partial-application" "^7.8.3"
+
 "@babel/plugin-proposal-pipeline-operator@7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-pipeline-operator/-/plugin-proposal-pipeline-operator-7.8.3.tgz#c3569228e7466f91bfff7f1c1ae18fb5d36b3097"
@@ -441,7 +449,7 @@
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-syntax-pipeline-operator" "^7.8.3"
 
-"@babel/plugin-proposal-private-methods@^7.8.3":
+"@babel/plugin-proposal-private-methods@7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-private-methods/-/plugin-proposal-private-methods-7.8.3.tgz#01248c6c8dc292116b3b4ebd746150f4f0728bab"
   integrity sha512-ysLAper960yy1TVXa2lMYdCQIGqtUXo8sVb+zYE7UTiZSLs6/wbZ0PrrXEKESJcK3SgFWrF8WpsaDzdslhuoZA==
@@ -590,6 +598,13 @@
   integrity sha512-KoK9ErH1MBlCPxV0VANkXW2/dw4vlbGDrFgz8bmUsBGYkFRcbRwMh6cIJubdPrkxRwuGdtCk0v/wPTKbQgBjkg==
   dependencies:
     "@babel/helper-plugin-utils" "^7.8.0"
+
+"@babel/plugin-syntax-partial-application@^7.8.3":
+  version "7.8.3"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-partial-application/-/plugin-syntax-partial-application-7.8.3.tgz#4518f1ae638b0bb478d95a10a9925e0a4c5d8dca"
+  integrity sha512-5ADNXV5ISSdqh+ypMonZDWMqQPOW7EoeOlq5Y9wtaqkvgxmgQ5GWEkYkAvyqNwwNShXow6Ke6YgrlVp+t21iGw==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.8.3"
 
 "@babel/plugin-syntax-pipeline-operator@^7.8.3":
   version "7.8.3"
@@ -6133,6 +6148,21 @@ escodegen@^1.11.0, escodegen@^1.11.1, escodegen@^1.9.1:
     optionator "^0.8.1"
   optionalDependencies:
     source-map "~0.6.1"
+
+eslint-config-accurapp@./packages/eslint-config-accurapp:
+  version "5.0.0"
+  dependencies:
+    "@babel/core" "7.9.0"
+    babel-eslint "11.0.0-beta.0"
+    eslint "5.16.0"
+    eslint-config-standard "12.0.0"
+    eslint-plugin-import "2.17.3"
+    eslint-plugin-no-copy-paste-default-export "0.0.3"
+    eslint-plugin-node "9.1.0"
+    eslint-plugin-promise "4.1.1"
+    eslint-plugin-react "7.13.0"
+    eslint-plugin-react-hooks "1.6.0"
+    eslint-plugin-standard "4.0.0"
 
 eslint-config-react-app@^5.1.0:
   version "5.2.1"
