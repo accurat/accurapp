@@ -55,7 +55,7 @@ module.exports = (context, opts = {}) => {
       [require('@babel/plugin-proposal-decorators').default, { legacy: true }],
       require('@babel/plugin-proposal-function-sent').default,
       require('@babel/plugin-proposal-throw-expressions').default,
-      require('@babel/plugin-proposal-private-methods').default,
+      [require('@babel/plugin-proposal-private-methods').default, { loose: true }],
 
       // ----------- Stage 3 -----------
       require('@babel/plugin-proposal-numeric-separator').default,

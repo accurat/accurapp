@@ -155,7 +155,7 @@ function buildWebpackConfig(config = []) {
     json5Loader(),
     workerLoader(),
     reactSvgLoader(),
-    reactColorSvgLoader(),
+    reactColorSvgLoader({ typescript: useTypescript }),
 
     // Needed for the worker-loader.
     setOutput({ globalObject: 'this' }),
@@ -323,11 +323,6 @@ function buildWebpackConfig(config = []) {
             ascii_only: true,
           },
         },
-        // Use multi-process parallel running to improve the build speed
-        // Default number of concurrent runs: os.cpus().length - 1
-        parallel: true,
-        // Enable file caching
-        cache: true,
         // Uglification in staging is alright because we have sourcemaps
         // that show the original code
         sourceMap: process.env.GENERATE_SOURCEMAP === 'true',

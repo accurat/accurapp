@@ -168,7 +168,7 @@ function reactSvgLoader() {
       ],
     })
 }
-function reactColorSvgLoader() {
+function reactColorSvgLoader(options = {}) {
   return (context, { addLoader }) =>
     addLoader({
       test: /colors\.svg$/,
@@ -195,6 +195,7 @@ function reactColorSvgLoader() {
                 { mergePaths: false },
               ],
             },
+            ...options,
           },
         },
         {
