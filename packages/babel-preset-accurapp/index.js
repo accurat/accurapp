@@ -9,18 +9,20 @@ module.exports = (context, opts = {}) => {
       // Browsers are taken from the browserslist field in package.json
       [
         require('@babel/preset-env').default,
-        isTest ? {
-          targets: {
-            node: 'current',
+        isTest
+          ? {
+            targets: {
+              node: 'current',
+            },
+          }
+          : {
+            modules: false,
+            useBuiltIns: 'usage',
+            // Enable stage 4 proposals, like array.flatMap
+            shippedProposals: true,
+            // Use new corejs version
+            corejs: { version: 3, proposals: true },
           },
-        } : {
-          modules: false,
-          useBuiltIns: 'usage',
-          // Enable stage 4 proposals, like array.flatMap
-          shippedProposals: true,
-          // Use new corejs version
-          corejs: { version: 3, proposals: true },
-        },
       ],
       [
         require('@babel/preset-react').default,
@@ -45,9 +47,15 @@ module.exports = (context, opts = {}) => {
       // ----------- Stage 1 -----------
       require('@babel/plugin-proposal-export-default-from').default,
       require('@babel/plugin-proposal-logical-assignment-operators').default,
+
+      // Optional chaining and nullish coalescing are supported in @babel/preset-env,
+      // but not yet supported in webpack due to support missing from acorn.
+      // These can be removed once webpack has support.
+      // See https://github.com/facebook/create-react-app/issues/8445#issuecomment-588512250
       require('@babel/plugin-proposal-optional-chaining').default,
-      [require('@babel/plugin-proposal-pipeline-operator').default, { proposal: 'minimal' }],
       require('@babel/plugin-proposal-nullish-coalescing-operator').default,
+
+      [require('@babel/plugin-proposal-pipeline-operator').default, { proposal: 'minimal' }],
       require('@babel/plugin-proposal-do-expressions').default,
 
       // ----------- Stage 2 -----------
@@ -59,15 +67,11 @@ module.exports = (context, opts = {}) => {
       require('@babel/plugin-proposal-throw-expressions').default,
 
       // ----------- Stage 3 -----------
-      require('@babel/plugin-syntax-dynamic-import').default,
       require('@babel/plugin-syntax-import-meta').default,
       // Enable loose mode to use assignment instead of defineProperty
       // See discussion in https://github.com/facebook/create-react-app/issues/4263
       [require('@babel/plugin-proposal-class-properties').default, { loose: true }],
       require('@babel/plugin-proposal-json-strings').default,
-
-      // Transform dynamic import to require
-      ...(isTest ? [require('babel-plugin-dynamic-import-node')] : []),
     ],
   }
 }

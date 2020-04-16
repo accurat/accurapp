@@ -97,6 +97,8 @@ const babelOptions = {
   // Disable cacheCompression because it's not that useful
   // https://github.com/facebook/create-react-app/pull/7633
   cacheCompression: false,
+  // https://github.com/zloirock/core-js/issues/743#issuecomment-608022407
+  exclude: [/\bcore-js\b/, /\bwebpack\/buildin\b/],
 }
 
 function buildWebpackConfig(config = []) {

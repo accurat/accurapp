@@ -20,10 +20,10 @@
     "customBlocks.js"
   ],
   "dependencies": {
-    "@babel/core": "7.8.0",
-    "@babel/plugin-transform-react-constant-elements": "7.8.0",
+    "@babel/core": "7.9.0",
+    "@babel/plugin-transform-react-constant-elements": "7.9.0",
     "@svgr/webpack": "5.0.1",
-    "@webpack-blocks/assets": "2.0.1",
+    "@webpack-blocks/assets": "marcofugaro/webpack-blocks-assets",
     "@webpack-blocks/core": "2.0.0",
     "@webpack-blocks/dev-server": "2.0.1",
     "@webpack-blocks/eslint": "2.0.1",
