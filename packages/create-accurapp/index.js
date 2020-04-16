@@ -88,7 +88,7 @@ const packageJson = {
   version: '0.1.0',
   license: 'MIT',
   scripts: {
-    start: 'accurapp-scripts start',
+    start: 'yarn && accurapp-scripts start',
     build: 'accurapp-scripts build',
     test: 'accurapp-scripts test',
     lint: 'accurapp-scripts lint',
