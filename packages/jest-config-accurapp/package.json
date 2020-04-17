@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "@babel/core": "7.9.0",
-    "babel-jest": "24.9.0",
+    "babel-jest": "25.3.0",
     "identity-obj-proxy": "3.0.0",
-    "jest": "24.9.0",
+    "jest": "25.3.0",
     "jest-environment-jsdom-fifteen": "1.0.2",
-    "jest-watch-typeahead": "0.4.2",
-    "react-app-polyfill": "1.0.5",
+    "jest-watch-typeahead": "0.5.0",
+    "react-app-polyfill": "1.0.6",
     "react-scripts": "3.3.0"
   }
 }
