@@ -43,7 +43,7 @@
     "prettier": "2.0.4",
     "prettier-eslint-cli": "4.7.1",
     "pretty-ms": "6.0.1",
-    "react-dev-utils": "9.0.1",
+    "react-dev-utils": "10.2.1",
     "resolve": "1.16.0",
     "semver": "7.3.2",
     "ssh-tuna": "1.0.3",
