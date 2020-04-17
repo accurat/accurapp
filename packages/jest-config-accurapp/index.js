@@ -1,6 +1,6 @@
 module.exports = {
   // Use newer version of jsdom
-  testEnvironment: 'jest-environment-jsdom-fifteen',
+  testEnvironment: 'jest-environment-jsdom-sixteen',
 
   setupFiles: [
     // It contains some polyfills such as the isomorphic fetch
