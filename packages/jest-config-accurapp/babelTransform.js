@@ -5,10 +5,12 @@ const appDir = process.cwd()
 const useTypescript = fs.existsSync(`${appDir}/tsconfig.json`)
 const babelrc = JSON.parse(fs.readFileSync(`${appDir}/.babelrc`))
 
+// TODO don't use react-scripts as a dependency
+
 // Inject the typescript option
 if (useTypescript) {
   babelrc.presets = [
-    ...babelrc.presets.filter(p => p !== 'accurapp'),
+    ...babelrc.presets.filter((p) => p !== 'accurapp'),
     ['accurapp', { typescript: true }],
   ]
 }

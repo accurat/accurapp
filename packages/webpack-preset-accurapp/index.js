@@ -62,7 +62,7 @@ const babelrc = JSON.parse(fs.readFileSync(`${appDir}/.babelrc`))
 // Inject the typescript option
 if (useTypescript) {
   babelrc.presets = [
-    ...babelrc.presets.filter(p => p !== 'accurapp'),
+    ...babelrc.presets.filter((p) => p !== 'accurapp'),
     ['accurapp', { typescript: true }],
   ]
 }
@@ -208,11 +208,7 @@ function buildWebpackConfig(config = []) {
             async: process.env.NODE_ENV === 'development',
             useTypescriptIncrementalApi: true,
             checkSyntacticErrors: true,
-            reportFiles: [
-              '**',
-              '!**/__tests__/**',
-              '!**/?(*.)test.*',
-            ],
+            reportFiles: ['**', '!**/__tests__/**', '!**/?(*.)test.*'],
             silent: true,
             // The formatter is invoked directly in WebpackDevServerUtils during development
             formatter: process.env.NODE_ENV === 'production' ? typescriptFormatter : undefined,
@@ -238,16 +234,19 @@ function buildWebpackConfig(config = []) {
       prependEntry('react-dev-utils/webpackHotDevClient'),
       devServer({
         compress: true,
-        clientLogLevel: 'none',
         contentBase: './public/',
         publicPath: '/',
         watchContentBase: true,
         quiet: true,
+        clientLogLevel: 'none',
         watchOptions: {
           ignored: process.env.WATCH_NODE_MODULES === 'true' ? undefined : /node_modules/,
         },
         overlay: false,
         disableHostCheck: true,
+        // https://github.com/facebook/create-react-app/pull/7988
+        transportMode: 'ws',
+        injectClient: false,
       }),
       eslint({
         cache: true,
