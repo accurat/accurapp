@@ -71,7 +71,7 @@ const appDir = path.resolve(cli.input[0])
 const appName = path.basename(appDir)
 const appTitle = appName
   .split('-')
-  .map(i => i.charAt(0).toUpperCase() + i.slice(1))
+  .map((i) => i.charAt(0).toUpperCase() + i.slice(1))
   .join(' ')
 
 console.log(coloredBanner('/||||/| accurapp', ['yellow', 'green']))
@@ -143,15 +143,15 @@ if (shouldInstall) {
 
   // Require local package if we're testing.
   if (isTesting) {
-    devDependencies = devDependencies.map(dep =>
+    devDependencies = devDependencies.map((dep) =>
       dep.includes('accurapp') ? path.resolve(__dirname, `../${dep}`) : dep
     )
   }
 
-  log.ok(`Installing dev dependencies: ${devDependencies.map(d => chalk.cyan(d)).join(', ')}`)
+  log.ok(`Installing dev dependencies: ${devDependencies.map((d) => chalk.cyan(d)).join(', ')}`)
   exec(`yarn add --dev ${devDependencies.join(' ')}`, appDir)
 
-  log.ok(`Installing dependencies: ${dependencies.map(d => chalk.cyan(d)).join(', ')}`)
+  log.ok(`Installing dependencies: ${dependencies.map((d) => chalk.cyan(d)).join(', ')}`)
   exec(`yarn add ${dependencies.join(' ')}`, appDir)
 } else {
   log.info(`Not running 'yarn add/install' because you chose so.`)

@@ -38,10 +38,7 @@ function extractLatestTag() {
 
 function extractCurrentBranch() {
   try {
-    return cp
-      .execSync('git rev-parse --abbrev-ref HEAD')
-      .toString()
-      .trim()
+    return cp.execSync('git rev-parse --abbrev-ref HEAD').toString().trim()
   } catch (e) {
     // Probably git is not available, return an empty string instead
     return ''

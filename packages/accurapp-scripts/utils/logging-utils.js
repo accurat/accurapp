@@ -63,7 +63,7 @@ function coloredBanner(text, colors = ['blue', 'red']) {
     '/': colors[1],
   }
   const banner = figlet.textSync(bannerText, { font: 'Big Money-nw' })
-  const colored = banner.replace(/[^\s]/g, c => chalk[bannerColors[c] || 'white'](c))
+  const colored = banner.replace(/[^\s]/g, (c) => chalk[bannerColors[c] || 'white'](c))
   return `\n${colored}`
 }
 
@@ -79,7 +79,7 @@ function yellowBox(message) {
 
 function createOutdatedMessage(outdatedDeps, latestDeps) {
   const outdatedMessages = outdatedDeps.map((dep, i) => {
-    const updatedDep = latestDeps.find(latestDep => latestDep.name === dep.name)
+    const updatedDep = latestDeps.find((latestDep) => latestDep.name === dep.name)
     return `${chalk.blue(dep.name)} ${chalk.gray(dep.version)} → ${chalk.green(updatedDep.version)}`
   })
 
@@ -87,8 +87,8 @@ function createOutdatedMessage(outdatedDeps, latestDeps) {
     ${chalk.yellow('Hey, an update for accurapp is available!')}
     ${outdatedMessages.join('\n')}
     ${chalk.yellow('Run')} ${chalk.cyan('yarn upgrade-interactive --latest')} ${chalk.yellow(
-    'to update'
-  )}
+  'to update'
+)}
   `
 }
 
@@ -99,17 +99,17 @@ function indent(text, prepend = '  ', firstLinePrepend = prepend) {
     .join(`\n`)
 }
 
-function listLine(text, color = i => i) {
+function listLine(text, color = (i) => i) {
   return indent(text, '   ', color('\n • '))
 }
 
 function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 512 * 1024) {
   const assets = (webpackStats.stats || [webpackStats])
-    .map(stats =>
+    .map((stats) =>
       stats
         .toJson({ all: false, assets: true })
-        .assets.filter(asset => /\.(js|css)$/.test(asset.name))
-        .map(asset => {
+        .assets.filter((asset) => /\.(js|css)$/.test(asset.name))
+        .map((asset) => {
           const fileContents = fs.readFileSync(path.join(appBuild, asset.name))
           const size = fs.statSync(path.join(appBuild, asset.name)).size
           const sizeGzip = gzipSize(fileContents)
@@ -126,7 +126,7 @@ function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 512 * 1024) 
 
   assets.sort((a, b) => b.size - a.size)
 
-  const isLarge = asset => path.extname(asset.name) === '.js' && asset.size > maxBundleGzipSize
+  const isLarge = (asset) => path.extname(asset.name) === '.js' && asset.size > maxBundleGzipSize
 
   const columnData = assets.reduce((columnObj, asset) => {
     const sizeLabel = `${filesize(asset.size)} ${chalk.dim(

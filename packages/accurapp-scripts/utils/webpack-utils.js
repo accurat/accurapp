@@ -31,7 +31,7 @@ function createWebpackCompiler(onFirstReadyCallback = () => {}, onError = () => 
   const useTypeScript = fs.existsSync(`${appDir}/tsconfig.json`)
 
   // You have changed a file, bundle is now "invalidated", and Webpack is recompiling a bundle.
-  compiler.hooks.invalid.tap('invalid', filePath => {
+  compiler.hooks.invalid.tap('invalid', (filePath) => {
     const filePathRelative = path.relative(appDir, filePath)
     console.log()
     log.info(`Compiling ${chalk.cyan(filePathRelative)}...`)
@@ -50,8 +50,8 @@ function createWebpackCompiler(onFirstReadyCallback = () => {}, onError = () => 
       }
       beforeCompileCalled = true
 
-      tsMessagesPromise = new Promise(resolve => {
-        tsMessagesResolver = msgs => resolve(msgs)
+      tsMessagesPromise = new Promise((resolve) => {
+        tsMessagesResolver = (msgs) => resolve(msgs)
       })
     })
 
@@ -60,18 +60,18 @@ function createWebpackCompiler(onFirstReadyCallback = () => {}, onError = () => 
       'afterTypeScriptCheck',
       (diagnostics, lints) => {
         const allMsgs = [...diagnostics, ...lints]
-        const format = message => `${message.file}\n${typescriptFormatter(message, true)}`
+        const format = (message) => `${message.file}\n${typescriptFormatter(message, true)}`
 
         tsMessagesResolver({
-          errors: allMsgs.filter(msg => msg.severity === 'error').map(format),
-          warnings: allMsgs.filter(msg => msg.severity === 'warning').map(format),
+          errors: allMsgs.filter((msg) => msg.severity === 'error').map(format),
+          warnings: allMsgs.filter((msg) => msg.severity === 'warning').map(format),
         })
       }
     )
   }
 
   // Webpack has finished recompiling the bundle (whether or not you have warnings or errors)
-  compiler.hooks.done.tap('done', async stats => {
+  compiler.hooks.done.tap('done', async (stats) => {
     const statsJson = stats.toJson({
       all: false,
       warnings: true,
@@ -111,7 +111,7 @@ function createWebpackCompiler(onFirstReadyCallback = () => {}, onError = () => 
       onError()
     } else if (messages.warnings.length > 0) {
       log.warn(`Compiled in ${chalk.cyan(time)} with warnings:`)
-      messages.warnings.forEach(message => {
+      messages.warnings.forEach((message) => {
         console.log(listLine(message, chalk.yellow))
       })
     }

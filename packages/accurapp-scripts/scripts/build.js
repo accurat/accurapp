@@ -44,7 +44,7 @@ function copyPublicFolder() {
   fs.copySync(appPublic, appBuild, {
     overwrite: true,
     dereference: true,
-    filter: file => path.basename(file) !== 'index.html',
+    filter: (file) => path.basename(file) !== 'index.html',
   })
 }
 
@@ -76,7 +76,7 @@ console.log(coloredBanner('/||||/| accurapp', ['cyan', 'magenta']))
 
 clearBuildFolder()
 copyPublicFolder()
-build().then(stats => {
+build().then((stats) => {
   log.info('File sizes:')
   console.log()
   printFileSizes(stats, appBuild)

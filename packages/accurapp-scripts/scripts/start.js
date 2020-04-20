@@ -49,7 +49,7 @@ function runDevServer(port) {
           const url = `https://${subdomain}.${TUNNEL_DOMAIN}`
           log.info(`Even from far away at: ${chalk.cyan(url)}`)
         })
-        .catch(err => {
+        .catch((err) => {
           const message = err.message || err
           if (message.includes('authentication methods failed')) {
             err =
@@ -68,7 +68,7 @@ function runDevServer(port) {
     ...readWebpackConfig().devServer,
   }
   const devServer = new WebpackDevServer(compiler, devServerConfig)
-  devServer.listen(port, HOST, err => {
+  devServer.listen(port, HOST, (err) => {
     if (err) return log.err(err)
     log.info('Starting the development server...')
     openOrRefreshBrowser(urls.localUrlForBrowser)
@@ -85,7 +85,7 @@ function runDevServer(port) {
 console.log(coloredBanner('/||||/| accurapp'))
 
 detect(DEFAULT_PORT)
-  .then(port => {
+  .then((port) => {
     if (port !== DEFAULT_PORT) {
       log.ok(
         `Something is already running on port ${DEFAULT_PORT}, switching to ${chalk.blue(port)}...`
@@ -94,6 +94,6 @@ detect(DEFAULT_PORT)
     runDevServer(port)
     return port
   })
-  .catch(err => {
+  .catch((err) => {
     throw err
   })
