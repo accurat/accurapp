@@ -14,16 +14,14 @@ module.exports = {
 
     // Transform simple css files in an empty object
     // https://jestjs.io/docs/en/webpack.html
-    '\\.css$': 'react-scripts/config/jest/cssTransform',
+    '\\.css$': 'jest-config-accurapp/cssTransform',
 
     // Transform all other files into just the filename string
-    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': 'react-scripts/config/jest/fileTransform',
+    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': 'jest-config-accurapp/fileTransform',
   },
 
   // Don't transform css modules into an empty object
-  transformIgnorePatterns: [
-    '\\.module\\.(css)$',
-  ],
+  transformIgnorePatterns: ['\\.module\\.(css)$'],
 
   // Instead use identity-obj-proxy which outputs the classnames
   moduleNameMapper: {
