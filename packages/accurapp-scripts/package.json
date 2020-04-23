@@ -46,7 +46,6 @@
     "react-dev-utils": "10.2.1",
     "resolve": "1.16.1",
     "semver": "7.3.2",
-    "ssh-tuna": "1.0.3",
     "webpack": "4.42.1",
     "webpack-dev-server": "3.10.3"
   }

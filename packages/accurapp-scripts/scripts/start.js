@@ -9,9 +9,7 @@ const detect = require('detect-port')
 const WebpackDevServer = require('webpack-dev-server')
 const openOrRefreshBrowser = require('react-dev-utils/openBrowser')
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils')
-const { tunnelPort } = require('ssh-tuna')
 const { log, coloredBanner } = require('../utils/logging-utils')
-const { generateSubdomain } = require('../utils/tunnel-utils')
 const { createWebpackCompiler, readWebpackConfig } = require('../utils/webpack-utils')
 const { verifyTypeScriptSetup } = require('../utils/verifyTypeScriptSetup')
 const {
@@ -29,9 +27,6 @@ process.env.LATEST_TAG = extractLatestTag()
 const HOST = process.env.HOST || '0.0.0.0'
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8000
 const PROTOCOL = process.env.HTTPS === 'true' ? 'https' : 'http'
-const TUNNEL_DOMAIN = process.env.TUNNEL_DOMAIN || 'internal.accurat.io'
-const TUNNEL_SSH_PORT = process.env.TUNNEL_SSH_PORT || 2222
-const EXPOSED = process.argv.includes('--exposed')
 
 const appDir = process.cwd()
 verifyTypeScriptSetup(appDir)
@@ -41,24 +36,6 @@ function runDevServer(port) {
   const compiler = createWebpackCompiler(() => {
     log.info(`The app is running at: ${chalk.cyan(urls.localUrlForTerminal)}`)
     log.info(`Or on your network at: ${chalk.cyan(urls.lanUrlForTerminal)}`)
-
-    if (EXPOSED) {
-      const subdomain = generateSubdomain()
-      tunnelPort(port, subdomain, TUNNEL_DOMAIN, TUNNEL_SSH_PORT)
-        .then(() => {
-          const url = `https://${subdomain}.${TUNNEL_DOMAIN}`
-          log.info(`Even from far away at: ${chalk.cyan(url)}`)
-        })
-        .catch((err) => {
-          const message = err.message || err
-          if (message.includes('authentication methods failed')) {
-            err =
-              'Could not authenticate to the tunneling server, please make sure you can access the server via ssh.'
-          }
-
-          log.err(`Could not expose the local port: ${err}`)
-        })
-    }
   })
 
   const devServerConfig = {

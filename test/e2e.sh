@@ -13,7 +13,7 @@ yarn create-test-app
 cd test-app/
 
 # Test the start of the application
-BROWSER=false yarn start --exposed &
+BROWSER=false yarn start &
 PID=$!
 sleep 20s
 kill $PID
@@ -32,7 +32,7 @@ mv ./src/components/App.test.js ./src/components/App.test.ts
 cp -r ../.fixtures/test-app-ts/src .
 
 # Test the start with typescript
-BROWSER=false yarn start --exposed &
+BROWSER=false yarn start &
 PID=$!
 sleep 30s
 kill $PID

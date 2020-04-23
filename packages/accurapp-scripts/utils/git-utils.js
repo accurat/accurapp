@@ -36,29 +36,6 @@ function extractLatestTag() {
   }
 }
 
-function extractCurrentBranch() {
-  try {
-    return cp.execSync('git rev-parse --abbrev-ref HEAD').toString().trim()
-  } catch (e) {
-    // Probably git is not available, return an empty string instead
-    return ''
-  }
-}
-
-function extractRepoName() {
-  try {
-    return cp
-      .execSync('basename -s .git `git config --get remote.origin.url`', {
-        stdio: ['pipe', 'pipe', 'ignore'],
-      })
-      .toString()
-      .trim()
-  } catch (e) {
-    // Probably git is not available, return an empty string instead
-    return ''
-  }
-}
-
 function isInGitRepository() {
   try {
     cp.execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' })
@@ -73,7 +50,5 @@ module.exports = {
   extractLatestCommitHash,
   extractLatestCommitTimestamp,
   extractLatestTag,
-  extractCurrentBranch,
-  extractRepoName,
   isInGitRepository,
 }
