@@ -238,7 +238,8 @@ function buildWebpackConfig(config = []) {
         publicPath: '/',
         watchContentBase: true,
         quiet: true,
-        clientLogLevel: 'none',
+        clientLogLevel: 'silent',
+        noInfo: true,
         watchOptions: {
           ignored: process.env.WATCH_NODE_MODULES === 'true' ? undefined : /node_modules/,
         },
