@@ -42,6 +42,7 @@ but significant amounts of code were rewritten and simplified. Here are some shi
   - [I need title and meta tags for each route for SEO. How do I do it?](#faq)
   - [I need to build for Electron. How do I do it?](#faq)
   - [How do I configure a multi-project repo?](#faq)
+  - [I am getting `JavaScript heap out of memory`, what can I do?](#faq)
 - [Contributing](#contributing)
 
 ## Creating a new project
@@ -199,7 +200,7 @@ You can define your variables in those different places, **in order of importanc
 
 1. in the `package.json`'s scripts section:
 ```json
-  "start": "HTTPS=true accurapp-scripts start",
+  "start": "yarn && HTTPS=true accurapp-scripts start",
 ```
 1. in the CI config script:
 ```yml
@@ -765,6 +766,19 @@ Yarn workspaces basically puts your dependencies in just one place, at the root.
 This approach allows you to require files across projects really easily. It is advised not to make a new project containing only the shared files, but rather choose a project to be the source of thruth, containing every image or UI components.
 
 </details>
+
+
+<details>
+<summary>I am getting `JavaScript heap out of memory`, what can I do?</summary>
+
+You are probably loading a very big file.
+
+You can try increasing the max allowed memory for node with the env variable `NODE_OPTIONS=--max_old_space_size=4096`.
+
+Check out the [Setting Env Variables](#setting-env-variables) section for info about setting env variables.
+
+</details>
+
 
 ## Contributing
 If you make some edits and wish to test them locally you can run `yarn test` for an end-to-end test, or `yarn create-test-app` which creates a test app using the local packages.
