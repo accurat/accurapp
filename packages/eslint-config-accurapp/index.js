@@ -27,7 +27,7 @@ module.exports = {
   parser: 'babel-eslint',
 
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
@@ -56,9 +56,9 @@ module.exports = {
   },
 
   globals: {
-    document: false,
-    navigator: false,
-    window: false,
+    document: 'readonly',
+    navigator: 'readonly',
+    window: 'readonly',
   },
 
   rules: {
@@ -70,7 +70,7 @@ module.exports = {
       2,
       {
         SwitchCase: 1,
-        flatTernaryExpressions: true,
+        ignoredNodes: ['TemplateLiteral *'],
       },
     ],
     'comma-dangle': ['warn', 'always-multiline'], // No risks, beacuse it will be transpiled
