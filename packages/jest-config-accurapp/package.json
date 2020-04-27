@@ -1,6 +1,6 @@
 {
   "name": "jest-config-accurapp",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Jest configuration used by Accurat",
   "repository": "accurat/accurapp",
   "license": "MIT",

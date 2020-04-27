@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://github.com/accurat/accurapp/compare/eslint-config-accurapp@5.0.0...eslint-config-accurapp@5.0.1) (2020-04-27)
+
+**Note:** Version bump only for package eslint-config-accurapp
+
+
+
+
+
 # [5.0.0](https://github.com/accurat/accurapp/compare/eslint-config-accurapp@4.2.8...eslint-config-accurapp@5.0.0) (2020-01-20)
 
 

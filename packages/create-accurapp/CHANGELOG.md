@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://github.com/accurat/accurapp/compare/create-accurapp@5.0.0...create-accurapp@5.0.1) (2020-04-27)
+
+
+### Bug Fixes
+
+* 🔧 Add yarn command on start ([a5f22f2](https://github.com/accurat/accurapp/commit/a5f22f2477f0cd23aada0e832181ff55f8df6863))
+
+
+
+
+
 # [5.0.0](https://github.com/accurat/accurapp/compare/create-accurapp@4.3.0...create-accurapp@5.0.0) (2020-01-20)
 
 

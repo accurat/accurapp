@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/accurat/accurapp/compare/babel-preset-accurapp@5.0.1...babel-preset-accurapp@5.1.0) (2020-04-27)
+
+
+### Features
+
+* 🐠 Add @babel/plugin-proposal-partial-application ([46ceb4c](https://github.com/accurat/accurapp/commit/46ceb4c1fe162eda745d80ab9a02c960df6ba994))
+* 🐠 Add @babel/plugin-proposal-private-methods ([d80468e](https://github.com/accurat/accurapp/commit/d80468efd5805af5db914a378b6c5490c7a45b07))
+
+
+
+
+
 ## [5.0.1](https://github.com/accurat/accurapp/compare/babel-preset-accurapp@5.0.0...babel-preset-accurapp@5.0.1) (2020-04-02)
 
 

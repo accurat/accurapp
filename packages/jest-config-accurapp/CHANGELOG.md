@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.2](https://github.com/accurat/accurapp/compare/jest-config-accurapp@4.1.1...jest-config-accurapp@4.1.2) (2020-04-27)
+
+**Note:** Version bump only for package jest-config-accurapp
+
+
+
+
+
 ## [4.1.1](https://github.com/accurat/accurapp/compare/jest-config-accurapp@4.1.0...jest-config-accurapp@4.1.1) (2020-01-29)
 
 

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/accurat/accurapp/compare/accurapp-scripts@5.0.0...accurapp-scripts@5.1.0) (2020-04-27)
+
+
+### Bug Fixes
+
+* 🐛  Fix declaration of svg ([40ae6f1](https://github.com/accurat/accurapp/commit/40ae6f16cbedb7accac272a132039d06671ae63e))
+
+
+### Features
+
+* 🔙 Revert live tunneler [#66](https://github.com/accurat/accurapp/issues/66) ([f6a6e6a](https://github.com/accurat/accurapp/commit/f6a6e6a58f681b6c747efa2f05ac2a4f8ae18902))
+
+
+
+
+
 # [5.0.0](https://github.com/accurat/accurapp/compare/accurapp-scripts@4.2.0...accurapp-scripts@5.0.0) (2020-01-20)
 
 
