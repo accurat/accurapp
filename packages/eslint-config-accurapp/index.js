@@ -73,7 +73,16 @@ module.exports = {
         ignoredNodes: ['TemplateLiteral *'],
       },
     ],
-    'comma-dangle': ['warn', 'always-multiline'], // No risks, beacuse it will be transpiled
+    'comma-dangle': [
+      'warn',
+      {
+        arrays: 'always-multiline',
+        objects: 'always-multiline',
+        imports: 'always-multiline',
+        exports: 'always-multiline',
+        functions: 'never',
+      },
+    ], // No risks, beacuse it will be transpiled
     'space-before-function-paren': ['warn', { anonymous: 'always', named: 'never' }],
     'key-spacing': ['warn', { beforeColon: false, afterColon: true, mode: 'minimum' }],
     'object-curly-spacing': ['warn', 'always'],
