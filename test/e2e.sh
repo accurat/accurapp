@@ -13,10 +13,9 @@ yarn create-test-app
 cd test-app/
 
 # Test the start of the application
-BROWSER=false yarn start &
-PID=$!
+BROWSER=false PORT=9999 yarn start &
 sleep 20s
-kill $PID
+fkill :9999
 
 # Test the build command
 yarn build
@@ -32,10 +31,9 @@ mv ./src/components/App.test.js ./src/components/App.test.ts
 cp -r ../.fixtures/test-app-ts/src .
 
 # Test the start with typescript
-BROWSER=false yarn start &
-PID=$!
+BROWSER=false PORT=9999 yarn start &
 sleep 30s
-kill $PID
+fkill :9999
 
 # Test the build with typescript
 yarn build
