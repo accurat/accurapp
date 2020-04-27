@@ -7,6 +7,7 @@ import ky from 'ky'
 import { ReactComponent as Logo } from '../images/logo.svg'
 import mmm from '../images/mmmpiselli.jpg'
 import styles from './App.module.css'
+import csv from '../sample.csv'
 
 export function firstDayOfYear(year) {
   return new Date(Date.UTC(year, 0, 1))
@@ -36,7 +37,7 @@ export class App extends React.Component {
     // test optionsl chaining
     const foo = props?.foo
 
-    console.log(foo, mapboxgl, ky)
+    console.log(foo, mapboxgl, ky, csv)
 
     // test pipeline operator
     const exclaim = string => `${string}!`

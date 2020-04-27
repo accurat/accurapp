@@ -5,6 +5,7 @@ import ky from 'ky'
 import { ReactComponent as Logo } from '../images/logo.svg'
 import mmm from '../images/mmmpiselli.jpg'
 import styles from './App.module.css'
+import csv from '../sample.csv'
 
 export function firstDayOfYear(year: number): Date {
   return new Date(Date.UTC(year, 0, 1))
@@ -19,7 +20,7 @@ export class App extends React.Component {
     const worker = new Worker()
 
     worker.postMessage('big deta')
-    worker.addEventListener('message', event => {
+    worker.addEventListener('message', (event) => {
       console.log(event.data)
     })
   }
@@ -32,7 +33,7 @@ export class App extends React.Component {
     const { ...props } = this.props
 
     // test delicate packages
-    console.log(ky)
+    console.log(ky, csv)
 
     return (
       <div {...props}>
