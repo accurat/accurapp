@@ -10641,9 +10641,9 @@ postcss-font-variant@^4.0.0:
   dependencies:
     postcss "^7.0.2"
 
-postcss-fuss@marcofugaro/postcss-fuss#function-updates:
+postcss-fuss@accurat/postcss-fuss:
   version "0.2.0"
-  resolved "https://codeload.github.com/marcofugaro/postcss-fuss/tar.gz/da5bfde8fb897e1b90156ef7efc270d316b52f4a"
+  resolved "https://codeload.github.com/accurat/postcss-fuss/tar.gz/2a70cebd3ae4d179a43f34a261373901fa4262bf"
   dependencies:
     lodash "^4.17.10"
     postcss "^5.2.6"
