@@ -2768,9 +2768,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@webpack-blocks/assets@marcofugaro/webpack-blocks-assets":
-  version "2.0.1"
-  resolved "https://codeload.github.com/marcofugaro/webpack-blocks-assets/tar.gz/e5e40c85c7631af94c594b858c6ded5f35d99cb5"
+"@webpack-blocks/assets@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@webpack-blocks/assets/-/assets-2.1.0.tgz#1604efd9d3337c27ae693284fd42a86a24247132"
+  integrity sha512-+z0+iA3Ffes4zZyX7K7kBtlzbSmCBinO4dC4NzEIJxkMpqcC82Aw8999v5CnI5cx5OttlBsxqbmem3TQLdMZUA==
   dependencies:
     css-loader "^3.5.2"
     file-loader "^6.0.0"
@@ -2778,14 +2779,14 @@
     style-loader "^1.1.4"
     url-loader "^4.1.0"
 
-"@webpack-blocks/core@2.0.0", "@webpack-blocks/core@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@webpack-blocks/core/-/core-2.0.0.tgz#c3511ce0baf628277646dfcad5e8371eadb7fdce"
-  integrity sha512-olqMyOyJdD+fb4Ey3/CWiWxtLT+W9zDJJ9HfxVr7TSXOP9PfbxKFRRtHsdrFJFIRxDh97eBfPB3d0EW+PIiLqA==
+"@webpack-blocks/core@2.1.0", "@webpack-blocks/core@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@webpack-blocks/core/-/core-2.1.0.tgz#f3ca80b61544cda7dfd2fb8efb1740456bb85c1c"
+  integrity sha512-TCoAfpetr5zf1fZ2Alr84QqsPH8/DsvCKzbviOmgQFhjtMDQa4SB7VX3LqE1ZtY/0tg6iDmAXNH6mLqOBe4eKQ==
   dependencies:
-    glob-to-regexp "^0.4.0"
-    lodash "^4.17.11"
-    webpack-merge "^4.1.4"
+    glob-to-regexp "^0.4.1"
+    lodash "^4.17.15"
+    webpack-merge "^4.2.2"
 
 "@webpack-blocks/dev-server@marcofugaro/webpack-blocks-dev-server":
   version "2.0.1"
@@ -2794,27 +2795,28 @@
     webpack "^4.42.1"
     webpack-dev-server marcofugaro/webpack-dev-server#quietstart-option
 
-"@webpack-blocks/eslint@marcofugaro/webpack-blocks-eslint":
-  version "2.0.1"
-  resolved "https://codeload.github.com/marcofugaro/webpack-blocks-eslint/tar.gz/53025d59ba6218f3773ee5f11e10b08ae84ded58"
+"@webpack-blocks/eslint@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@webpack-blocks/eslint/-/eslint-2.1.0.tgz#bf89913bed1f45c8f1880a3b2f3023fb0afcfc46"
+  integrity sha512-nEKMI6zlNo3JIA+WmBZ/kZbD80agX+89OEXipv4szxDPGzf0mbXQON7wCETCrS75EVgbRXxM2AZnkdLICw5sBQ==
   dependencies:
     eslint-loader "^4.0.0"
 
-"@webpack-blocks/postcss@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@webpack-blocks/postcss/-/postcss-2.0.1.tgz#3a7fc6fd7285db8ec2b7e9778fac470cfacc11eb"
-  integrity sha512-Xrn/aeKk95FyY0o5RDFS6xPhtq97nl9rzocFN5nx3kTAWcUpUjJ1s0wxjtnnap6rqHL+qhfBwvqFEYlp+iCzzQ==
+"@webpack-blocks/postcss@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@webpack-blocks/postcss/-/postcss-2.1.0.tgz#c15092a7e8faa4567d8a67c6cb273c3b93b1063a"
+  integrity sha512-HCuQF/WqyIGqSHbXzg8Nq3LtCC7ReX3NPbalNDr/F4o/VVoxcTjy8/I7u4EHk7Df32ZPNiI4CVgBTlGLrdiMRw==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     postcss-loader "^3.0.0"
 
-"@webpack-blocks/webpack@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@webpack-blocks/webpack/-/webpack-2.0.1.tgz#eca590e46cae73b833205a54d06a200e8fe5ace2"
-  integrity sha512-cj1t/KhCNGcgSOd+qbYm0Djr3slsML9R8mwofoRqFzy2Z0SMCDNUUP6ClzTpGQSAMPq3Hp/0I1KaCKknV7g62g==
+"@webpack-blocks/webpack@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@webpack-blocks/webpack/-/webpack-2.1.0.tgz#95c21efcc76d413d9641b649bf42aa5f00d1b8b6"
+  integrity sha512-FoRo4SpJKok/nFbK3rcGovkCiC6WWP/M8wprYgaznVJiZf7kV7CfqEzeKbvKYtxFcmHvIcYHW4UyxRLg/Nx0Hg==
   dependencies:
-    "@webpack-blocks/core" "^2.0.0"
-    webpack-merge "^4.1.4"
+    "@webpack-blocks/core" "^2.1.0"
+    webpack-merge "^4.2.2"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -5518,7 +5520,7 @@ escodegen@^1.11.1, escodegen@^1.14.1:
     source-map "~0.6.1"
 
 eslint-config-accurapp@./packages/eslint-config-accurapp:
-  version "5.0.0"
+  version "5.0.2"
   dependencies:
     "@babel/core" "7.9.0"
     babel-eslint "11.0.0-beta.0"
@@ -6635,7 +6637,7 @@ glob-to-regexp@^0.3.0:
   resolved "https://registry.yarnpkg.com/glob-to-regexp/-/glob-to-regexp-0.3.0.tgz#8c5a1494d2066c570cc3bfe4496175acc4d502ab"
   integrity sha1-jFoUlNIGbFcMw7/kSWF1rMTVAqs=
 
-glob-to-regexp@^0.4.0:
+glob-to-regexp@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/glob-to-regexp/-/glob-to-regexp-0.4.1.tgz#c75297087c851b9a578bd217dd59a92f59fe546e"
   integrity sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==
@@ -13841,7 +13843,7 @@ webpack-log@^2.0.0:
     ansi-colors "^3.0.0"
     uuid "^3.3.2"
 
-webpack-merge@^4.1.4:
+webpack-merge@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-4.2.2.tgz#a27c52ea783d1398afd2087f547d7b9d2f43634d"
   integrity sha512-TUE1UGoTX2Cd42j3krGYqObZbOD+xF7u28WB7tfUordytSjbWTIjK/8V0amkBfTYN4/pB/GIDlJZZ657BGG19g==
