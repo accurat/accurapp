@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.3](https://github.com/accurat/accurapp/compare/eslint-config-accurapp@5.0.2...eslint-config-accurapp@5.0.3) (2020-04-28)
+
+
+### Bug Fixes
+
+* 🚨 Restore quote eslint rule ([0d2bc62](https://github.com/accurat/accurapp/commit/0d2bc62030123498b56ea40d557943ec71741d45))
+
+
+
+
+
 ## [5.0.2](https://github.com/accurat/accurapp/compare/eslint-config-accurapp@5.0.1...eslint-config-accurapp@5.0.2) (2020-04-27)
 
 
