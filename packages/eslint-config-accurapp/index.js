@@ -93,6 +93,7 @@ module.exports = {
     'import/named': 'warn',
     'jsx-quotes': ['warn', 'prefer-double'],
     'prefer-template': 'warn',
+    quotes: ['warn', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
     'no-useless-concat': 'warn',
     'no-implicit-coercion': 'warn',
     'no-bitwise': 'warn',
