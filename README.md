@@ -501,7 +501,7 @@ Make sure to disable the related eslint rule like this:
 <details>
 <summary>What's all the fuss about FUSS?</summary>
 
-Accurapp comes with [postcss-fuss](https://github.com/marcofugaro/postcss-fuss/tree/function-updates), a postcss plugin that lets you generate custom functional css classes, in the [tachyons](https://raw.githubusercontent.com/tachyons-css/tachyons/master/css/tachyons.css) way. It's useful if you want to define custom colors, and don't want to write all the classes by hand. And for many other stuff.
+Accurapp comes with [postcss-fuss](https://github.com/accurat/postcss-fuss), a postcss plugin that lets you generate custom functional css classes, in the [tachyons](https://raw.githubusercontent.com/tachyons-css/tachyons/master/css/tachyons.css) way. It's useful if you want to define custom colors, and don't want to write all the classes by hand. And for many other stuff.
 
 For example, this is what you write in your `style.css`:
 
@@ -519,7 +519,7 @@ And this is what the generated css looks like:
 
 There are other preset functions, like `color-variants()` which outputs both a lighter and darker version of the color, `color-states()` which outputs the classes in the hover active and focus pseudo-classes. You can even create your own custom modifier function!
 
-[More info in the postcss-fuss readme.](https://github.com/marcofugaro/postcss-fuss/tree/function-updates)
+[More info in the postcss-fuss readme.](https://github.com/accurat/postcss-fuss)
 </details>
 
 <details>
