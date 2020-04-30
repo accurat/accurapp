@@ -142,8 +142,8 @@ function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 1024 * 1024)
     const sizeLabel = `${filesize(asset.size)} ${chalk.dim(
       `(${filesize(asset.sizeGzip)} gzipped)`
     )}`
-    const firstColumn = isLarge(asset) ? chalk.yellow(sizeLabel) : sizeLabel
-    const secondColumn = `${chalk.dim(`${asset.folder}${path.sep}`)}${chalk.cyan(asset.name)}`
+    const firstColumn = `${chalk.dim(`${asset.folder}${path.sep}`)}${chalk.cyan(asset.name)}`
+    const secondColumn = isLarge(asset) ? chalk.yellow(sizeLabel) : sizeLabel
 
     columnObj[firstColumn] = secondColumn
     return columnObj
