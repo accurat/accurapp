@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.2](https://github.com/accurat/accurapp/compare/accurapp-scripts@5.1.1...accurapp-scripts@5.1.2) (2020-04-30)
+
+
+### Bug Fixes
+
+* 💅 Better file logging ([2bb055a](https://github.com/accurat/accurapp/commit/2bb055a82f98b1be5cb0da363311c624fb97f3bf))
+
+
+
+
+
 ## [5.1.1](https://github.com/accurat/accurapp/compare/accurapp-scripts@5.1.0...accurapp-scripts@5.1.1) (2020-04-30)
 
 
