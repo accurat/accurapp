@@ -172,6 +172,24 @@ function buildWebpackConfig(config = []) {
       },
     }),
 
+    // Turn off performance hints because we have our own filesize reporter
+    performance(false),
+
+    // Some libraries import Node modules but don't use them in the browser.
+    // Tell webpack to provide empty mocks for them so importing them works.
+    customConfig({
+      node: {
+        module: 'empty',
+        dgram: 'empty',
+        dns: 'mock',
+        fs: 'empty',
+        http2: 'empty',
+        net: 'empty',
+        tls: 'empty',
+        child_process: 'empty',
+      },
+    }),
+
     addPlugins([
       // Like webpack.DefinePlugin, but also reads the .env file, giving however priority to
       // the envs already there (like variable set from the command line or CI).
@@ -258,8 +276,6 @@ function buildWebpackConfig(config = []) {
       ]),
       // Faster 'cheap-module-source-map' sourcemaps in development
       sourceMaps('cheap-module-source-map'),
-      // Turn off performance hints during development
-      performance(false),
       // Fix "webpackHotUpdate is not defined" issue
       // https://github.com/webpack/webpack/issues/6693
       optimization({

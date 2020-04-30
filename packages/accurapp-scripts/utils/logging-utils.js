@@ -87,8 +87,8 @@ function createOutdatedMessage(outdatedDeps, latestDeps) {
     ${chalk.yellow('Hey, an update for accurapp is available!')}
     ${outdatedMessages.join('\n')}
     ${chalk.yellow('Run')} ${chalk.cyan('yarn upgrade-interactive --latest')} ${chalk.yellow(
-  'to update'
-)}
+    'to update'
+  )}
   `
 }
 
@@ -103,7 +103,7 @@ function listLine(text, color = (i) => i) {
   return indent(text, '   ', color('\n • '))
 }
 
-function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 512 * 1024) {
+function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 1024 * 1024) {
   const assets = (webpackStats.stats || [webpackStats])
     .map((stats) =>
       stats
@@ -124,7 +124,17 @@ function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 512 * 1024) 
     )
     .reduce((single, all) => all.concat(single), [])
 
-  assets.sort((a, b) => b.size - a.size)
+  // sort by name
+  assets.sort((a, b) => {
+    if (a.name < b.name) {
+      return -1
+    }
+    if (a.name > b.name) {
+      return 1
+    }
+
+    return 0
+  })
 
   const isLarge = (asset) => path.extname(asset.name) === '.js' && asset.size > maxBundleGzipSize
 
