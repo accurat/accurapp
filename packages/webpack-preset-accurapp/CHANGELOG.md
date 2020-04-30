@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.4](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@5.0.3...webpack-preset-accurapp@5.0.4) (2020-04-30)
+
+
+### Bug Fixes
+
+* 🧹 Clean console logs ([862abec](https://github.com/accurat/accurapp/commit/862abec0116f406763eec52669499adcaee05ee4))
+
+
+
+
+
 ## [5.0.3](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@5.0.2...webpack-preset-accurapp@5.0.3) (2020-04-28)
 
 **Note:** Version bump only for package webpack-preset-accurapp
