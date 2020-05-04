@@ -202,12 +202,12 @@ You can define your variables in those different places, **in order of importanc
 ```json
   "start": "yarn && HTTPS=true accurapp-scripts start",
 ```
-1. in the CI config script:
+2. in the CI config script:
 ```yml
   script:
     - GENERATE_SOURCEMAP=true yarn build
 ```
-1. in the `.env` file:
+3. in the `.env` file:
 ```js
 // .env
 
