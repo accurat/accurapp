@@ -51,6 +51,12 @@ function runDevServer(port) {
     openOrRefreshBrowser(urls.localUrlForBrowser)
   })
 
+  // Useful when running fork-ts-checker-webpack-plugin with async: true to report errors that are emitted after the webpack build is complete.
+  compiler.devSocket = {
+    warnings: (warnings) => devServer.sockWrite(devServer.sockets, 'warnings', warnings),
+    errors: (errors) => devServer.sockWrite(devServer.sockets, 'errors', errors),
+  }
+
   const shutDownServer = () => {
     devServer.close()
     process.exit()

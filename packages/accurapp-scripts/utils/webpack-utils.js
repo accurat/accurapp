@@ -5,7 +5,7 @@ const chalk = require('chalk')
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter')
 const prettyMs = require('pretty-ms')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin')
 const { log, listLine } = require('./logging-utils')
 
 const appDir = process.cwd()
@@ -40,16 +40,10 @@ function createWebpackCompiler(onFirstReadyCallback = () => {}, onError = () => 
   let isFirstCompile = true
   let tsMessagesPromise // used to wait for the typechecking
   let tsMessagesResolver // used to trigger the messages after the typechecking
-  let beforeCompileCalled = false
 
   if (useTypeScript) {
     // reset the promise
     compiler.hooks.beforeCompile.tap('beforeCompile', () => {
-      if (beforeCompileCalled) {
-        return
-      }
-      beforeCompileCalled = true
-
       tsMessagesPromise = new Promise((resolve) => {
         tsMessagesResolver = (msgs) => resolve(msgs)
       })
@@ -72,33 +66,35 @@ function createWebpackCompiler(onFirstReadyCallback = () => {}, onError = () => 
 
   // Webpack has finished recompiling the bundle (whether or not you have warnings or errors)
   compiler.hooks.done.tap('done', async (stats) => {
-    const statsJson = stats.toJson({
+    const statsData = stats.toJson({
       all: false,
       warnings: true,
       errors: true,
       timings: true,
     })
 
-    if (useTypeScript && statsJson.errors.length === 0) {
+    if (useTypeScript && statsData.errors.length === 0) {
       // push typescript errors and warnings
       const messages = await tsMessagesPromise
-      statsJson.errors.push(...messages.errors)
-      statsJson.warnings.push(...messages.warnings)
+      statsData.errors.push(...messages.errors)
+      statsData.warnings.push(...messages.warnings)
 
       // Push errors and warnings into compilation result
       // to show them after page refresh triggered by user.
       stats.compilation.errors.push(...messages.errors)
       stats.compilation.warnings.push(...messages.warnings)
 
-      // if (messages.errors.length > 0) {
-      //   devSocket.errors(messages.errors);
-      // } else if (messages.warnings.length > 0) {
-      //   devSocket.warnings(messages.warnings);
-      // }
+      if (compiler.devSocket) {
+        if (messages.errors.length > 0) {
+          compiler.devSocket.errors(messages.errors)
+        } else if (messages.warnings.length > 0) {
+          compiler.devSocket.warnings(messages.warnings)
+        }
+      }
     }
 
-    const messages = formatWebpackMessages(statsJson)
-    const time = prettyMs(statsJson.time)
+    const messages = formatWebpackMessages(statsData)
+    const time = prettyMs(statsData.time)
     const isSuccessful = messages.errors.length + messages.warnings.length === 0
 
     if (isSuccessful) {
