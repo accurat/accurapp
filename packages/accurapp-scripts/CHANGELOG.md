@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.3](https://github.com/accurat/accurapp/compare/accurapp-scripts@5.1.2...accurapp-scripts@5.1.3) (2020-05-10)
+
+
+### Bug Fixes
+
+* 🐛  Fix issue with errorr in TS breaking the local process ([54140f2](https://github.com/accurat/accurapp/commit/54140f221a73d9f79634c8cf365f4fa46352e483))
+
+
+
+
+
 ## [5.1.2](https://github.com/accurat/accurapp/compare/accurapp-scripts@5.1.1...accurapp-scripts@5.1.2) (2020-04-30)
 
 
