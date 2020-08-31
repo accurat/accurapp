@@ -46,7 +46,7 @@
     "react-dev-utils": "10.2.1",
     "resolve": "1.17.0",
     "semver": "7.3.2",
-    "webpack": "4.43.0",
+    "webpack": "4.44.1",
     "webpack-dev-server": "marcofugaro/webpack-dev-server#quietstart-option"
   }
 }
