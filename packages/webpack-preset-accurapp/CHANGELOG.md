@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@5.0.5...webpack-preset-accurapp@5.1.0) (2020-08-31)
+
+
+### Bug Fixes
+
+* 🐛  Fix icon.colors.svg breaking with typescript ([3713cf8](https://github.com/accurat/accurapp/commit/3713cf8e363d755ed62e7367144e7c881c02aafb))
+
+
+### Features
+
+* 🌚  Allow empty values in .env and .env.example ([a3fbda9](https://github.com/accurat/accurapp/commit/a3fbda910850ba61305f457d382039816f921bf4))
+
+
+
+
+
 ## [5.0.5](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@5.0.4...webpack-preset-accurapp@5.0.5) (2020-05-10)
 
 

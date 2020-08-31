@@ -1,6 +1,6 @@
 {
   "name": "create-accurapp",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "description": "Create accurat apps with minimum flexible build configuration",
   "repository": "accurat/accurapp",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "create-accurapp": "./index.js"
   },
   "dependencies": {
-    "accurapp-scripts": "^5.1.3",
+    "accurapp-scripts": "^5.1.4",
     "chalk": "4.0.0",
     "figlet": "1.4.0",
     "fs-extra": "9.0.0",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/accurat/accurapp/compare/eslint-config-accurapp@5.0.3...eslint-config-accurapp@5.1.0) (2020-08-31)
+
+
+### Features
+
+* 🚨  Add no-return-await eslint rule ([bbffb82](https://github.com/accurat/accurapp/commit/bbffb82fb790e359f1f57bb0ef0b6a6d11327b22))
+
+
+
+
+
 ## [5.0.3](https://github.com/accurat/accurapp/compare/eslint-config-accurapp@5.0.2...eslint-config-accurapp@5.0.3) (2020-04-28)
 
 

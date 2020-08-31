@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.5](https://github.com/accurat/accurapp/compare/create-accurapp@5.0.4...create-accurapp@5.0.5) (2020-08-31)
+
+**Note:** Version bump only for package create-accurapp
+
+
+
+
+
 ## [5.0.4](https://github.com/accurat/accurapp/compare/create-accurapp@5.0.3...create-accurapp@5.0.4) (2020-05-10)
 
 **Note:** Version bump only for package create-accurapp
