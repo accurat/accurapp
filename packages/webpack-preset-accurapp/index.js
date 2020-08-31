@@ -155,7 +155,7 @@ function buildWebpackConfig(config = []) {
     json5Loader(),
     workerLoader(),
     reactSvgLoader(),
-    reactColorSvgLoader({ typescript: useTypescript }),
+    reactColorSvgLoader(),
 
     // Needed for the worker-loader.
     setOutput({ globalObject: 'this' }),
