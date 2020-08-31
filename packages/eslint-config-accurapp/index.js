@@ -102,6 +102,7 @@ module.exports = {
     'prefer-object-spread': 'warn',
     'require-await': 'warn',
     'require-yield': 'warn',
+    'no-return-await': 'warn',
     'react/jsx-indent': ['warn', 2],
     'react/jsx-indent-props': ['warn', 2],
     'react/jsx-wrap-multilines': ['warn', { return: 'parens-new-line', arrow: 'parens-new-line' }],
