@@ -5538,6 +5538,21 @@ escodegen@^1.11.1, escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
+eslint-config-accurapp@./packages/eslint-config-accurapp:
+  version "5.1.0"
+  dependencies:
+    "@babel/core" "7.9.0"
+    babel-eslint "11.0.0-beta.0"
+    eslint "6.8.0"
+    eslint-config-standard "14.1.1"
+    eslint-plugin-import "2.20.2"
+    eslint-plugin-no-copy-paste-default-export "0.0.3"
+    eslint-plugin-node "11.1.0"
+    eslint-plugin-promise "4.2.1"
+    eslint-plugin-react "7.19.0"
+    eslint-plugin-react-hooks "3.0.0"
+    eslint-plugin-standard "4.0.1"
+
 eslint-config-standard@14.1.1:
   version "14.1.1"
   resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-14.1.1.tgz#830a8e44e7aef7de67464979ad06b406026c56ea"
@@ -9508,9 +9523,9 @@ node-fetch-npm@^2.0.2:
     safe-buffer "^5.1.1"
 
 node-fetch@^2.3.0, node-fetch@^2.5.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
-  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-forge@0.9.0:
   version "0.9.0"
