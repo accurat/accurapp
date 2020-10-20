@@ -44,7 +44,7 @@ function copyPublicFolder() {
   fs.copySync(appPublic, appBuild, {
     overwrite: true,
     dereference: true,
-    filter: (file) => path.basename(file) !== 'index.html',
+    filter: (file) => !file.endsWith('/public/index.html'),
   })
 }
 
