@@ -347,6 +347,8 @@ function buildWebpackConfig(config = []) {
         // Uglification in staging is alright because we have sourcemaps
         // that show the original code
         sourceMap: process.env.GENERATE_SOURCEMAP === 'true',
+        // Don't generate the license.txt file
+        extractComments: false,
       }),
     ]),
 
