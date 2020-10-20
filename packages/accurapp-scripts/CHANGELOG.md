@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.5](https://github.com/accurat/accurapp/compare/accurapp-scripts@5.1.4...accurapp-scripts@5.1.5) (2020-10-20)
+
+
+### Bug Fixes
+
+* 🐛  Support nested index.html in public folder ([7d04634](https://github.com/accurat/accurapp/commit/7d04634befeff0dead28ecaf2885a711b8455c5c))
+
+
+
+
+
 ## [5.1.4](https://github.com/accurat/accurapp/compare/accurapp-scripts@5.1.3...accurapp-scripts@5.1.4) (2020-08-31)
 
 **Note:** Version bump only for package accurapp-scripts

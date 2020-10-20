@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.1](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@5.1.0...webpack-preset-accurapp@5.1.1) (2020-10-20)
+
+
+### Bug Fixes
+
+* 🔨  Don't generate license.txt file ([dd3e926](https://github.com/accurat/accurapp/commit/dd3e926edc0482315507e43288294b8b1c60b9cf))
+
+
+
+
+
 # [5.1.0](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@5.0.5...webpack-preset-accurapp@5.1.0) (2020-08-31)
 
 
