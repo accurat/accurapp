@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0](https://github.com/accurat/accurapp/compare/accurapp-scripts@5.1.5...accurapp-scripts@5.2.0) (2020-10-22)
+
+
+### Features
+
+* 👯  Support multiple webpack builds ([d432792](https://github.com/accurat/accurapp/commit/d432792da236091c337c63d289707e15f645c009))
+
+
+
+
+
 ## [5.1.5](https://github.com/accurat/accurapp/compare/accurapp-scripts@5.1.4...accurapp-scripts@5.1.5) (2020-10-20)
 
 
