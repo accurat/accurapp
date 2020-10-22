@@ -110,8 +110,15 @@ function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 1024 * 1024)
         .toJson({ all: false, assets: true })
         .assets.filter((asset) => /\.(js|css)$/.test(asset.name))
         .map((asset) => {
-          const fileContents = fs.readFileSync(path.join(appBuild, asset.name))
-          const size = fs.statSync(path.join(appBuild, asset.name)).size
+          const file = path.join(appBuild, asset.name)
+
+          // Maybe some files are in a subfolder
+          if (!fs.existsSync(file)) {
+            return
+          }
+
+          const fileContents = fs.readFileSync(file)
+          const size = fs.statSync(file).size
           const sizeGzip = gzipSize(fileContents)
 
           return {
@@ -121,6 +128,7 @@ function printFileSizes(webpackStats, appBuild, maxBundleGzipSize = 1024 * 1024)
             sizeGzip,
           }
         })
+        .filter(Boolean)
     )
     .reduce((single, all) => all.concat(single), [])
 

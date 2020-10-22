@@ -38,11 +38,12 @@ function runDevServer(port) {
     log.info(`Or on your network at: ${chalk.cyan(urls.lanUrlForTerminal)}`)
   })
 
+  const webpackConfig = readWebpackConfig()
   const devServerConfig = {
     host: HOST,
     public: urls.lanUrlForConfig,
     https: PROTOCOL === 'https',
-    ...readWebpackConfig().devServer,
+    ...(Array.isArray(webpackConfig) ? webpackConfig[0] : webpackConfig).devServer,
   }
   const devServer = new WebpackDevServer(compiler, devServerConfig)
   devServer.listen(port, HOST, (err) => {

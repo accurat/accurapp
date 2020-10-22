@@ -73,6 +73,12 @@ function createWebpackCompiler(onFirstReadyCallback = () => {}, onError = () => 
       timings: true,
     })
 
+    // If there's an array of configs
+    if (statsData.children) {
+      const totalTime = statsData.children.reduce((sum, s) => sum + s.time, 0)
+      statsData.time = totalTime
+    }
+
     if (useTypeScript && statsData.errors.length === 0) {
       // push typescript errors and warnings
       const messages = await tsMessagesPromise
