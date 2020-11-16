@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.1](https://github.com/accurat/accurapp/compare/accurapp-scripts@5.2.0...accurapp-scripts@5.2.1) (2020-11-16)
+
+
+### Bug Fixes
+
+* 🐛  Fix output directory not being configurable, close [#75](https://github.com/accurat/accurapp/issues/75) ([abb0756](https://github.com/accurat/accurapp/commit/abb07561916430f39745b8de226a17c7e7d5a2c7))
+
+
+
+
+
 # [5.2.0](https://github.com/accurat/accurapp/compare/accurapp-scripts@5.1.5...accurapp-scripts@5.2.0) (2020-10-22)
 
 
