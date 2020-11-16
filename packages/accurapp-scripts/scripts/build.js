@@ -26,7 +26,8 @@ if (process.env.PUBLIC_URL.endsWith('/')) {
 
 const appDir = process.cwd()
 const appPublic = path.resolve(appDir, 'public')
-const appBuild = path.resolve(appDir, 'build')
+const config = readWebpackConfig()
+const appBuild = Array.isArray(config) ? config[0].output.path : config.output.path
 const relativeAppBuildPath = `${path.relative(appDir, appBuild)}/`
 
 function clearBuildFolder() {
