@@ -56,6 +56,11 @@ npx create-accurapp project-name
 > **Note:** If your project fails to start right after installing, npx may be using a cached version of `create-accurapp`.
 > Remove previously installed versions with `npm uninstall -g create-accurapp`
 
+Also, if you want to use typescript, you can just pass the `--typescript` flag.
+```sh
+npx create-accurapp project-name --typescript
+```
+
 Then you just `cd project-name`, run `yarn start` and start creating awesome stuff! 🎉
 
 #### Setting up github
