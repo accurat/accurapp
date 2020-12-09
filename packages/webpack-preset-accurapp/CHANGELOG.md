@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.1](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@5.2.0...webpack-preset-accurapp@5.2.1) (2020-12-09)
+
+
+### Bug Fixes
+
+* 📦  Upgrade dotenv-webpack ([d974c61](https://github.com/accurat/accurapp/commit/d974c6122c0d624cdb9fa5098cd27ebcd613c24b))
+
+
+
+
+
 # [5.2.0](https://github.com/accurat/accurapp/compare/webpack-preset-accurapp@5.1.1...webpack-preset-accurapp@5.2.0) (2020-12-09)
 
 
