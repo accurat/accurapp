@@ -198,6 +198,7 @@ function buildWebpackConfig(config = []) {
         silent: true,
         safe: process.env.CI !== 'true',
         allowEmptyValues: true,
+        defaults: true,
       }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin({
