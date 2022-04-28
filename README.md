@@ -51,7 +51,7 @@ Having installed node (`brew install node`), run this command in the directory w
 npx create-accurapp project-name
 ```
 
-> **Note**: if no folder is created, then try using _yarn_ instead of _npx_: `yarn create-accurapp project-name`
+> **Note**: if no folder is created, then try using _yarn_ instead of _npx_: `yarn create accurapp project-name`
 
 > **Note**: if it says `npx: command not found` update your node version by running `brew upgrade node`
 
